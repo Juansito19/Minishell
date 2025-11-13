@@ -2,6 +2,7 @@ NAME = minishell
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
+LDFLAGS = -lreadline -lncurses
 RM = rm -rf
 AR = ar rcs
 MAKE = make -sC
@@ -16,10 +17,10 @@ SRC = src/main.c
 
 OBJ = $(SRC:src/%.c=obj/%.o)
 
-all: minishell
+all: shell
 
-minishell: $(OBJ) $(MINISHELL_LIB) $(LIBFT)
-	@$(CC) $(CFLAGS) -g $(SRC) $(MINISHELL_LIB) $(LIBFT) -o $(NAME)
+shell: $(OBJ) $(MINISHELL_LIB) $(LIBFT)
+	@$(CC) $(CFLAGS) -g $(SRC) $(MINISHELL_LIB) $(LIBFT) $(LDFLAGS) -o $(NAME)
 	@echo "\e[1;32m[✓] Successful minishell compilation\e[0m"
 
 obj/%.o: src/%.c
