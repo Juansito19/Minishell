@@ -6,7 +6,7 @@
 /*   By: jbrosio <jbrosio@student.42malaga.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 20:34:17 by jbrosio           #+#    #+#             */
-/*   Updated: 2025/11/11 14:43:06 by jbrosio          ###   ########.fr       */
+/*   Updated: 2025/11/18 08:04:55 by jbrosio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <fcntl.h>
 # include <limits.h>
 # include <stdarg.h>
+# include "../minishel.h"
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
@@ -547,7 +548,7 @@ char		*gnl_substr(char *s, unsigned int start, size_t len, size_t i);
  * @param size Number of elements.
  * @note Uses bubble sort algorithm.
  */
-void		ft_sort_int_tab(int *tab, int size);
+void		ft_sort_int_tab(int *list, int size);
 
 /**
  * @brief Prints double pointer array to file descriptor.
@@ -563,5 +564,6 @@ void		ft_double_putstr_fd(char **s, int fd);
  * @return Single joined string or NULL.
  */
 char		*ft_dblstr_join(char **str);
+int			ft_is_metachar(char c);
 
 #endif

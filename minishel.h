@@ -12,11 +12,11 @@
 # include <term.h>
 
 typedef	enum {
-	T_PIPE,
+	T_PIPE = 1,
 	T_REDIR_IN,
 	T_REDIR_OUT,
-	T_REDIR_APPEND,
-	T_REDIR_HEREDOC,
+	T_APPEND,
+	T_HEREDOC,
 	T_SQUOTE,
 	T_DQUOTE,
 	T_WORD
@@ -24,23 +24,23 @@ typedef	enum {
 
 typedef	struct s_token {
 	t_token_type	type;
-	struct s_node	*left;
-	struct s_node	*right;
 	char			**content;
+	struct s_token	*next;
 } t_token;
 
-typedef	struct s_cmd {
-	char			**av;
+typedef	struct s_tree {
+	char			**content;
 	int				infile;
 	int				outfile;
 	int				pipe[2];
 	int				is_builting;
-	struct s_cmd	*next;
-} t_cmd;
+	struct s_tree	*left;
+	struct s_tree	*right;
+} t_tree;
 
 typedef struct s_data {
 	t_token	*tokens;
-	t_cmd	*cmds;
+	t_tree	*cmds;
 	char	*path;
 	int		infile;
 	int		outfile;

@@ -5,11 +5,11 @@
 /* ========================= */
 
 
-t_cmd	*ft_cmd_init(void **content)
+t_tree	*ft_tree_init(void **content)
 {
-	t_cmd	*new_cmd;
+	t_tree	*new_cmd;
 
-	new_cmd = (t_cmd *)malloc(1 * sizeof(t_cmd));
+	new_cmd = (t_tree *)malloc(1 * sizeof(t_tree));
 	if (!new_cmd)
 		return (NULL);
 	new_cmd->next = NULL;

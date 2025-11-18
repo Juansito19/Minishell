@@ -1,0 +1,10 @@
+{
+	"files.associations": {
+		"glad.h": "c",
+		"khrplatform.h": "c",
+		"mlx42.h": "c",
+		"fractol.h": "c",
+		"STAR.C": "cpp",
+		"libft.h": "c"
+	}
+}

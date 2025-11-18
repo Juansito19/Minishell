@@ -6,7 +6,7 @@
 #    By: jbrosio <jbrosio@student.42malaga.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/21 16:44:12 by Juan              #+#    #+#              #
-#    Updated: 2025/11/11 15:09:47 by jbrosio          ###   ########.fr        #
+#    Updated: 2025/11/18 08:03:57 by jbrosio          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,10 +76,14 @@ SRC = src/ft_atod.c \
 		src/ft_tolower.c \
 		src/ft_toupper.c \
 		src/ft_sort_int_tab.c \
+		src/ft_is_metachar.c \
 		src/get_next_line.c \
 		src/get_next_line_utils.c
 
 OBJ = $(SRC:src/%.c=obj/%.o)
+
+TOTAL_FILES := $(words $(SRC))
+COMPILED := 0
 
 ## Rules
 all: $(NAME)
@@ -90,24 +94,78 @@ run:
 
 ## converting .c to .o
 obj/%.o: src/%.c
-	@echo "\e[32mCompiling... $<\e[0m"
+	@sleep 0.05
 	@mkdir -p obj
 	@$(CC) $(CFLAGS) -fPIC -c $< -o $@
-	@echo "\e[32m$@ created!\e[0m"
+	@$(eval COMPILED=$(shell echo $$(($(COMPILED)+1))))
+	@$(eval PROGRESS=$(shell echo $$(($(COMPILED)*50/$(TOTAL_FILES)))))
+	@printf "\r\e[32mLIBFT = [%-50s] %d/%d files\e[0m" \
+		$$(printf '█%.0s' $$(seq 1 $(PROGRESS))) $(COMPILED) $(TOTAL_FILES)
 
 ## library
 $(NAME) : $(OBJ)
 	@$(AR) $(NAME) $(OBJ)
-	@echo "\e[32mLibrary created!\e[0m"
+	@echo "\e[32m    \e[0m"
+	@echo "\e[32m    \e[0m"
+	@echo "\e[32m    \e[0m"
+	@echo "\e[32m    \e[0m"
+	@echo "\e[32m    \e[0m"
+	@sleep 0.08
+	@echo "\e[32m    \e[0m"
+	@sleep 0.08
+	@sleep 0.08
+	@echo "\e[32m               ███████████████ ███████████   █████████ ███████████ █████ █████            \e[0m"
+	@sleep 0.08
+	@echo "\e[32m   ░░███     ░░██░░███░░░░░██░░███░░░░░███ ███░░░░░██░░███░░░░░██░░███ ░░███             \e[0m"
+	@sleep 0.08
+	@echo "\e[32m    ░███      ░███░███    ░███░███    ░███░███    ░███░███    ░███░░███ ███              \e[0m"
+	@sleep 0.08
+	@echo "\e[32m    ░███      ░███░██████████ ░██████████ ░███████████░██████████  ░░█████               \e[0m"
+	@sleep 0.08
+	@echo "\e[32m    ░███      ░███░███░░░░░███░███░░░░░███░███░░░░░███░███░░░░░███  ░░███                \e[0m"
+	@sleep 0.08
+	@echo "\e[32m    ░███      ░███░███    ░███░███    ░███░███    ░███░███    ░███   ░███                \e[0m"
+	@sleep 0.08
+	@echo "\e[32m    █████████████████████████ █████   █████████   █████████   █████  █████               \e[0m"
+	@sleep 0.08
+	@echo "\e[32m   ░░░░░░░░░░░░░░░░░░░░░░░░░ ░░░░░   ░░░░░░░░░   ░░░░░░░░░   ░░░░░  ░░░░░                \e[0m"
+	@sleep 0.08
+	@echo "\e[32m   \e[0m"
+	@sleep 0.08
+	@echo "\e[32m   \e[0m"
+	@sleep 0.08
+	@echo "\e[32m   \e[0m"
+	@sleep 0.08
+	@echo "\e[32m      █████████ ███████████ ██████████ █████████ ███████████████████████████████      ███\e[0m"
+	@sleep 0.08
+	@echo "\e[32m     ███░░░░░██░░███░░░░░██░░███░░░░░████░░░░░██░█░░░███░░░░░███░░░░░░░███░░░░███    ░███\e[0m"
+	@sleep 0.08
+	@echo "\e[32m    ███     ░░░ ░███    ░███░███  █ ░░███    ░██░   ░███  ░ ░███  █ ░ ░███   ░░███   ░███\e[0m"
+	@sleep 0.08
+	@echo "\e[32m   ░███         ░██████████ ░██████  ░███████████   ░███    ░██████   ░███    ░███   ░███\e[0m"
+	@sleep 0.08
+	@echo "\e[32m   ░███         ░███░░░░░███░███░░█  ░███░░░░░███   ░███    ░███░░█   ░███    ░███   ░███\e[0m"
+	@sleep 0.08
+	@echo "\e[32m   ░░███     ███░███    ░███░███ ░   ░███    ░███   ░███    ░███ ░   █░███    ███    ░░░ \e[0m"
+	@sleep 0.08
+	@echo "\e[32m    ░░█████████ █████   ██████████████████   █████  █████   ████████████████████      ███\e[0m"
+	@sleep 0.08
+	@echo "\e[32m     ░░░░░░░░░ ░░░░░   ░░░░░░░░░░░░░░░░░░   ░░░░░  ░░░░░   ░░░░░░░░░░░░░░░░░░░░      ░░░ \e[0m"
+	@sleep 0.08
+	@echo "\e[32m   \e[0m"
+	@sleep 0.08
+	@echo "\e[32m   \e[0m"
+	@sleep 0.08
+	@echo "\e[32m   \e[0m"
+	@sleep 0.08
+	@sleep 1
 
 ## Remove rules
 clean:
 	@$(RM) obj
-	@echo "\e[31mObjects deleted!\e[0m"
 
 fclean: clean
 	@$(RM) $(NAME)
-	@echo "\e[31mLibrary deleted!\e[0m"
 
 re: fclean all
 
