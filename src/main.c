@@ -25,10 +25,33 @@ int	ft_minishell(char **env)
 	return (0);
 }
 
+void	print_nodes(t_token **token)
+{
+	t_token *temp;
+	int i;
+
+	i = 0;
+	temp = (*token);
+	while (temp)
+	{
+		printf("───────────────────────────────────\n");
+		printf(">> [%d] = %s\n", i, temp->content);
+		printf("───────────────────────────────────\n");
+		i++;
+		temp = temp->next;
+	}
+}
+
 int main(int ac, char **av, char **env)
 {
-	(void)ac;	
-	(void)av;
-	ft_minishell(env);
+	(void)ac;
+	(void)env;
+	t_token *token;
+	char *s = ft_dblstr_join(av+1);
+	token = ft_token(s, 0);
+	print_nodes(&token);
+	ft_free_tokens(&token);
+	free(s);
+	// ft_minishell(env);
 	return (0);
 }

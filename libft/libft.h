@@ -6,7 +6,7 @@
 /*   By: jbrosio <jbrosio@student.42malaga.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 20:34:17 by jbrosio           #+#    #+#             */
-/*   Updated: 2025/11/18 08:04:55 by jbrosio          ###   ########.fr       */
+/*   Updated: 2025/11/18 09:19:22 by jbrosio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -564,6 +564,8 @@ void		ft_double_putstr_fd(char **s, int fd);
  * @return Single joined string or NULL.
  */
 char		*ft_dblstr_join(char **str);
+
+
 int			ft_is_metachar(char c);
 
 #endif

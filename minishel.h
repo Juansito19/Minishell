@@ -11,6 +11,28 @@
 # include <termios.h>
 # include <term.h>
 
+# ifndef PIPE
+#  define PIPE = "|"
+# endif
+# ifndef RED_IN
+#  define RED_IN = "<"
+# endif
+# ifndef RED_OUT
+#  define RED_OUT = ">"
+# endif
+# ifndef APPEND
+#  define APPEND = ">>"
+# endif
+# ifndef HEREDOC
+#  define HEREDOC = "<<"
+# endif
+# ifndef SQUOTE
+#  define SQUOTE = "\'"
+# endif
+# ifndef DQUOTE
+#  define DQUOTE = "\""
+# endif
+
 typedef	enum {
 	T_PIPE = 1,
 	T_REDIR_IN,
@@ -24,7 +46,7 @@ typedef	enum {
 
 typedef	struct s_token {
 	t_token_type	type;
-	char			**content;
+	char			*content;
 	struct s_token	*next;
 } t_token;
 
@@ -46,5 +68,24 @@ typedef struct s_data {
 	int		outfile;
 	int		exit_status;
 } t_data;
+
+/* ========================= */
+/* =========tokens========== */
+/* ========================= */
+
+t_token	*ft_token_init(void *content, t_token_type type);
+t_token	*ft_token(char *s, int i);
+void	ft_tokenadd_back(t_token **tokens, t_token *new);
+int		ft_token_word(t_token **tokens, char *s, int *ind);
+int		ft_token_meta(t_token **tokens, char *s, int *ind, t_token_type type);
+void	ft_free_tokens(t_token **head);
+
+/* ========================== */
+/* ===========tree=========== */
+/* ========================== */
+
+t_tree	*ft_tree_init(void **content);
+void	ft_treeadd_right(t_tree **tree, t_tree *new);
+void	ft_treeadd_left(t_tree **tree, t_tree *new);
 
 #endif
