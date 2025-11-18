@@ -15,6 +15,7 @@ LIBFT_LIB = libft.a
 
 SRC = src/main.c \
 		src/token.c \
+		src/tree.c \
 
 OBJ = $(SRC:src/%.c=obj/%.o)
 TOTAL_FILES := $(words $(SRC))

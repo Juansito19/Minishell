@@ -4,7 +4,7 @@
 /* ===========tree=========== */
 /* ========================== */
 
-t_tree	*ft_tree_init(void **content)
+t_tree	*ft_tree_init(void **content, t_token_type type)
 {
 	t_tree	*new_tree;
 
@@ -18,7 +18,8 @@ t_tree	*ft_tree_init(void **content)
 	new_tree->pipe[0] = -1;
 	new_tree->pipe[1] = -1;
 	new_tree->is_builting = -1;
-	new_tree->content = content;
+	new_tree->type = type;
+	new_tree->content = (char **)content;
 	return (new_tree);
 }
 
@@ -46,6 +47,64 @@ void	ft_treeadd_left(t_tree **tree, t_tree *new)
 	}
 }
 
+t_token	*ft_search_pipe(t_token **tokens)
+{
+	t_token	*tmp;
+
+	tmp = (*tokens);
+	if (!tokens || !(*tokens))
+		return (NULL);
+	while (tmp)
+	{
+		if (tmp->type == T_PIPE)
+			return (tmp);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
+t_token	*ft_put_all_left(t_token **tokens, t_token *token_pipe)
+{
+	t_token	*left_tokens;
+	t_token	*tmp;
+	t_token	*new;
+
+	tmp = (*tokens);
+	while (tmp != token_pipe)
+	{
+		new = ft_token_init(tmp->content, tmp->type);
+		if (!new)
+			return (NULL);
+		ft_tokenadd_back(&left_tokens, new);;
+		free(new->content);
+		free(new);
+		new = NULL;
+		tmp = tmp->next;
+	}
+	return (left_tokens);
+}
+
+t_token	*ft_put_all_right(t_token **tokens)
+{
+	t_token	*right_tokens;
+	t_token	*tmp;
+	t_token	*new;
+
+	tmp = (*tokens);
+	while (tmp)
+	{
+		new = ft_token_init(tmp->content, tmp->type);
+		if (!new)
+			return (NULL);
+		ft_tokenadd_back(&right_tokens, new);;
+		free(new->content);
+		free(new);
+		new = NULL;
+		tmp = tmp->next;
+	}
+	return (right_tokens);
+}
+
 // void	ft_treesclean(t_tree **trees)
 // {
 // 	t_tree	*aux;
@@ -60,4 +119,20 @@ void	ft_treeadd_left(t_tree **tree, t_tree *new)
 // 		*trees = aux;
 // 	}
 // 	*trees = NULL;
+// }
+
+// t_tree	*ft_tree(t_token **tokens, t_tree *tree)
+// {
+// 	t_token	*token_pipe;
+
+// 	token_pipe = ft_search_pipe(tokens);
+// 	if (token_pipe)
+// 	{
+// 		tree = ft_tree_init(&token_pipe->content, T_PIPE);
+// 		if (!tree)
+// 			return (NULL);
+		
+// 	}
+// 	else
+// 		return (funcion_para_comando_simple());
 // }

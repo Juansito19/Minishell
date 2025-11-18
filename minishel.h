@@ -56,6 +56,7 @@ typedef	struct s_tree {
 	int				outfile;
 	int				pipe[2];
 	int				is_builting;
+	t_token_type	type;
 	struct s_tree	*left;
 	struct s_tree	*right;
 } t_tree;
@@ -84,7 +85,10 @@ void	ft_free_tokens(t_token **head);
 /* ===========tree=========== */
 /* ========================== */
 
-t_tree	*ft_tree_init(void **content);
+t_tree	*ft_tree_init(char **content, t_token_type type);
+t_token	*ft_search_pipe(t_token **tokens);
+t_token	*ft_put_all_left(t_token **tokens, t_token *token_pipe);
+t_token	*ft_put_all_right(t_token **tokens);
 void	ft_treeadd_right(t_tree **tree, t_tree *new);
 void	ft_treeadd_left(t_tree **tree, t_tree *new);
 
