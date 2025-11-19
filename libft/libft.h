@@ -6,7 +6,7 @@
 /*   By: jbrosio <jbrosio@student.42malaga.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 20:34:17 by jbrosio           #+#    #+#             */
-/*   Updated: 2025/11/18 09:19:22 by jbrosio          ###   ########.fr       */
+/*   Updated: 2025/11/19 21:50:13 by jbrosio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -567,5 +567,6 @@ char		*ft_dblstr_join(char **str);
 
 
 int			ft_is_metachar(char c);
+void		*ft_free_all_array(char **big);
 
 #endif

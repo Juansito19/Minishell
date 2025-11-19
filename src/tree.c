@@ -4,7 +4,7 @@
 /* ===========tree=========== */
 /* ========================== */
 
-t_tree	*ft_tree_init(void **content, t_token_type type)
+t_tree	*ft_tree_init(char **content, t_token_type type)
 {
 	t_tree	*new_tree;
 
@@ -19,7 +19,7 @@ t_tree	*ft_tree_init(void **content, t_token_type type)
 	new_tree->pipe[1] = -1;
 	new_tree->is_builting = -1;
 	new_tree->type = type;
-	new_tree->content = (char **)content;
+	new_tree->content = content;
 	return (new_tree);
 }
 
@@ -68,17 +68,25 @@ t_token	*ft_put_all_left(t_token **tokens, t_token *token_pipe)
 	t_token	*left_tokens;
 	t_token	*tmp;
 	t_token	*new;
+	char	*cpy;
 
 	tmp = (*tokens);
-	while (tmp != token_pipe)
+	left_tokens = NULL;
+	while (tmp && tmp != token_pipe)
 	{
-		new = ft_token_init(tmp->content, tmp->type);
-		if (!new)
+		cpy = ft_strdup(tmp->content);
+		if (!cpy)
+		{
+			ft_free_tokens(&tmp);
 			return (NULL);
-		ft_tokenadd_back(&left_tokens, new);;
-		free(new->content);
-		free(new);
-		new = NULL;
+		}
+		new = ft_token_init(cpy, tmp->type);
+		if (!new)
+		{
+			free(cpy);
+			return (NULL);
+		}
+		ft_tokenadd_back(&left_tokens, new);
 		tmp = tmp->next;
 	}
 	return (left_tokens);
@@ -89,17 +97,25 @@ t_token	*ft_put_all_right(t_token **tokens)
 	t_token	*right_tokens;
 	t_token	*tmp;
 	t_token	*new;
+	char	*cpy;
 
 	tmp = (*tokens);
+	right_tokens = NULL;
 	while (tmp)
 	{
-		new = ft_token_init(tmp->content, tmp->type);
-		if (!new)
+		cpy = ft_strdup(tmp->content);
+		if (!cpy)
+		{
+			ft_free_tokens(&right_tokens);
 			return (NULL);
-		ft_tokenadd_back(&right_tokens, new);;
-		free(new->content);
-		free(new);
-		new = NULL;
+		}
+		new = ft_token_init(cpy, tmp->type);
+		if (!new)
+		{
+			ft_free_tokens(&right_tokens);
+			return (free(cpy), NULL);
+		}
+		ft_tokenadd_back(&right_tokens, new);
 		tmp = tmp->next;
 	}
 	return (right_tokens);
