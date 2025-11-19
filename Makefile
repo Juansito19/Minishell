@@ -635,7 +635,7 @@ $(MINISHELL_LIB): $(OBJ) $(LIBFT)
 $(LIBFT):
 	@$(MAKE) $(LIBFT_D)
 
-removep:
+removep: clean fclean
 	@$(RM) $(NAME)
 	@$(RM) $(BONUS_NAME)
 
