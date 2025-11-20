@@ -131,5 +131,6 @@ t_token	*ft_put_all_right(t_token **tokens);
 void	ft_treeadd_right(t_tree **tree, t_tree *new);
 void	ft_treeadd_left(t_tree **tree, t_tree *new);
 char	**ft_fill_word_type(t_token *token, int	size);
+void	ft_tree(t_token **tokens, t_tree **tree);
 
 #endif

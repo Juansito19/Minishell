@@ -25,7 +25,7 @@ int	ft_minishell(char **env)
 	return (0);
 }
 
-void	print_nodes(t_token **token)
+void	print_token(t_token **token)
 {
 	t_token *temp;
 	int i;
@@ -42,6 +42,17 @@ void	print_nodes(t_token **token)
 	}
 }
 
+void	print_tree(t_tree **tree)
+{
+	if (!(*tree))
+		return ;
+	printf("───────────────────────────────────\n");
+	printf(">> [%d] = %s\n", (*tree)->content);
+	printf("───────────────────────────────────\n");
+	print_tree((*tree)->right);
+	print_tree((*tree)->left);
+}
+
 int main(int ac, char **av, char **env)
 {
 	(void)ac;
@@ -51,32 +62,33 @@ int main(int ac, char **av, char **env)
 	t_token *token_red;
 	t_token *tokens_left;
 	t_token *tokens_right;
-	// t_tree *tree;
+	t_tree *tree;
 
 	/* CREAMOS LOS TOKENS */
 	char *s = ft_dblstr_join(av+1);
 	token = ft_token(s, 0);
-	print_nodes(&token);
+	// print_token(&token);
 
+	ft_tree(&token, &tree);
+	print_tree(&tree);
+	// char **sss = ft_fill_word_type(token, ft_tk_size(token));
+	// printf("\n\nDOBLE ARRAY\n\n");
+	// ft_double_putstr_fd(sss, 1);
+	// ft_free_all_array(sss);
 
-	char **sss = ft_fill_word_type(token, ft_tk_size(token));
-	printf("\n\nDOBLE ARRAY\n\n");
-	ft_double_putstr_fd(sss, 1);
-	ft_free_all_array(sss);
+	// /* BUSCAMOS EL NODO PIPE */	
+	// token_pipe = ft_search_pipe(&token);
+	// if (token_pipe)
+	// 	printf("token_pipe = %s\n", token_pipe->content);
+	// else
+	// 	printf("no encontro nada");
 
-	/* BUSCAMOS EL NODO PIPE */	
-	token_pipe = ft_search_pipe(&token);
-	if (token_pipe)
-		printf("token_pipe = %s\n", token_pipe->content);
-	else
-		printf("no encontro nada");
-
-	/* BUSCAMOS EL NODO RED */	
-	token_red = ft_search_red(&token);
-	if (token_red)
-		printf("token_red = %s\n", token_red->content);
-	else
-		printf("no encontro nada");
+	// /* BUSCAMOS EL NODO RED */	
+	// token_red = ft_search_red(&token);
+	// if (token_red)
+	// 	printf("token_red = %s\n", token_red->content);
+	// else
+	// 	printf("no encontro nada");
 	
 	/* CREAMOS EL ARBOL */
 	// tree = ft_tree_init(ft_split(token_pipe->content, ' '), token_pipe->type);
@@ -87,22 +99,22 @@ int main(int ac, char **av, char **env)
 	// }
 	// printf("\ntree = %s\n", *tree->content);
 
-	/* PONEMOS TODO A LA IZQUIERDA */
-	tokens_left = ft_put_all_left(&token, token_pipe);
-	if (!tokens_left)
-		return (printf("error con token_left\n"));
-	printf("\nnodos a la izquierda\n");
-	print_nodes(&tokens_left);
+	// /* PONEMOS TODO A LA IZQUIERDA */
+	// tokens_left = ft_put_all_left(&token, token_pipe);
+	// if (!tokens_left)
+	// 	return (printf("error con token_left\n"));
+	// printf("\nnodos a la izquierda\n");
+	// print_nodes(&tokens_left);
 
-	/* PONEMOS TODO A LA DERECHA */
-	tokens_right = ft_put_all_right(&token_pipe->next);
-	if (!tokens_right)
-		return (printf("error con token_right\n"));
-	printf("\nnodos a la derecha\n");
-	print_nodes(&tokens_right);
+	// /* PONEMOS TODO A LA DERECHA */
+	// tokens_right = ft_put_all_right(&token_pipe->next);
+	// if (!tokens_right)
+	// 	return (printf("error con token_right\n"));
+	// printf("\nnodos a la derecha\n");
+	// print_nodes(&tokens_right);
 
-	ft_free_tokens(&tokens_left);
-	ft_free_tokens(&tokens_right);
+	// ft_free_tokens(&tokens_left);
+	// ft_free_tokens(&tokens_right);
 	ft_free_tokens(&token);
 	free(s);
 	// ft_minishell(env);

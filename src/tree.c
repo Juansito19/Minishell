@@ -236,36 +236,39 @@ void	ft_tree(t_token **tokens, t_tree **tree)
 	t_token	*token_pipe;
 	t_token	*token_red;
 
-	if (!(*tree)->left && !(*tree)->right)
-		return ;
+	// if (!(*tree)->left && !(*tree)->right)
+	// 	return ;
+	// if (!(*tree))
+	// 	return ;
+	// else
+	// {
+	token_pipe = ft_search_pipe(tokens);
+	if (token_pipe)
+	{
+		(*tree) = ft_tree_init(&token_pipe->content, T_PIPE);
+		if (!tree)
+			return ;
+		ft_tree(ft_put_all_left(tokens, token_pipe), &(*tree)->left);
+		ft_tree(ft_put_all_right(&token_pipe->next), &(*tree)->right);
+	}
 	else
 	{
-		token_pipe = ft_search_pipe(tokens);
-		if (token_pipe)
+		token_red = ft_search_red(tokens);
+		if (token_red)
 		{
-			(*tree) = ft_tree_init(&token_pipe->content, T_PIPE);
+			(*tree) = ft_tree_init(&token_red->content, ft_red_type(token_red->content));
 			if (!tree)
-				return (NULL);
-			ft_tree(ft_put_all_left(tokens, token_pipe), &(*tree)->left);
-			ft_tree(ft_put_all_right(&token_pipe->next), &(*tree)->right);
+				return ;
+			ft_tree(ft_put_all_left(tokens, token_red), &(*tree)->left);
+			ft_tree(ft_put_all_right(&token_red->next), &(*tree)->right);
 		}
 		else
 		{
-			token_red = ft_search_red(tokens);
-			if (token_red)
-			{
-				(*tree) = ft_tree_init(&token_red->content, ft_red_type(token_red->content));
-				if (!tree)
-					return (NULL);
-				ft_tree(ft_put_all_left(tokens, token_red), &(*tree)->left);
-				ft_tree(ft_put_all_right(&token_red->next), &(*tree)->right);
-			}
-			else
-			{
-				(*tree) = ft_tree_init(ft_fill_word_type((*tokens), ft_tk_size((*tokens))), ft_is_builtin((*tokens)));
-			}
+			(*tree) = ft_tree_init(ft_fill_word_type((*tokens), ft_tk_size((*tokens))), ft_is_builtin((*tokens)));
 		}
 	}
+	return ;
+	// }
 	
 }
 /* [ls] [-l] - [wc] [-l]*/
