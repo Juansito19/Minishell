@@ -6,7 +6,7 @@
 /*   By: jbrosio <jbrosio@student.42malaga.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 19:53:43 by jbrosio           #+#    #+#             */
-/*   Updated: 2025/11/19 17:22:21 by jbrosio          ###   ########.fr       */
+/*   Updated: 2025/11/20 20:43:56 by jbrosio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ void	ft_double_putstr_fd(char **s, int fd)
 			j++;
 		}
 		write(fd, "\n", 1);
-		s++;
+		i++;
 	}
 }

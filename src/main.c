@@ -47,10 +47,11 @@ void	print_tree(t_tree **tree)
 	if (!(*tree))
 		return ;
 	printf("───────────────────────────────────\n");
-	printf(">> [%d] = %s\n", (*tree)->content);
+	printf(">> [%d]\n", (*tree)->type);
+	ft_double_putstr_fd((*tree)->content, 1);
 	printf("───────────────────────────────────\n");
-	print_tree((*tree)->right);
-	print_tree((*tree)->left);
+	print_tree(&(*tree)->right);
+	print_tree(&(*tree)->left);
 }
 
 int main(int ac, char **av, char **env)
@@ -58,19 +59,21 @@ int main(int ac, char **av, char **env)
 	(void)ac;
 	(void)env;
 	t_token *token;
-	t_token *token_pipe;
-	t_token *token_red;
-	t_token *tokens_left;
-	t_token *tokens_right;
+	// t_token *token_pipe;
+	// t_token *token_red;
+	// t_token *tokens_left;
+	// t_token *tokens_right;
 	t_tree *tree;
 
 	/* CREAMOS LOS TOKENS */
 	char *s = ft_dblstr_join(av+1);
 	token = ft_token(s, 0);
 	// print_token(&token);
-
+	// printf("llega 1\n");
 	ft_tree(&token, &tree);
+	// printf("llega 2\n");
 	print_tree(&tree);
+	// printf("llega 3\n");
 	// char **sss = ft_fill_word_type(token, ft_tk_size(token));
 	// printf("\n\nDOBLE ARRAY\n\n");
 	// ft_double_putstr_fd(sss, 1);

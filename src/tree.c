@@ -161,7 +161,6 @@ char	**ft_fill_word_type(t_token *token, int	size)
 		return (NULL);
 	i = 0;
 	aux = token;
-	printf("size = %d\n", size);
 	while (i < size)
 	{
 		content[i] = ft_strdup(aux->content);
@@ -171,7 +170,6 @@ char	**ft_fill_word_type(t_token *token, int	size)
 			free(content);
 			return (NULL);
 		}
-		printf("content[%d] = %s\n", i, content[i]);
 		aux = aux->next;
 		i++;
 	}
@@ -235,6 +233,8 @@ void	ft_tree(t_token **tokens, t_tree **tree)
 {
 	t_token	*token_pipe;
 	t_token	*token_red;
+	t_token	*left;
+	t_token	*right;
 
 	// if (!(*tree)->left && !(*tree)->right)
 	// 	return ;
@@ -245,22 +245,30 @@ void	ft_tree(t_token **tokens, t_tree **tree)
 	token_pipe = ft_search_pipe(tokens);
 	if (token_pipe)
 	{
-		(*tree) = ft_tree_init(&token_pipe->content, T_PIPE);
+		(*tree) = ft_tree_init(ft_fill_word_type(token_pipe, 1), T_PIPE);
 		if (!tree)
 			return ;
-		ft_tree(ft_put_all_left(tokens, token_pipe), &(*tree)->left);
-		ft_tree(ft_put_all_right(&token_pipe->next), &(*tree)->right);
+		left = ft_put_all_left(tokens, token_pipe);
+		right = ft_put_all_right(&token_pipe->next);
+		ft_tree(&left, &(*tree)->left);
+		ft_tree(&right, &(*tree)->right);
+		// ft_tree(ft_put_all_left(tokens, token_pipe), &(*tree)->left);
+		// ft_tree(ft_put_all_right(&token_pipe->next), &(*tree)->right);
 	}
 	else
 	{
 		token_red = ft_search_red(tokens);
 		if (token_red)
 		{
-			(*tree) = ft_tree_init(&token_red->content, ft_red_type(token_red->content));
+			(*tree) = ft_tree_init(ft_fill_word_type(token_red, 1), ft_is_red(token_red->content));
 			if (!tree)
 				return ;
-			ft_tree(ft_put_all_left(tokens, token_red), &(*tree)->left);
-			ft_tree(ft_put_all_right(&token_red->next), &(*tree)->right);
+			left = ft_put_all_left(tokens, token_red);
+			right = ft_put_all_right(&token_red->next);
+			ft_tree(&left, &(*tree)->left);
+			ft_tree(&right, &(*tree)->right);
+			// ft_tree((t_token **)ft_put_all_left(tokens, token_red), &(*tree)->left);
+			// ft_tree((t_token **)ft_put_all_right(&token_red->next), &(*tree)->right);
 		}
 		else
 		{
@@ -268,7 +276,5 @@ void	ft_tree(t_token **tokens, t_tree **tree)
 		}
 	}
 	return ;
-	// }
-	
 }
 /* [ls] [-l] - [wc] [-l]*/
