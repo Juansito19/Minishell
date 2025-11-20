@@ -48,6 +48,7 @@ int main(int ac, char **av, char **env)
 	(void)env;
 	t_token *token;
 	t_token *token_pipe;
+	t_token *token_red;
 	t_token *tokens_left;
 	t_token *tokens_right;
 	// t_tree *tree;
@@ -57,10 +58,23 @@ int main(int ac, char **av, char **env)
 	token = ft_token(s, 0);
 	print_nodes(&token);
 
+
+	char **sss = ft_fill_word_type(token, ft_tk_size(token));
+	printf("\n\nDOBLE ARRAY\n\n");
+	ft_double_putstr_fd(sss, 1);
+	ft_free_all_array(sss);
+
 	/* BUSCAMOS EL NODO PIPE */	
 	token_pipe = ft_search_pipe(&token);
 	if (token_pipe)
 		printf("token_pipe = %s\n", token_pipe->content);
+	else
+		printf("no encontro nada");
+
+	/* BUSCAMOS EL NODO RED */	
+	token_red = ft_search_red(&token);
+	if (token_red)
+		printf("token_red = %s\n", token_red->content);
 	else
 		printf("no encontro nada");
 	

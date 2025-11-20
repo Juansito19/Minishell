@@ -41,34 +41,71 @@ typedef	enum {
 	T_HEREDOC,
 	T_SQUOTE,
 	T_DQUOTE,
-	T_WORD
+	T_WORD,
+	T_CMD,
+	T_BUILTIN,
+	T_FD
 } t_token_type;
 
-typedef	struct s_token {
-	t_token_type	type;
-	char			*content;
-	struct s_token	*next;
-} t_token;
+// typedef	enum {
+// 	T_CMD,
+// 	T_ECHO,
+// 	T_CD,
+// 	T_PWD,
+// 	T_EXPORT,
+// 	T_UNSET,
+// 	T_EXIT,
+// 	T_ENV
+// } t_builtin;
 
-typedef	struct s_tree {
-	char			**content;
-	int				infile;
-	int				outfile;
-	int				pipe[2];
-	int				is_builting;
-	t_token_type	type;
-	struct s_tree	*left;
-	struct s_tree	*right;
-} t_tree;
+/**
+ * @brief Token node for lexical analysis.
+ * 
+ * Represents a single token in the command line input. Tokens are
+ * linked together to form the complete tokenized input.
+ */
+typedef struct s_token
+{
+	t_token_type	type;		/* Token classification (word/operator) */
+	char			*content;	/* Token string content */
+	struct s_token	*next;		/* Pointer to next token in list */
+}	t_token;
 
-typedef struct s_data {
-	t_token	*tokens;
-	t_tree	*cmds;
-	char	*path;
-	int		infile;
-	int		outfile;
-	int		exit_status;
-} t_data;
+/**
+ * @brief Binary tree node for command execution.
+ * 
+ * Represents a command or operator in the execution tree. Each node
+ * can be a simple command, pipe, or redirection. Tree structure allows
+ * for proper command execution order and pipe handling.
+ */
+typedef struct s_tree
+{
+	char			**content;		/* Command and arguments array */
+	int				infile;			/* Input file descriptor */
+	int				outfile;		/* Output file descriptor */
+	int				pipe[2];		/* Pipe descriptors [read, write] */
+	char			*path;		/* Builtin command identifier */
+	t_token_type	type;			/* Node type (cmd/pipe/redir) */
+	struct s_tree	*left;			/* Left child (cmd before pipe) */
+	struct s_tree	*right;			/* Right child (cmd after pipe) */
+}	t_tree;
+
+/**
+ * @brief Main program data structure.
+ * 
+ * Holds all global state for the minishell program including tokens,
+ * execution tree, environment path, and file descriptors. Passed between
+ * functions to maintain program state.
+ */
+typedef struct s_data
+{
+	t_token	*tokens;		/* Linked list of input tokens */
+	t_tree	*cmds;			/* Binary tree of commands */
+	char	*path;			/* PATH environment variable */
+	int		infile;			/* Standard input backup fd */
+	int		outfile;		/* Standard output backup fd */
+	int		exit_status;	/* Last command exit status */
+}	t_data;
 
 /* ========================= */
 /* =========tokens========== */
@@ -80,6 +117,7 @@ void	ft_tokenadd_back(t_token **tokens, t_token *new);
 int		ft_token_word(t_token **tokens, char *s, int *ind);
 int		ft_token_meta(t_token **tokens, char *s, int *ind, t_token_type type);
 void	ft_free_tokens(t_token **head);
+int		ft_tk_size(t_token *lst);
 
 /* ========================== */
 /* ===========tree=========== */
@@ -87,9 +125,11 @@ void	ft_free_tokens(t_token **head);
 
 t_tree	*ft_tree_init(char **content, t_token_type type);
 t_token	*ft_search_pipe(t_token **tokens);
+t_token	*ft_search_red(t_token **tokens);
 t_token	*ft_put_all_left(t_token **tokens, t_token *token_pipe);
 t_token	*ft_put_all_right(t_token **tokens);
 void	ft_treeadd_right(t_tree **tree, t_tree *new);
 void	ft_treeadd_left(t_tree **tree, t_tree *new);
+char	**ft_fill_word_type(t_token *token, int	size);
 
 #endif

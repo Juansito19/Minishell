@@ -29,6 +29,19 @@ void	ft_tokenadd_back(t_token **tokens, t_token *new)
 	}
 }
 
+int	ft_tk_size(t_token *lst)
+{
+	int	i;
+
+	i = 0;
+	while (lst)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
+}
+
 void	ft_free_tokens(t_token **head)
 {
 	t_token	*current;
@@ -105,9 +118,7 @@ t_token	*ft_token(char *s, int i)
 	error = 0;
 	while (s[i])
 	{
-		if (error < 0)
-			return (NULL);
-		if (s[i] == ' ')
+		if (s[i] == ' ') //agregar mas tipos de espacios
 			i++;
 		else if (s[i] == '<' && s[i+1] && s[i+1] == '<')
 			error = ft_token_meta(&token, s+i, &i, T_HEREDOC);
@@ -117,6 +128,17 @@ t_token	*ft_token(char *s, int i)
 			error = ft_token_meta(&token, s+i, &i, ft_is_metachar(s[i]));
 		else
 			error = ft_token_word(&token, s+i, &i);
+		if (error < 0)
+		{
+			ft_free_tokens(&token);
+			return (NULL);
+		}
 	}
 	return (token);
 }
+
+/* 
+
+text < ls -l | wc -l
+
+*/
