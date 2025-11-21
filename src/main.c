@@ -101,11 +101,12 @@ int main(int ac, char **av, char **env)
 	t_tree *tree;
 
 	/* CREAMOS LOS TOKENS */
+	ft_banner();
 	char *s = ft_dblstr_join(av+1);
 	token = ft_token(s, 0);
 	// print_token(&token);
 	// printf("llega 1\n");
-	ft_tree(&token, &tree);
+	ft_yggdrasil(&token, &tree);
 	// printf("llega 2\n");
 	print_tree(&tree);
 	// printf("llega 3\n");

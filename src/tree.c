@@ -226,8 +226,8 @@ void	ft_yggdrasil(t_token **tokens, t_tree **tree)
 			return ;
 		left = ft_put_all_left(tokens, token_pipe);
 		right = ft_put_all_right(&token_pipe->next);
-		ft_tree(&left, &(*tree)->left);
-		ft_tree(&right, &(*tree)->right);
+		ft_yggdrasil(&left, &(*tree)->left);
+		ft_yggdrasil(&right, &(*tree)->right);
 	}
 	else
 	{
@@ -239,8 +239,8 @@ void	ft_yggdrasil(t_token **tokens, t_tree **tree)
 				return ;
 			left = ft_put_all_left(tokens, token_red);
 			right = ft_put_all_right(&token_red->next);
-			ft_tree(&left, &(*tree)->left);
-			ft_tree(&right, &(*tree)->right);
+			ft_yggdrasil(&left, &(*tree)->left);
+			ft_yggdrasil(&right, &(*tree)->right);
 		}
 		else
 			(*tree) = ft_tree_init(ft_fill_word_type((*tokens), ft_tk_size((*tokens))), ft_is_builtin((*tokens)));

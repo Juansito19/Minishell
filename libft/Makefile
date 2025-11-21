@@ -6,7 +6,7 @@
 #    By: jbrosio <jbrosio@student.42malaga.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/21 16:44:12 by Juan              #+#    #+#              #
-#    Updated: 2025/11/20 16:04:05 by jbrosio          ###   ########.fr        #
+#    Updated: 2025/11/21 17:28:20 by jbrosio          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -97,10 +97,10 @@ obj/%.o: src/%.c
 	@sleep 0.01
 	@mkdir -p obj
 	@$(CC) $(CFLAGS) -fPIC -c $< -o $@
-# 	@$(eval COMPILED=$(shell echo $$(($(COMPILED)+1))))
-# 	@$(eval PROGRESS=$(shell echo $$(($(COMPILED)*50/$(TOTAL_FILES)))))
-# 	@printf "\r\e[32mLIBFT = [%-50s] %d/%d files\e[0m" \
-# 		$$(printf '█%.0s' $$(seq 1 $(PROGRESS))) $(COMPILED) $(TOTAL_FILES)
+	@$(eval COMPILED=$(shell echo $$(($(COMPILED)+1))))
+	@$(eval PROGRESS=$(shell echo $$(($(COMPILED)*50/$(TOTAL_FILES)))))
+	@printf "\r\e[32mLIBFT = [%-50s] %d/%d files\e[0m" \
+		$$(printf '█%.0s' $$(seq 1 $(PROGRESS))) $(COMPILED) $(TOTAL_FILES)
 
 ## library
 $(NAME) : $(OBJ)
