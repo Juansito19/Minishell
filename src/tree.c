@@ -210,38 +210,14 @@ t_token_type	ft_is_builtin(t_token *token)
 // 	}
 // 	*trees = NULL;
 // }
-// 
-// t_tree	*ft_tree(t_token **tokens, t_tree *tree)
-// {
-	// t_token	*token_pipe;
-	// t_token	*token_left;
-	// t_token	*token_right;
-// 
-	// token_pipe = ft_search_pipe(tokens);
-	// if (token_pipe)
-	// {
-		// tree = ft_tree_init(&token_pipe->content, T_PIPE);
-		// if (!tree)
-			// return (NULL);
-		// token_left = ft_put_all_left()
-	// }
-	// else
-		// return (funcion_para_comando_simple());
-// }
 
-void	ft_tree(t_token **tokens, t_tree **tree)
+void	ft_yggdrasil(t_token **tokens, t_tree **tree)
 {
 	t_token	*token_pipe;
 	t_token	*token_red;
 	t_token	*left;
 	t_token	*right;
 
-	// if (!(*tree)->left && !(*tree)->right)
-	// 	return ;
-	// if (!(*tree))
-	// 	return ;
-	// else
-	// {
 	token_pipe = ft_search_pipe(tokens);
 	if (token_pipe)
 	{
@@ -252,8 +228,6 @@ void	ft_tree(t_token **tokens, t_tree **tree)
 		right = ft_put_all_right(&token_pipe->next);
 		ft_tree(&left, &(*tree)->left);
 		ft_tree(&right, &(*tree)->right);
-		// ft_tree(ft_put_all_left(tokens, token_pipe), &(*tree)->left);
-		// ft_tree(ft_put_all_right(&token_pipe->next), &(*tree)->right);
 	}
 	else
 	{
@@ -267,14 +241,58 @@ void	ft_tree(t_token **tokens, t_tree **tree)
 			right = ft_put_all_right(&token_red->next);
 			ft_tree(&left, &(*tree)->left);
 			ft_tree(&right, &(*tree)->right);
-			// ft_tree((t_token **)ft_put_all_left(tokens, token_red), &(*tree)->left);
-			// ft_tree((t_token **)ft_put_all_right(&token_red->next), &(*tree)->right);
 		}
 		else
-		{
 			(*tree) = ft_tree_init(ft_fill_word_type((*tokens), ft_tk_size((*tokens))), ft_is_builtin((*tokens)));
-		}
 	}
 	return ;
 }
-/* [ls] [-l] - [wc] [-l]*/
+
+// void	ft_tree(t_token **tokens, t_tree **tree)
+// {
+// 	t_token	*token_pipe;
+// 	t_token	*token_red;
+// 	t_token	*left;
+// 	t_token	*right;
+
+// 	// if (!(*tree)->left && !(*tree)->right)
+// 	// 	return ;
+// 	// if (!(*tree))
+// 	// 	return ;
+// 	// else
+// 	// {
+// 	token_pipe = ft_search_pipe(tokens);
+// 	if (token_pipe)
+// 	{
+// 		(*tree) = ft_tree_init(ft_fill_word_type(token_pipe, 1), T_PIPE);
+// 		if (!tree)
+// 			return ;
+// 		left = ft_put_all_left(tokens, token_pipe);
+// 		right = ft_put_all_right(&token_pipe->next);
+// 		ft_tree(&left, &(*tree)->left);
+// 		ft_tree(&right, &(*tree)->right);
+// 		// ft_tree(ft_put_all_left(tokens, token_pipe), &(*tree)->left);
+// 		// ft_tree(ft_put_all_right(&token_pipe->next), &(*tree)->right);
+// 	}
+// 	else
+// 	{
+// 		token_red = ft_search_red(tokens);
+// 		if (token_red)
+// 		{
+// 			(*tree) = ft_tree_init(ft_fill_word_type(token_red, 1), ft_is_red(token_red->content));
+// 			if (!tree)
+// 				return ;
+// 			left = ft_put_all_left(tokens, token_red);
+// 			right = ft_put_all_right(&token_red->next);
+// 			ft_tree(&left, &(*tree)->left);
+// 			ft_tree(&right, &(*tree)->right);
+// 			// ft_tree((t_token **)ft_put_all_left(tokens, token_red), &(*tree)->left);
+// 			// ft_tree((t_token **)ft_put_all_right(&token_red->next), &(*tree)->right);
+// 		}
+// 		else
+// 		{
+// 			(*tree) = ft_tree_init(ft_fill_word_type((*tokens), ft_tk_size((*tokens))), ft_is_builtin((*tokens)));
+// 		}
+// 	}
+// 	return ;
+// }

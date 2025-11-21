@@ -42,16 +42,51 @@ void	print_token(t_token **token)
 	}
 }
 
+void	ft_write_type_branch(t_token_type type)
+{
+	if (type == T_PIPE)
+		printf("branch [PIPE]\n");
+	if (type == T_APPEND)
+		printf("branch [>>]\n");
+	if (type == T_HEREDOC)
+		printf("branch [<<]\n");
+	if (type == T_REDIR_IN)
+		printf("branch [<]\n");
+	if (type == T_REDIR_OUT)
+		printf("branch [>]\n");
+	if (type == T_SQUOTE)
+		printf("branch [\']\n");
+	if (type == T_DQUOTE)
+		printf("branch [\"]\n");
+	if (type == T_CMD)
+		printf("branch [command]\n");
+	if (type == T_BUILTIN)
+		printf("branch [builtin]\n");
+}
+
 void	print_tree(t_tree **tree)
 {
+	t_tree	*tmp_left;
+	t_tree	*tmp_right;
+
 	if (!(*tree))
 		return ;
 	printf("───────────────────────────────────\n");
-	printf(">> [%d]\n", (*tree)->type);
+	ft_write_type_branch((*tree)->type);
 	ft_double_putstr_fd((*tree)->content, 1);
 	printf("───────────────────────────────────\n");
-	print_tree(&(*tree)->right);
-	print_tree(&(*tree)->left);
+	tmp_left = (*tree);
+	while (tmp_left->left)
+	{
+		print_tree(&tmp_left->left);
+		tmp_left = tmp_left->left;
+	}
+	tmp_right = (*tree);
+	while (tmp_right->right)
+	{
+		print_tree(&tmp_right->right);
+		tmp_right = tmp_right->right;
+	}
 }
 
 int main(int ac, char **av, char **env)

@@ -12,25 +12,25 @@
 # include <term.h>
 
 # ifndef PIPE
-#  define PIPE = "|"
+#  define PIPE "|"
 # endif
 # ifndef RED_IN
-#  define RED_IN = "<"
+#  define RED_IN "<"
 # endif
 # ifndef RED_OUT
-#  define RED_OUT = ">"
+#  define RED_OUT ">"
 # endif
 # ifndef APPEND
-#  define APPEND = ">>"
+#  define APPEND ">>"
 # endif
 # ifndef HEREDOC
-#  define HEREDOC = "<<"
+#  define HEREDOC "<<"
 # endif
 # ifndef SQUOTE
-#  define SQUOTE = "\'"
+#  define SQUOTE "\'"
 # endif
 # ifndef DQUOTE
-#  define DQUOTE = "\""
+#  define DQUOTE "\""
 # endif
 
 typedef	enum {
