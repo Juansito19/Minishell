@@ -6,7 +6,7 @@
 /*   By: jbrosio <jbrosio@student.42malaga.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 20:34:17 by jbrosio           #+#    #+#             */
-/*   Updated: 2025/11/20 19:45:48 by jbrosio          ###   ########.fr       */
+/*   Updated: 2025/11/23 21:51:16 by jbrosio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <fcntl.h>
 # include <limits.h>
 # include <stdarg.h>
-# include "../minishel.h"
+# include "../minishell.h"
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
@@ -565,8 +565,6 @@ void		ft_double_putstr_fd(char **s, int fd);
  */
 char		*ft_dblstr_join(char **str);
 
-
-int			ft_is_metachar(char c);
 void		*ft_free_all_array(char **big);
 
 #endif

@@ -15,8 +15,12 @@ LIBFT_LIB = libft.a
 
 SRC = src/main.c \
 		src/token.c \
-		src/tree.c \
+		src/token_utils.c \
+		src/yggdrasil.c \
+		src/yggdrasil_utils.c \
+		src/parse.c \
 		src/utils.c \
+		src/banner.c \
 
 OBJ = $(SRC:src/%.c=obj/%.o)
 TOTAL_FILES := $(words $(SRC))
@@ -627,7 +631,7 @@ obj/%.o: src/%.c
 	@$(CC) $(CFLAGS) -fPIC -c $< -o $@
 	@$(eval COMPILED=$(shell echo $$(($(COMPILED)+1))))
 	@$(eval PROGRESS=$(shell echo $$(($(COMPILED)*50/$(TOTAL_FILES)))))
-	@printf "\r\e[32mCompiling LIBFT: [%-50s] %d/%d files\e[0m" \
+	@printf "\r\e[32mCompiling MINISHELL: [%-50s] %d/%d files\e[0m" \
         $$(printf '█%.0s' $$(seq 1 $(PROGRESS))) $(COMPILED) $(TOTAL_FILES)
 
 $(MINISHELL_LIB): $(OBJ) $(LIBFT)

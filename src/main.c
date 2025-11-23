@@ -1,4 +1,4 @@
-#include "../minishel.h"
+#include "../minishell.h"
 
 int	ft_minishell(char **env)
 {
@@ -71,19 +71,22 @@ void	print_tree(t_tree **tree)
 
 	if (!(*tree))
 		return ;
-	printf("───────────────────────────────────\n");
 	ft_write_type_branch((*tree)->type);
 	ft_double_putstr_fd((*tree)->content, 1);
 	printf("───────────────────────────────────\n");
 	tmp_left = (*tree);
 	while (tmp_left->left)
 	{
+		printf("───────────────────────────────────\n");
+		printf("[left]\n");
 		print_tree(&tmp_left->left);
 		tmp_left = tmp_left->left;
 	}
 	tmp_right = (*tree);
 	while (tmp_right->right)
 	{
+		printf("───────────────────────────────────\n");
+		printf("[right]\n");
 		print_tree(&tmp_right->right);
 		tmp_right = tmp_right->right;
 	}
@@ -101,7 +104,7 @@ int main(int ac, char **av, char **env)
 	t_tree *tree;
 
 	/* CREAMOS LOS TOKENS */
-	ft_banner();
+	ft_banner_1();
 	char *s = ft_dblstr_join(av+1);
 	token = ft_token(s, 0);
 	// print_token(&token);

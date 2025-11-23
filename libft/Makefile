@@ -6,7 +6,7 @@
 #    By: jbrosio <jbrosio@student.42malaga.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/21 16:44:12 by Juan              #+#    #+#              #
-#    Updated: 2025/11/21 17:28:20 by jbrosio          ###   ########.fr        #
+#    Updated: 2025/11/23 21:36:51 by jbrosio          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,7 +76,6 @@ SRC = src/ft_atod.c \
 		src/ft_tolower.c \
 		src/ft_toupper.c \
 		src/ft_sort_int_tab.c \
-		src/ft_is_metachar.c \
 		src/get_next_line.c \
 		src/get_next_line_utils.c
 

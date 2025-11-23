@@ -1,96 +1,8 @@
-#include "../minishel.h"
+#include "../minishell.h"
 
 /* ========================== */
 /* ===========tree=========== */
 /* ========================== */
-
-t_tree	*ft_tree_init(char **content, t_token_type type)
-{
-	t_tree	*new_tree;
-
-	new_tree = (t_tree *)malloc(1 * sizeof(t_tree));
-	if (!new_tree)
-		return (NULL);
-	new_tree->right = NULL;
-	new_tree->left = NULL;
-	new_tree->infile = -1;
-	new_tree->outfile = -1;
-	new_tree->pipe[0] = -1;
-	new_tree->pipe[1] = -1;
-	new_tree->path = NULL;
-	new_tree->type = type;
-	new_tree->content = content;
-	return (new_tree);
-}
-
-void	ft_treeadd_right(t_tree **tree, t_tree *new)
-{
-	if (!*tree)
-		(*tree) = new;
-	else
-	{
-		while ((*tree)->right)
-			tree = &(*tree)->right;
-		(*tree)->right = new;
-	}
-}
-
-void	ft_treeadd_left(t_tree **tree, t_tree *new)
-{
-	if (!*tree)
-		(*tree) = new;
-	else
-	{
-		while ((*tree)->left)
-			tree = &(*tree)->left;
-		(*tree)->left = new;
-	}
-}
-
-t_token	*ft_search_pipe(t_token **tokens)
-{
-	t_token	*tmp;
-
-	tmp = (*tokens);
-	if (!tokens || !(*tokens))
-		return (NULL);
-	while (tmp)
-	{
-		if (tmp->type == T_PIPE)
-			return (tmp);
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
-
-t_token_type ft_is_red(char *content)
-{
-	if (!ft_strncmp(content, "<<", 3))
-        return (T_HEREDOC);
-    else if (!ft_strncmp(content, ">>", 3))
-        return (T_APPEND);
-    else if (!ft_strncmp(content, "<", 3))
-        return (T_REDIR_IN);
-    else if (!ft_strncmp(content, ">", 3))
-        return (T_REDIR_OUT);
-    return (0);
-}
-
-t_token	*ft_search_red(t_token **tokens)
-{
-	t_token	*tmp;
-
-	tmp = (*tokens);
-	if (!tokens || !(*tokens))
-		return (NULL);
-	while (tmp)
-	{
-		if (tmp->type == ft_is_red(tmp->content))
-			return (tmp);
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
 
 t_token	*ft_put_all_left(t_token **tokens, t_token *token_pipe)
 {
@@ -174,25 +86,6 @@ char	**ft_fill_word_type(t_token *token, int	size)
 		i++;
 	}
 	return (content);
-}
-
-t_token_type	ft_is_builtin(t_token *token)
-{
-	if (!ft_strncmp(token->content, "echo", 5))
-		return (T_BUILTIN);
-	else if (!ft_strncmp(token->content, "cd", 3))
-		return (T_BUILTIN);
-	else if (!ft_strncmp(token->content, "pwd", 4))
-		return (T_BUILTIN);
-	else if (!ft_strncmp(token->content, "export", 7))
-		return (T_BUILTIN);
-	else if (!ft_strncmp(token->content, "unset", 6))
-		return (T_BUILTIN);
-	else if (!ft_strncmp(token->content, "exit", 5))
-		return (T_BUILTIN);
-	else if (!ft_strncmp(token->content, "env", 4))
-		return (T_BUILTIN);
-	return (T_CMD);
 }
 
 // void	ft_treesclean(t_tree **trees)
