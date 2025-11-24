@@ -2,25 +2,31 @@
 
 int	ft_minishell(char **env)
 {
-	char *input;
+	char	*input;
+	t_token	*token;
+	t_tree	*tree;
 
 	(void)env;
 	while (1)
 	{
-		input = readline("putito $> ");
+		input = readline("bostero $> ");
 		if (!input)
 		{
 			printf("exit\n");
 			break ;
 		}
-		if (ft_strlen(input))
-			add_history(input);
+		// if (ft_strlen(input))
+		// 	add_history(input);
+		token = ft_token(input, 0);
+		ft_yggdrasil(&token, &tree);
+		fprint_tree(&tree);
 		if (!ft_strncmp(input, "exit", ft_strlen("exit")))
 			break ;
 		// printf("%s\n", input);
 		free(input);
 	}
-	rl_clear_history();
+	ft_free_tokens(&token);
+	// rl_clear_history();
 	free(input);
 	return (0);
 }
@@ -29,23 +35,23 @@ int	ft_minishell(char **env)
 int main(int ac, char **av, char **env)
 {
 	(void)ac;
-	(void)env;
-	t_token *token;
+	(void)av;
+	// t_token *token;
 	// t_token *token_pipe;
 	// t_token *token_red;
 	// t_token *tokens_left;
 	// t_token *tokens_right;
-	t_tree *tree;
+	// t_tree *tree;
 
 	/* CREAMOS LOS TOKENS */
 	ft_banner_1();
-	char *s = ft_dblstr_join(av+1);
-	token = ft_token(s, 0);
+	ft_minishell(env);
+	// token = ft_token(s, 0);
 	// print_token(&token);
 	// printf("llega 1\n");
-	ft_yggdrasil(&token, &tree);
+	// ft_yggdrasil(&token, &tree);
 	// printf("llega 2\n");
-	fprint_tree(&tree);
+	// fprint_tree(&tree);
 	// printf("llega 3\n");
 	// char **sss = ft_fill_word_type(token, ft_tk_size(token));
 	// printf("\n\nDOBLE ARRAY\n\n");
@@ -91,8 +97,7 @@ int main(int ac, char **av, char **env)
 
 	// ft_free_tokens(&tokens_left);
 	// ft_free_tokens(&tokens_right);
-	ft_free_tokens(&token);
-	free(s);
+	// free(s);
 	// ft_minishell(env);
 	return (0);
 }
