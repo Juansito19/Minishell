@@ -1,5 +1,9 @@
 #include "../minishell.h"
 
+/* ========================== */
+/* ==========clean=========== */
+/* ========================== */
+
 void	ft_free_tokens(t_token **head)
 {
 	t_token	*current;
@@ -12,7 +16,7 @@ void	ft_free_tokens(t_token **head)
 	{
 		next = current->next;
 		free(current->content);
-		// free(current);
+		free(current);
 		current = next;
 	}
 }
@@ -24,23 +28,32 @@ void	ft_clean_yggdrasil(t_tree **tree)
 
 	if (!(*tree))
 		return ;
-	tmp_left = (*tree);
-	if (tmp_left->left)
+	tmp_left = (*tree)->left;
+	if (tmp_left)
 	{
 		ft_free_all_array((*tree)->content);
-		ft_clean_yggdrasil(&tmp_left->left);
 		free(*tree);
+		ft_clean_yggdrasil(&tmp_left);
 		return ;
 	}
-	tmp_right = (*tree);
-	if (tmp_right->right)
+	tmp_right = (*tree)->right;
+	if (tmp_right)
 	{
 		ft_free_all_array((*tree)->content);
-		ft_clean_yggdrasil(&tmp_right->right);
 		free((*tree));
+		ft_clean_yggdrasil(&tmp_right);
 		return ;
 	}
 	ft_free_all_array((*tree)->content);
 	free((*tree));
 }
 
+void	ft_free_all(t_tree **tree, t_token **token, char **input)
+{
+	if ((*tree))
+		ft_clean_yggdrasil(tree);
+	if ((*token))
+		ft_free_tokens(token);
+	if ((*input))
+		free(*input);
+}

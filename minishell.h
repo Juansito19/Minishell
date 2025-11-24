@@ -145,7 +145,6 @@ int				ft_token_meta(t_token **tokens, char *s, int *ind, t_token_type type);
 
 t_token			*ft_token_init(void *content, t_token_type type);
 void			ft_tokenadd_back(t_token **tokens, t_token *new);
-void			ft_free_tokens(t_token **head);
 int				ft_tk_size(t_token *lst);
 
 /* _____________________________________________________________________ */
@@ -183,8 +182,18 @@ int				ft_is_metachar(char c);
 t_token_type	ft_is_builtin(t_token *token);
 t_token_type 	ft_is_red(char *content);
 
-void	ft_clean_yggdrasil(t_tree **tree);
 
+/* _____________________________________________________________________ */
+
+/* _____________________________________________________________________ */
+
+/* ============================ */
+/* ========== clean =========== */
+/* ============================ */
+
+void			ft_clean_yggdrasil(t_tree **tree);
+void			ft_free_tokens(t_token **head);
+void			ft_free_all(t_tree **tree, t_token **token, char **input);
 
 /* _____________________________________________________________________ */
 
@@ -209,11 +218,19 @@ void    ft_banner_4b(void);
 
 /* _____________________________________________________________________ */
 
+/* _____________________________________________________________________ */
+
+
+/* ============================ */
+/* ========== print =========== */
+/* ============================ */
+
 void	print_token(t_token **token);
 void	ft_write_type_branch(t_token_type type);
 void	print_tree(t_tree **tree);
 void	print_tree_recursive(t_tree *tree, int depth, char *prefix);
 void	fprint_tree(t_tree **tree);
 
+/* _____________________________________________________________________ */
 
 #endif
