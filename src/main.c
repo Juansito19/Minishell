@@ -4,7 +4,7 @@ int	ft_minishell(char **env)
 {
 	char	*input;
 	t_token	*token;
-	t_tree	*tree;
+	t_tree	*tree = NULL;
 
 	(void)env;
 	while (1)
@@ -21,16 +21,19 @@ int	ft_minishell(char **env)
 		ft_yggdrasil(&token, &tree);
 		fprint_tree(&tree);
 		if (!ft_strncmp(input, "exit", ft_strlen("exit")))
+		{
+			ft_free_all(&tree, &token, &input);
 			break ;
-		// printf("%s\n", input);
+		}
+		ft_free_all(&tree, &token, &input);
 		// ft_free_tokens(&token);
-		ft_clean_yggdrasil(&tree);
-		free(input);
+		// ft_clean_yggdrasil(&tree);
+		// free(input);
 	}
 	// ft_free_tokens(&token);
-	ft_clean_yggdrasil(&tree);
+	// ft_clean_yggdrasil(&tree);
+	// free(input);
 	// rl_clear_history();
-	free(input);
 	return (0);
 }
 

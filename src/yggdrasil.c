@@ -121,7 +121,8 @@ void	ft_yggdrasil(t_token **tokens, t_tree **tree)
 		right = ft_put_all_right(&token_pipe->next);
 		ft_yggdrasil(&left, &(*tree)->left);
 		ft_yggdrasil(&right, &(*tree)->right);
-		ft_free_tokens(&token_pipe);
+		ft_free_tokens(&left);
+		ft_free_tokens(&right);
 		return ;
 	}
 	else
@@ -136,7 +137,8 @@ void	ft_yggdrasil(t_token **tokens, t_tree **tree)
 			right = ft_put_all_right(&token_red->next);
 			ft_yggdrasil(&left, &(*tree)->left);
 			ft_yggdrasil(&right, &(*tree)->right);
-			ft_free_tokens(&token_red);
+			ft_free_tokens(&left);
+			ft_free_tokens(&right);
 			return ;
 		}
 		else
