@@ -206,4 +206,11 @@ void    ft_banner_4b(void);
 
 /* _____________________________________________________________________ */
 
+void	print_token(t_token **token);
+void	ft_write_type_branch(t_token_type type);
+void	print_tree(t_tree **tree);
+void	print_tree_recursive(t_tree *tree, int depth, char *prefix);
+void	fprint_tree(t_tree **tree);
+
+
 #endif
