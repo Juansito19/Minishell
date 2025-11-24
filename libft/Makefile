@@ -6,7 +6,7 @@
 #    By: jbrosio <jbrosio@student.42malaga.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/21 16:44:12 by Juan              #+#    #+#              #
-#    Updated: 2025/11/23 21:36:51 by jbrosio          ###   ########.fr        #
+#    Updated: 2025/11/23 22:15:19 by jbrosio          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -104,8 +104,6 @@ obj/%.o: src/%.c
 ## library
 $(NAME) : $(OBJ)
 	@$(AR) $(NAME) $(OBJ)
-	@echo "\e[32m  compilo libft  \e[0m"
-# 	@echo "\e[32m    \e[0m"
 # 	@echo "\e[32m    \e[0m"
 # 	@echo "\e[32m    \e[0m"
 # 	@echo "\e[32m    \e[0m"
