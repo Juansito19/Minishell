@@ -23,9 +23,12 @@ int	ft_minishell(char **env)
 		if (!ft_strncmp(input, "exit", ft_strlen("exit")))
 			break ;
 		// printf("%s\n", input);
+		ft_free_tokens(&token);
+		ft_clean_yggdrasil(&tree);
 		free(input);
 	}
 	ft_free_tokens(&token);
+	ft_clean_yggdrasil(&tree);
 	// rl_clear_history();
 	free(input);
 	return (0);

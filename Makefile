@@ -22,6 +22,7 @@ SRC = src/main.c \
 		src/utils.c \
 		src/banner.c \
 		src/print.c \
+		src/clean.c \
 
 OBJ = $(SRC:src/%.c=obj/%.o)
 TOTAL_FILES := $(words $(SRC))

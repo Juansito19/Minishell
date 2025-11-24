@@ -42,19 +42,4 @@ int	ft_tk_size(t_token *lst)
 	return (i);
 }
 
-void	ft_free_tokens(t_token **head)
-{
-	t_token	*current;
-	t_token	*next;
 
-	current = (*head);
-	if (!(*head))
-		return ;
-	while (current)
-	{
-		next = current->next;
-		free(current->content);
-		free(current);
-		current = next;
-	}
-}

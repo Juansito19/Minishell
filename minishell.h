@@ -183,6 +183,9 @@ int				ft_is_metachar(char c);
 t_token_type	ft_is_builtin(t_token *token);
 t_token_type 	ft_is_red(char *content);
 
+void	ft_clean_yggdrasil(t_tree **tree);
+
+
 /* _____________________________________________________________________ */
 
 /* ============================ */
