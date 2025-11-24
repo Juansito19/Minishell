@@ -25,9 +25,9 @@ t_token_type ft_is_red(char *content)
         return (T_HEREDOC);
     else if (!ft_strncmp(content, ">>", 3))
         return (T_APPEND);
-    else if (!ft_strncmp(content, "<", 3))
+    else if (!ft_strncmp(content, "<", 2))
         return (T_REDIR_IN);
-    else if (!ft_strncmp(content, ">", 3))
+    else if (!ft_strncmp(content, ">", 2))
         return (T_REDIR_OUT);
     return (0);
 }
