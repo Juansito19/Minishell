@@ -39,7 +39,6 @@ int main(int ac, char **av, char **env)
 {
 	(void)ac;
 	(void)av;
-	write(1, "puto\n", 5);
 	// t_token *token;
 	// t_token *token_pipe;
 	// t_token *token_red;
