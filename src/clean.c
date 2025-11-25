@@ -30,20 +30,10 @@ void	ft_clean_yggdrasil(t_tree **tree)
 		return ;
 	tmp_left = (*tree)->left;
 	if (tmp_left)
-	{
-		ft_free_all_array((*tree)->content);
-		free(*tree);
 		ft_clean_yggdrasil(&tmp_left);
-		return ;
-	}
 	tmp_right = (*tree)->right;
 	if (tmp_right)
-	{
-		ft_free_all_array((*tree)->content);
-		free((*tree));
 		ft_clean_yggdrasil(&tmp_right);
-		return ;
-	}
 	ft_free_all_array((*tree)->content);
 	free((*tree));
 }
