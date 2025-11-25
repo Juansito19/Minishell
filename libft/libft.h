@@ -6,7 +6,7 @@
 /*   By: jbrosio <jbrosio@student.42malaga.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 20:34:17 by jbrosio           #+#    #+#             */
-/*   Updated: 2025/11/23 21:51:16 by jbrosio          ###   ########.fr       */
+/*   Updated: 2025/11/25 19:42:24 by jbrosio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,13 @@ int			ft_toupper(int c);
  * @return Lowercase character or unchanged if not uppercase.
  */
 int			ft_tolower(int c);
+
+/**
+ * @brief Checks if character is any type of space.
+ * @param c Character to check (as int).
+ * @return 1 if is space, 0 otherwise.
+ */
+int			ft_is_space(int c);
 
 /* ========================================================================== */
 /*                          STRING OPERATIONS                                 */
