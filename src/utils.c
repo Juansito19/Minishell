@@ -4,32 +4,32 @@
 /* ==========utils=========== */
 /* ========================== */
 
-int ft_is_metachar(char c)
+int	ft_is_metachar(char c)
 {
-    if (c == 34)
-        return (T_DQUOTE);
-    if (c == 39)
-        return (T_SQUOTE);
-    if (c == 60)
-        return (T_REDIR_IN);
-    if (c == 62)
-        return (T_REDIR_OUT);
-    if (c == 124)
-        return (T_PIPE);
-    return (0);
+	if (c == 34)
+		return (T_DQUOTE);
+	if (c == 39)
+		return (T_SQUOTE);
+	if (c == 60)
+		return (T_REDIR_IN);
+	if (c == 62)
+		return (T_REDIR_OUT);
+	if (c == 124)
+		return (T_PIPE);
+	return (0);
 }
 
-t_token_type ft_is_red(char *content)
+t_token_type	ft_is_red(char *content)
 {
 	if (!ft_strncmp(content, "<<", 3))
-        return (T_HEREDOC);
-    else if (!ft_strncmp(content, ">>", 3))
-        return (T_APPEND);
-    else if (!ft_strncmp(content, "<", 2))
-        return (T_REDIR_IN);
-    else if (!ft_strncmp(content, ">", 2))
-        return (T_REDIR_OUT);
-    return (0);
+		return (T_HEREDOC);
+	else if (!ft_strncmp(content, ">>", 3))
+		return (T_APPEND);
+	else if (!ft_strncmp(content, "<", 2))
+		return (T_REDIR_IN);
+	else if (!ft_strncmp(content, ">", 2))
+		return (T_REDIR_OUT);
+	return (0);
 }
 
 t_token_type	ft_is_builtin(t_token *token)
