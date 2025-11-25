@@ -180,7 +180,8 @@ void			ft_treeadd_left(t_tree **tree, t_tree *new);
 
 int				ft_is_metachar(char c);
 t_token_type	ft_is_builtin(t_token *token);
-t_token_type 	ft_is_red(char *content);
+t_token_type	ft_is_red(char *content);
+t_token_type	ft_take_meta(char *content);
 
 
 /* _____________________________________________________________________ */
@@ -214,11 +215,11 @@ int				redir_check(char *s);
 /* ========== banner ========== */
 /* ============================ */
 
-void    ft_banner_1(void);
-void    ft_banner_2(void);
-void    ft_banner_3(void);
-void    ft_banner_4a(void);
-void    ft_banner_4b(void);
+void			ft_banner_1(void);
+void			ft_banner_2(void);
+void			ft_banner_3(void);
+void			ft_banner_4a(void);
+void			ft_banner_4b(void);
 
 /* _____________________________________________________________________ */
 
@@ -229,11 +230,11 @@ void    ft_banner_4b(void);
 /* ========== print =========== */
 /* ============================ */
 
-void	print_token(t_token **token);
-void	ft_write_type_branch(t_token_type type);
-void	print_tree(t_tree **tree);
-void	print_tree_recursive(t_tree *tree, int depth, char *prefix);
-void	fprint_tree(t_tree **tree);
+void			print_token(t_token **token);
+void			ft_write_type_branch(t_token_type type);
+void			print_tree(t_tree **tree);
+void			print_tree_recursive(t_tree *tree, int depth, char *prefix);
+void			fprint_tree(t_tree **tree);
 
 /* _____________________________________________________________________ */
 

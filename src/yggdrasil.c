@@ -88,53 +88,82 @@ char	**ft_fill_word_type(t_token *token, int size)
 	return (content);
 }
 
-int	ft_branch_pipe(t_token *pipe, t_tree **tree, t_token **tokens)
+// ESTO SE COMENTO POR LAS DUDAS DE QUE VUELVA A USARSE
+// int	ft_branch_pipe(t_token *pipe, t_tree **tree, t_token **tokens)
+// {
+// 	t_token	*left;
+// 	t_token	*right;
+// 	char	**word;
+
+// 	word = ft_fill_word_type(pipe, 1);
+// 	if (!word)
+// 	{
+// 		ft_free_all(tree, tokens, word);
+// 		return (1);
+// 	}
+// 	(*tree) = ft_tree_init(word, T_PIPE);
+// 	if (!(*tree))
+// 	{
+// 		ft_free_all(tree, tokens, word);
+// 		return (1);
+// 	}
+// 	left = ft_put_all_left(tokens, pipe);
+// 	right = ft_put_all_right(&pipe->next);
+// 	ft_yggdrasil(&left, &(*tree)->left);
+// 	ft_yggdrasil(&right, &(*tree)->right);
+// 	ft_free_tokens(&left);
+// 	ft_free_tokens(&right);
+// 	return (0);
+// }
+
+// ESTO SE COMENTO POR LAS DUDAS DE QUE VUELVA A USARSE
+// int	ft_branch_red(t_token *red, t_tree **tree, t_token **tokens)
+// {
+// 	t_token	*left;
+// 	t_token	*right;
+// 	char	**word;
+
+// 	word = ft_fill_word_type(red, 1);
+// 	if (!word)
+// 	{
+// 		ft_free_all(tree, tokens, word);
+// 		return (1);
+// 	}
+// 	(*tree) = ft_tree_init(word, ft_is_red(red->content));
+// 	if (!(*tree))
+// 	{
+// 		ft_free_all(tree, tokens, word);
+// 		return (1);
+// 	}
+// 	left = ft_put_all_left(tokens, red);
+// 	right = ft_put_all_right(&red->next);
+// 	ft_yggdrasil(&left, &(*tree)->left);
+// 	ft_yggdrasil(&right, &(*tree)->right);
+// 	ft_free_tokens(&left);
+// 	ft_free_tokens(&right);
+// 	return (0);
+// }
+
+int	ft_branch_meta(t_token *meta, t_tree **tree, t_token **tokens)
 {
 	t_token	*left;
 	t_token	*right;
 	char	**word;
 
-	word = ft_fill_word_type(pipe, 1);
+	word = ft_fill_word_type(meta, 1);
 	if (!word)
 	{
 		ft_free_all(tree, tokens, word);
 		return (1);
 	}
-	(*tree) = ft_tree_init(word, T_PIPE);
+	(*tree) = ft_tree_init(word, ft_take_meta(meta->content));
 	if (!(*tree))
 	{
 		ft_free_all(tree, tokens, word);
 		return (1);
 	}
-	left = ft_put_all_left(tokens, pipe);
-	right = ft_put_all_right(&pipe->next);
-	ft_yggdrasil(&left, &(*tree)->left);
-	ft_yggdrasil(&right, &(*tree)->right);
-	ft_free_tokens(&left);
-	ft_free_tokens(&right);
-	return (0);
-}
-
-int	ft_branch_red(t_token *red, t_tree **tree, t_token **tokens)
-{
-	t_token	*left;
-	t_token	*right;
-	char	**word;
-
-	word = ft_fill_word_type(red, 1);
-	if (!word)
-	{
-		ft_free_all(tree, tokens, word);
-		return (1);
-	}
-	(*tree) = ft_tree_init(word, ft_is_red(red->content));
-	if (!(*tree))
-	{
-		ft_free_all(tree, tokens, word);
-		return (1);
-	}
-	left = ft_put_all_left(tokens, red);
-	right = ft_put_all_right(&red->next);
+	left = ft_put_all_left(tokens, meta);
+	right = ft_put_all_right(&meta->next);
 	ft_yggdrasil(&left, &(*tree)->left);
 	ft_yggdrasil(&right, &(*tree)->right);
 	ft_free_tokens(&left);
@@ -169,7 +198,7 @@ void	ft_yggdrasil(t_token **tokens, t_tree **tree)
 	token_pipe = ft_search_pipe(tokens);
 	if (token_pipe)
 	{
-		if (ft_branch_pipe(token_pipe, tree, tokens))
+		if (ft_branch_meta(token_pipe, tree, tokens))
 			return ;
 		return ;
 	}
@@ -178,7 +207,7 @@ void	ft_yggdrasil(t_token **tokens, t_tree **tree)
 		token_red = ft_search_red(tokens);
 		if (token_red)
 		{
-			if (ft_branch_red(token_red, tree, tokens))
+			if (ft_branch_meta(token_red, tree, tokens))
 				return ;
 			return ;
 		}
@@ -190,6 +219,7 @@ void	ft_yggdrasil(t_token **tokens, t_tree **tree)
 	}
 }
 
+// FUNCION ANTIGUA DEL ARBOL
 // void	ft_yggdrasil(t_token **tokens, t_tree **tree)
 // {
 // 	t_token	*token_pipe;

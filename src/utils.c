@@ -32,6 +32,21 @@ t_token_type	ft_is_red(char *content)
 	return (0);
 }
 
+t_token_type	ft_take_meta(char *content)
+{
+	if (!ft_strncmp(content, "|", 2))
+		return (T_PIPE);
+	else if (!ft_strncmp(content, "<<", 3))
+		return (T_HEREDOC);
+	else if (!ft_strncmp(content, ">>", 3))
+		return (T_APPEND);
+	else if (!ft_strncmp(content, "<", 2))
+		return (T_REDIR_IN);
+	else if (!ft_strncmp(content, ">", 2))
+		return (T_REDIR_OUT);
+	return (0);
+}
+
 t_token_type	ft_is_builtin(t_token *token)
 {
 	if (!ft_strncmp(token->content, "echo", 5))

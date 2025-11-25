@@ -15,6 +15,7 @@ void	print_token(t_token **token)
 	{
 		printf("───────────────────────────────────\n");
 		printf(">> [%d] = %s\n", i, temp->content);
+		ft_write_type_branch(temp->type);
 		printf("───────────────────────────────────\n");
 		i++;
 		temp = temp->next;
@@ -82,7 +83,7 @@ void	print_tree_recursive(t_tree *tree, int depth, char *prefix)
 	for (int j = 0; j < depth; j++)
 		printf("    ");
 	for (int i = 0; tree->content[i]; i++)
-		printf("%s\n", tree->content[i]);
+		printf("%s ", tree->content[i]);
 	printf("\n");
 	if (tree->left)
 		print_tree_recursive(tree->left, depth + 1, "├─L─ ");
@@ -96,16 +97,3 @@ void	fprint_tree(t_tree **tree)
 	print_tree_recursive(*tree, 0, "ROOT ");
 	printf("=====================\n");
 }
-
-// === ÁRBOL BINARIO ===
-// |
-// ROOT branch [PIPE]  
-// ls
-//     ├─L─ branch [command]  
-// |
-//     └─R─ branch [PIPE]  
-// ls
-//         ├─L─ branch [command]  
-// ls
-//         └─R─ branch [command]  
-// =====================

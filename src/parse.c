@@ -161,3 +161,10 @@ int	pipe_check_ia(char *s)
 		return (1);
 	return (0);
 }
+// int	redir_check_(char *s)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while ()
+// }
