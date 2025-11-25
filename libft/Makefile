@@ -6,7 +6,7 @@
 #    By: jbrosio <jbrosio@student.42malaga.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/21 16:44:12 by Juan              #+#    #+#              #
-#    Updated: 2025/11/23 22:15:19 by jbrosio          ###   ########.fr        #
+#    Updated: 2025/11/25 19:47:18 by jbrosio          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRC = src/ft_atod.c \
 		src/ft_isalnum.c \
 		src/ft_isalpha.c \
 		src/ft_isascii.c \
+		src/ft_isspace.c \
 		src/ft_isdigit.c \
 		src/ft_isprint.c \
 		src/ft_itoa.c \

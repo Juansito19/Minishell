@@ -48,10 +48,10 @@ int	pipe_check(char *s)
 	return (0);
 }
 
-int	redir_check_(char *s)
-{
-	int	i;
+// int	redir_check_(char *s)
+// {
+// 	int	i;
 
-	i = 0;
-	while ()
-}
+// 	i = 0;
+// 	while ()
+// }
