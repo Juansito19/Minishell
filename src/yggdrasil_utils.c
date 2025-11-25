@@ -72,7 +72,7 @@ t_token	*ft_search_red(t_token **tokens)
 		return (NULL);
 	while (tmp)
 	{
-		if (tmp->type == ft_is_red(tmp->content))
+		if (ft_is_red(tmp->content))
 			return (tmp);
 		tmp = tmp->next;
 	}
