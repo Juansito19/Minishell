@@ -7,6 +7,7 @@ int	ft_minishell(char **env)
 	t_tree	*tree = NULL;
 
 	(void)env;
+	printf("holi\n");
 	while (1)
 	{
 		input = readline("bostero $> ");
