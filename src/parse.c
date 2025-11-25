@@ -25,3 +25,33 @@ int	ft_open_quote(char *input)
 		return (1);
 	return (0);
 }
+
+/* comrpobamos en las primeras etapas que las pipes que manejamos son correctas
+1.- no hay pipes en el inicio ni en el final
+2.- no hay pipes seguidas (error por ahora)
+*/
+
+int	pipe_check(char *s)
+{
+	int	i;
+
+	i = -1;
+	while (s[++i])
+	{
+		if (s[i] == '|' && s[i + 1] == '|')
+			return (1);
+		if (s[0] == '|')
+			return (1);
+		if (s[i] == '|' && s[i + 1] == '\0')
+			return (1);
+	}
+	return (0);
+}
+
+int	redir_check_(char *s)
+{
+	int	i;
+
+	i = 0;
+	while ()
+}
