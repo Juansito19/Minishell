@@ -6,8 +6,8 @@
 
 void	print_token(t_token **token)
 {
-	t_token *temp;
-	int i;
+	t_token	*temp;
+	int		i;
 
 	i = 0;
 	temp = (*token);

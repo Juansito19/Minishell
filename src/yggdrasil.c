@@ -62,7 +62,7 @@ t_token	*ft_put_all_right(t_token **tokens)
 	return (right_tokens);
 }
 
-char	**ft_fill_word_type(t_token *token, int	size)
+char	**ft_fill_word_type(t_token *token, int size)
 {
 	char	**content;
 	t_token	*aux;
