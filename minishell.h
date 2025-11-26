@@ -204,8 +204,10 @@ void			ft_free_all(t_tree **tree, t_token **token, char **input, char **str);
 /* ============================ */
 
 int				ft_open_quote(char *input);
-int				pipe_check(char *s);
+int				ft_pipe_check(char *s);
 int				redir_check(char *s);
+int				ft_q_p_parse(char *input);
+
 
 /* _____________________________________________________________________ */
 

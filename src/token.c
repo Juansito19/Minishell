@@ -63,16 +63,16 @@ t_token	*ft_token(char *s, int i)
 	error = 0;
 	while (s[i])
 	{
-		if (ft_is_space(s[i]))
-			i++;
-		else if (s[i] == '<' && s[i+1] && s[i+1] == '<')
-			error = ft_token_meta(&token, s+i, &i, T_HEREDOC);
-		else if (s[i] == '>' && s[i+1] && s[i+1] == '>')
-			error = ft_token_meta(&token, s+i, &i, T_APPEND);
+		// if (ft_is_space(s[i]))
+		// 	i++;
+		if (s[i] == '<' && s[i + 1] && s[i + 1] == '<')
+			error = ft_token_meta(&token, s + i, &i, T_HEREDOC);
+		else if (s[i] == '>' && s[i + 1] && s[i + 1] == '>')
+			error = ft_token_meta(&token, s + i, &i, T_APPEND);
 		else if (ft_is_metachar(s[i]))
-			error = ft_token_meta(&token, s+i, &i, ft_is_metachar(s[i]));
+			error = ft_token_meta(&token, s + i, &i, ft_is_metachar(s[i]));
 		else
-			error = ft_token_word(&token, s+i, &i);
+			error = ft_token_word(&token, s + i, &i);
 		if (error < 0)
 		{
 			ft_free_tokens(&token);
