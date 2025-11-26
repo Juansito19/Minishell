@@ -63,8 +63,8 @@ t_token	*ft_token(char *s, int i)
 	error = 0;
 	while (s[i])
 	{
-		// if (ft_is_space(s[i]))
-		// 	i++;
+		if (ft_is_space(s[i]))
+			i++;
 		if (s[i] == '<' && s[i + 1] && s[i + 1] == '<')
 			error = ft_token_meta(&token, s + i, &i, T_HEREDOC);
 		else if (s[i] == '>' && s[i + 1] && s[i + 1] == '>')

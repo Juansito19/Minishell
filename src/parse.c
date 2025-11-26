@@ -108,7 +108,7 @@ int	redir_check(char *s)
 	return (0);
 }
 
-static char	ft_quote_track(char c)
+char	ft_quote_track(char c)
 {
 	char	quote;
 
