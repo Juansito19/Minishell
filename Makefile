@@ -13,7 +13,7 @@ LIBFT_D = libft
 LIBFT = $(LIBFT_D)/libft.a
 LIBFT_LIB = libft.a
 
-SRC = src/main_parse.c \
+SRC = src/main.c \
 		src/token.c \
 		src/token_utils.c \
 		src/yggdrasil.c \
@@ -594,7 +594,7 @@ obj/%.o: src/%.c
 	@$(eval COMPILED=$(shell echo $$(($(COMPILED)+1))))
 	@$(eval PROGRESS=$(shell echo $$(($(COMPILED)*50/$(TOTAL_FILES)))))
 	@printf "\r\e[32mCompiling MINISHELL: [%-50s] %d/%d files\e[0m" \
-        $$(printf '█%.0s' $$(seq 1 $(PROGRESS))) $(COMPILED) $(TOTAL_FILES)
+		$$(printf '█%.0s' $$(seq 1 $(PROGRESS))) $(COMPILED) $(TOTAL_FILES)
 
 $(MINISHELL_LIB): $(OBJ) $(LIBFT)
 	@$(AR) $(MINISHELL_LIB) $(OBJ)
