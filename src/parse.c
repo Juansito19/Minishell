@@ -82,29 +82,28 @@ no funciona, intentar con flags
 
 int	redir_check(char *s)
 {
-	int	i;
+	int		i;
+	char	quote;
 
-	i = -1;
-	while (s[++i])
+	i = 0;
+	quote = 0;
+	while (s[i] && s[i] <= 32)
+		i++;
+	if (s[i] == '|')
+		return (1);
+	while (s[i])
 	{
-		if (s[0] == '<' || s[0] == '>')
-			return (1);
-		else if (s[i] == '<' || s[i] == '>')
+		quote = ft_quote_track(s[i]);
+		if (s[i] == '|' && !quote)
 		{
 			i++;
-			while (s[i] < 33)
-			{
-				if (s[i] == '\0')
-					return (1);
-				if (s[i] == '<' || s[i] == '>')
-					return (1);
+			while (s[i] && s[i] <= 32)
 				i++;
-			}
-			if (s[i] > 32 && ((s[i] != '<' || s[i] != '>')))
-				return (0);
-			else
+			if (s[i] == '|' || s[i] == '\0')
 				return (1);
+			continue ;
 		}
+		i++;
 	}
 	return (0);
 }
