@@ -38,12 +38,27 @@ void	ft_clean_yggdrasil(t_tree **tree)
 	free((*tree));
 }
 
-void	ft_free_all(t_tree **tree, t_token **token, char **input)
+void	ft_clean_data(t_data **data)
+{
+	if (!(*data))
+		return ;
+	if ((*data)->path)
+		free((*data)->path);
+	if ((*data)->yggdrasil)
+		ft_clean_yggdrasil(&(*data)->yggdrasil);
+	if ((*data)->tokens)
+		ft_free_tokens(&(*data)->tokens);
+	free((*data));
+}
+
+void	ft_free_all(t_tree **tree, t_token **token, char **input, char **str)
 {
 	if ((*tree))
 		ft_clean_yggdrasil(tree);
 	if ((*token))
 		ft_free_tokens(token);
+	if (str)
+		ft_free_all_array(str);
 	if ((*input))
 		free(*input);
 }
