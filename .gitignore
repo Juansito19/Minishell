@@ -3,3 +3,5 @@ obj/
 minishell
 *.a
 *.o
+.gitignore
+src/main_parse.c
