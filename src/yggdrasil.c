@@ -153,13 +153,13 @@ int	ft_branch_meta(t_token *meta, t_tree **tree, t_token **tokens)
 	word = ft_fill_word_type(meta, 1);
 	if (!word)
 	{
-		ft_free_all(tree, tokens, word);
+		ft_free_all(tree, tokens, NULL, word);
 		return (1);
 	}
 	(*tree) = ft_tree_init(word, ft_take_meta(meta->content));
 	if (!(*tree))
 	{
-		ft_free_all(tree, tokens, word);
+		ft_free_all(tree, tokens, NULL, word);
 		return (1);
 	}
 	left = ft_put_all_left(tokens, meta);
@@ -178,13 +178,13 @@ int	ft_branch_word(t_tree **tree, t_token **tokens)
 	word = ft_fill_word_type((*tokens), ft_tk_size((*tokens)));
 	if (!word)
 	{
-		ft_free_all(tree, tokens, word);
+		ft_free_all(tree, tokens, NULL, word);
 		return (1);
 	}
 	(*tree) = ft_tree_init(word, ft_is_builtin((*tokens)));
 	if (!(*tree))
 	{
-		ft_free_all(tree, tokens, word);
+		ft_free_all(tree, tokens, NULL, word);
 		return (1);
 	}
 	return (0);

@@ -122,7 +122,7 @@ typedef struct s_tree
 typedef struct s_data
 {
 	t_token	*tokens;		/* Linked list of input tokens */
-	t_tree	*cmds;			/* Binary tree of commands */
+	t_tree	*yggdrasil;		/* Binary tree of yggdrasil */
 	char	*path;			/* PATH environment variable */
 	int		infile;			/* Standard input backup fd */
 	int		outfile;		/* Standard output backup fd */
@@ -178,11 +178,11 @@ void			ft_treeadd_left(t_tree **tree, t_tree *new);
 /* ========== utils =========== */
 /* ============================ */
 
+void			ft_random_banner(void);
 int				ft_is_metachar(char c);
 t_token_type	ft_is_builtin(t_token *token);
 t_token_type	ft_is_red(char *content);
 t_token_type	ft_take_meta(char *content);
-
 
 /* _____________________________________________________________________ */
 
@@ -194,7 +194,8 @@ t_token_type	ft_take_meta(char *content);
 
 void			ft_clean_yggdrasil(t_tree **tree);
 void			ft_free_tokens(t_token **head);
-void			ft_free_all(t_tree **tree, t_token **token, char **input);
+void			ft_clean_data(t_data **data);
+void			ft_free_all(t_tree **tree, t_token **token, char **input, char **str);
 
 /* _____________________________________________________________________ */
 
@@ -205,8 +206,6 @@ void			ft_free_all(t_tree **tree, t_token **token, char **input);
 int				ft_open_quote(char *input);
 int				pipe_check(char *s);
 int				redir_check(char *s);
-
-
 
 /* _____________________________________________________________________ */
 
