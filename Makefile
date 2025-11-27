@@ -13,12 +13,13 @@ LIBFT_D = libft
 LIBFT = $(LIBFT_D)/libft.a
 LIBFT_LIB = libft.a
 
-SRC = src/main_parse.c \
+SRC = src/main.c \
 		src/token.c \
 		src/token_utils.c \
 		src/yggdrasil.c \
 		src/yggdrasil_utils.c \
 		src/parse.c \
+		src/parse_utils.c \
 		src/utils.c \
 		src/banner.c \
 		src/print.c \
