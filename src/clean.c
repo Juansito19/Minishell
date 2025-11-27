@@ -35,6 +35,7 @@ void	ft_clean_yggdrasil(t_tree **tree)
 	if (tmp_right)
 		ft_clean_yggdrasil(&tmp_right);
 	ft_free_all_array((*tree)->content);
+	free((*tree)->path);
 	free((*tree));
 }
 

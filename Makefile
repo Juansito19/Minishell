@@ -23,6 +23,7 @@ SRC = src/main_parse.c \
 		src/banner.c \
 		src/print.c \
 		src/clean.c \
+		src/error.c \
 
 OBJ = $(SRC:src/%.c=obj/%.o)
 TOTAL_FILES := $(words $(SRC))

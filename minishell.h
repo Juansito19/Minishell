@@ -106,7 +106,7 @@ typedef struct s_tree
 	int				infile;			/* Input file descriptor */
 	int				outfile;		/* Output file descriptor */
 	int				pipe[2];		/* Pipe descriptors [read, write] */
-	char			*path;		/* Builtin command identifier */
+	char			*path;			/* Builtin command identifier */
 	t_token_type	type;			/* Node type (cmd/pipe/redir) */
 	struct s_tree	*left;			/* Left child (cmd before pipe) */
 	struct s_tree	*right;			/* Right child (cmd after pipe) */
@@ -150,7 +150,7 @@ int				ft_tk_size(t_token *lst);
 /* _____________________________________________________________________ */
 
 /* ============================ */
-/* =========== tree =========== */
+/* ========= yggdrasil ======== */
 /* ============================ */
 
 t_token			*ft_put_all_left(t_token **tokens, t_token *token_pipe);
@@ -158,15 +158,15 @@ t_token			*ft_put_all_right(t_token **tokens);
 void			ft_treeadd_right(t_tree **tree, t_tree *new);
 void			ft_treeadd_left(t_tree **tree, t_tree *new);
 char			**ft_fill_word_type(t_token *token, int	size);
-void			ft_yggdrasil(t_token **tokens, t_tree **tree);
+void			ft_yggdrasil(t_token **tokens, t_tree **tree, t_data **data);
 
 /* _____________________________________________________________________ */
 
 /* ================================= */
-/* ========== tree utils =========== */
+/* ======== yggdrasil utils ======== */
 /* ================================= */
 
-t_tree			*ft_tree_init(char **content, t_token_type type);
+t_tree			*ft_tree_init(char **content, t_token_type type, char *path);
 t_token			*ft_search_pipe(t_token **tokens);
 t_token			*ft_search_red(t_token **tokens);
 void			ft_treeadd_right(t_tree **tree, t_tree *new);
@@ -180,6 +180,7 @@ void			ft_treeadd_left(t_tree **tree, t_tree *new);
 
 void			ft_random_banner(void);
 int				ft_is_metachar(char c);
+int				ft_find_path(t_data **data, char **envp);
 t_token_type	ft_is_builtin(t_token *token);
 t_token_type	ft_is_red(char *content);
 t_token_type	ft_take_meta(char *content);
@@ -210,9 +211,7 @@ int				ft_redir_bucle_check(char *s, char quote);
 int				ft_big_prick_parse(char *input);
 char			ft_quote_track(char c);
 
-
 /* _____________________________________________________________________ */
-
 
 /* ============================ */
 /* ========== banner ========== */
@@ -228,7 +227,6 @@ void			ft_banner_4b(void);
 
 /* _____________________________________________________________________ */
 
-
 /* ============================ */
 /* ========== print =========== */
 /* ============================ */
@@ -238,6 +236,16 @@ void			ft_write_type_branch(t_token_type type);
 void			print_tree(t_tree **tree);
 void			print_tree_recursive(t_tree *tree, int depth, char *prefix);
 void			fprint_tree(t_tree **tree);
+
+/* _____________________________________________________________________ */
+
+/* _____________________________________________________________________ */
+
+/* ============================ */
+/* ========== error =========== */
+/* ============================ */
+
+int				ft_print_error(int error_code, char *s);
 
 /* _____________________________________________________________________ */
 
