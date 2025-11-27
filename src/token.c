@@ -27,7 +27,7 @@ int	ft_token_word(t_token **tokens, char *s, int *ind)
 	return (0);
 }
 
-int	ft_token_meta(t_token **tokens, char *s, int *ind, t_token_type type)
+int	ft_token_meta(t_token **tokens, char *s, int *ind, t_type type)
 {
 	t_token	*new;
 	char	*word;

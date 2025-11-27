@@ -61,7 +61,7 @@ int	ft_is_metachar(char c)
 	return (0);
 }
 
-t_token_type	ft_is_red(char *content)
+t_type	ft_is_red(char *content)
 {
 	if (!ft_strncmp(content, "<", 2))
 		return (T_REDIR_IN);
@@ -74,7 +74,7 @@ t_token_type	ft_is_red(char *content)
 	return (0);
 }
 
-t_token_type	ft_take_meta(char *content)
+t_type	ft_take_meta(char *content)
 {
 	if (!ft_strncmp(content, "|", 2))
 		return (T_PIPE);
@@ -89,21 +89,23 @@ t_token_type	ft_take_meta(char *content)
 	return (0);
 }
 
-t_token_type	ft_is_builtin(t_token *token)
+t_type	ft_is_builtin(t_token *token)
 {
-	if (!ft_strncmp(token->content, "echo", 5))
+	if (!token->content)
+		return (T_CMD);
+	if (!ft_strncmp("echo", token->content, 5))
 		return (T_BUILTIN);
-	else if (!ft_strncmp(token->content, "cd", 3))
+	else if (!ft_strncmp("cd", token->content, 3))
 		return (T_BUILTIN);
-	else if (!ft_strncmp(token->content, "pwd", 4))
+	else if (!ft_strncmp("pwd", token->content, 3))
 		return (T_BUILTIN);
-	else if (!ft_strncmp(token->content, "export", 7))
+	else if (!ft_strncmp("export", token->content, 6))
 		return (T_BUILTIN);
-	else if (!ft_strncmp(token->content, "unset", 6))
+	else if (!ft_strncmp("unset", token->content, 5))
 		return (T_BUILTIN);
-	else if (!ft_strncmp(token->content, "exit", 5))
+	else if (!ft_strncmp("exit", token->content, 4))
 		return (T_BUILTIN);
-	else if (!ft_strncmp(token->content, "env", 4))
+	else if (!ft_strncmp("env", token->content, 3))
 		return (T_BUILTIN);
 	return (T_CMD);
 }

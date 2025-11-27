@@ -22,7 +22,7 @@ void	print_token(t_token **token)
 	}
 }
 
-void	ft_write_type_branch(t_token_type type)
+void	ft_write_type_branch(t_type type)
 {
 	if (type == T_PIPE)
 		printf("branch [PIPE]\n");

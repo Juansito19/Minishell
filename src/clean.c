@@ -9,34 +9,34 @@ void	ft_free_tokens(t_token **head)
 	t_token	*current;
 	t_token	*next;
 
-	current = (*head);
 	if (!(*head))
 		return ;
+	current = (*head);
 	while (current)
 	{
 		next = current->next;
-		free(current->content);
+		if (current->content)
+			free(current->content);
 		free(current);
 		current = next;
 	}
+	*head = NULL;
 }
 
 void	ft_clean_yggdrasil(t_tree **tree)
 {
-	t_tree	*tmp_left;
-	t_tree	*tmp_right;
-
 	if (!(*tree))
 		return ;
-	tmp_left = (*tree)->left;
-	if (tmp_left)
-		ft_clean_yggdrasil(&tmp_left);
-	tmp_right = (*tree)->right;
-	if (tmp_right)
-		ft_clean_yggdrasil(&tmp_right);
-	ft_free_all_array((*tree)->content);
-	free((*tree)->path);
+	if ((*tree)->left)
+		ft_clean_yggdrasil(&(*tree)->left);
+	if ((*tree)->right)
+		ft_clean_yggdrasil(&(*tree)->right);
+	if ((*tree)->content)
+		ft_free_all_array((*tree)->content);
+	if ((*tree)->path)
+		free((*tree)->path);
 	free((*tree));
+	*tree = NULL;
 }
 
 void	ft_clean_data(t_data **data)
@@ -52,14 +52,26 @@ void	ft_clean_data(t_data **data)
 	free((*data));
 }
 
-void	ft_free_all(t_tree **tree, t_token **token, char **input, char **str)
+void	ft_free_all(t_tree **tree, t_token **token, char *input, char **s)
 {
 	if ((*tree))
+	{
 		ft_clean_yggdrasil(tree);
+		*tree = NULL;
+	}
 	if ((*token))
+	{
 		ft_free_tokens(token);
-	if (str)
-		ft_free_all_array(str);
-	if ((*input))
-		free(*input);
+		*token = NULL;
+	}
+	if (s)
+	{
+		ft_free_all_array(s);
+		*s = NULL;
+	}
+	if (input)
+	{
+		free(input);
+		input = NULL;
+	}
 }

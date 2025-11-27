@@ -4,7 +4,7 @@
 /* ======= yggdrasil utils ========= */
 /* ================================= */
 
-t_tree	*ft_tree_init(char **content, t_token_type type, char *path)
+t_tree	*ft_tree_init(char **content, t_type type, char *path)
 {
 	t_tree	*new_tree;
 

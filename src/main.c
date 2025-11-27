@@ -1,5 +1,17 @@
 #include "../minishell.h"
 
+void	ft_check_input(t_data **data, char *input)
+{
+	if (ft_big_prick_parse(input))
+	{
+		ft_print_error(0, "Error: Syntax error");
+		return ;
+	}
+	(*data)->tokens = ft_token(input, 0);
+	ft_yggdrasil(&(*data)->tokens, &(*data)->yggdrasil, data);
+	fprint_tree(&(*data)->yggdrasil);
+}
+
 t_data	*ft_init_data(char **env)
 {
 	t_data	*data;
@@ -31,17 +43,15 @@ int	ft_minishell(char **env)
 			printf("exit\n");
 			break ;
 		}
+		ft_check_input(&data, input);
 		add_history(input);
-		data->tokens = ft_token(input, 0);
-		ft_yggdrasil(&data->tokens, &data->yggdrasil, &data);
-		fprint_tree(&data->yggdrasil);
 		if (!ft_strncmp(input, "exit", 5))
 		{
 			free(input);
 			ft_clean_data(&data);
 			break ;
 		}
-		ft_free_all(&data->yggdrasil, &data->tokens, &input, NULL);
+		ft_free_all(&data->yggdrasil, &data->tokens, input, NULL);
 	}
 	rl_clear_history();
 	return (0);
