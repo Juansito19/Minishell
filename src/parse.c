@@ -4,30 +4,8 @@
 /* ==========parse=========== */
 /* ========================== */
 
-// int	ft_open_quote(char *input)
-// {
-// 	int	s_quote;
-// 	int	d_quote;
 
-// 	s_quote = 0;
-// 	d_quote = 0;
-// 	while (*input)
-// 	{
-// 		if (*input == '\"')
-// 			d_quote++;
-// 		if (*input == '\'')
-// 			s_quote++;
-// 		input++;
-// 	}
-// 	if (s_quote % 2 != 0)
-// 		return (1);
-// 	if (d_quote % 2 != 0)
-// 		return (1);
-// 	return (0);
-// }
-
-/*NO ESTA MAL PERO LE FALTAN COSAS SEGUN IA, SEGUN LA 
-NUEVA GESTIONA LA MEZCLA DE COMILLAS TRATANDOLAS COMO CHAR*/
+/* ========== funcion principial =========== */
 
 int	ft_big_prick_parse(char *input)
 {
@@ -39,6 +17,8 @@ int	ft_big_prick_parse(char *input)
 		return (1);
 	return (0);
 }
+
+/* ========== parseo comillas =========== */
 
 int	ft_open_quote(char *input)
 {
@@ -64,32 +44,7 @@ int	ft_open_quote(char *input)
 	return (0);
 }
 
-int	ft_redir_bucle_check(char *s, char quote)
-{
-	int		i;
-
-	i = 0;
-	while (s[i])
-	{
-		quote = ft_quote_track(s[i]);
-		if ((s[i] == '>' || s[i] == '<') && !quote)
-		{
-			if (s[i] == '>' && s[i + 1] == '>')
-				i += 2;
-			else if (s[i] == '<' && s[i + 1] == '<')
-				i += 2;
-			else
-				i++;
-			while (s[i] && s[i] <= 32)
-				i++;
-			if (s[i] == '>' || s[i] == '<' || s[i] == '|' || s[i] == '\0')
-				return (1);
-			continue ;
-		}
-		i++;
-	}
-	return (0);
-}
+/* ========== parseo redirecciones =========== */
 
 int	ft_redir_check(char *s)
 {
@@ -104,39 +59,10 @@ int	ft_redir_check(char *s)
 		return (1);
 	if (ft_redir_bucle_check(s, quote))
 		return (1);
-	// while (s[i])
-	// {
-	// 	quote = ft_quote_track(s[i]);
-	// 	if ((s[i] == '>' || s[i] == '<') && !quote)
-	// 	{
-	// 		if (s[i] == '>' && s[i + 1] == '>')
-	// 			i += 2;
-	// 		else if (s[i] == '<' && s[i + 1] == '<')
-	// 			i += 2;
-	// 		else
-	// 			i++;
-	// 		while (s[i] && s[i] <= 32)
-	// 			i++;
-	// 		if (s[i] == '>' || s[i] == '<' || s[i] == '|' || s[i] == '\0')
-	// 			return (1);
-	// 		continue ;
-	// 	}
-	// 	i++;
-	// }
 	return (0);
 }
 
-char	ft_quote_track(char c)
-{
-	char	quote;
-
-	quote = 0;
-	if (!quote && (c == '\'' || c == '\"'))
-		quote = c;
-	else
-		quote = 0;
-	return (quote);
-}
+/* ========== parseo pipes =========== */
 
 int	ft_pipe_check(char *s)
 {
@@ -165,46 +91,3 @@ int	ft_pipe_check(char *s)
 	}
 	return (0);
 }
-
-/*Después de > , >> , < debe haber un ﬁlename*/
-// int	pipe_check_ia(char *s)
-// {
-// 	int		i;
-// 	int		in_quote;
-// 	char	quote_type;
-
-// 	i = 0;
-// 	in_quote = 0;
-// 	quote_type = 0;
-// 	while (s[i] && s[i] <= 32)
-// 		i++;
-// 	if (s[i] == '|')
-// 		return (1);
-// 	while (s[i])
-// 	{
-// 		if ((s[i] == '\'' || s[i] == '\"') && !in_quote)
-// 		{
-// 			in_quote = 1;
-// 			quote_type = s[i];
-// 		}
-// 		else if (s[i] == quote_type && in_quote)
-// 			in_quote = 0;
-
-// 		if (s[i] == '|' && !in_quote)
-// 		{
-// 			i++;
-// 			while (s[i] && s[i] <= 32)
-// 				i++;
-// 			if (s[i] == '|' || s[i] == '\0')
-// 				return (1);
-// 			continue ;
-// 		}
-// 		i++;
-// 	}
-// 	// i--;
-// 	// while (i >= 0 && s[i] <= 32)
-// 	// 	i--;
-// 	// if (i >= 0 && s[i] == '|')
-// 	// 	return (1);
-// 	return (0);
-// }
