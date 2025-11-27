@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-t_data	*ft_init_data(void)
+t_data	*ft_init_data(char **env)
 {
 	t_data	*data;
 
@@ -11,6 +11,7 @@ t_data	*ft_init_data(void)
 	data->infile = -1;
 	data->outfile = -1;
 	data->path = NULL;
+	ft_find_path(&data, env);
 	data->tokens = NULL;
 	data->yggdrasil = NULL;
 	return (data);
@@ -21,8 +22,7 @@ int	ft_minishell(char **env)
 	char	*input;
 	t_data	*data;
 
-	data = ft_init_data();
-	(void)env;
+	data = ft_init_data(env);
 	while (1)
 	{
 		input = readline("bostero$> ");
@@ -31,12 +31,11 @@ int	ft_minishell(char **env)
 			printf("exit\n");
 			break ;
 		}
-		// if (ft_strlen(input))
-		// 	add_history(input);
+		add_history(input);
 		data->tokens = ft_token(input, 0);
-		ft_yggdrasil(&data->tokens, &data->yggdrasil);
+		ft_yggdrasil(&data->tokens, &data->yggdrasil, &data);
 		fprint_tree(&data->yggdrasil);
-		if (!ft_strncmp(input, "exit", ft_strlen("exit")))
+		if (!ft_strncmp(input, "exit", 5))
 		{
 			free(input);
 			ft_clean_data(&data);
@@ -44,7 +43,7 @@ int	ft_minishell(char **env)
 		}
 		ft_free_all(&data->yggdrasil, &data->tokens, &input, NULL);
 	}
-	// rl_clear_history();
+	rl_clear_history();
 	return (0);
 }
 

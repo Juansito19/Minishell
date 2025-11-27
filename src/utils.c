@@ -22,6 +22,30 @@ void	ft_random_banner(void)
 		ft_banner_4a();
 }
 
+int	ft_find_path(t_data **data, char **envp)
+{
+	int		i;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+		{
+			(*data)->path = ft_strdup(envp[i]);
+			if (!(*data)->path)
+				return (ft_print_error(12, NULL));
+			break ;
+		}
+		i++;
+	}
+	if (!(*data)->path)
+	{
+		// ft_print_error(0, "Error: PATH variable not found in environment\n");
+		return (1);
+	}
+	return (0);
+}
+
 int	ft_is_metachar(char c)
 {
 	if (c == 34)

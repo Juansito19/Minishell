@@ -1,7 +1,7 @@
 #include "../minishell.h"
 
 /* ========================== */
-/* ===========tree=========== */
+/* ========yggdrasil========= */
 /* ========================== */
 
 t_token	*ft_put_all_left(t_token **tokens, t_token *token_pipe)
@@ -144,7 +144,7 @@ char	**ft_fill_word_type(t_token *token, int size)
 // 	return (0);
 // }
 
-int	ft_branch_meta(t_token *meta, t_tree **tree, t_token **tokens)
+int	ft_branch_meta(t_token *meta, t_tree **tree, t_token **tokens, t_data **data)
 {
 	t_token	*left;
 	t_token	*right;
@@ -156,7 +156,7 @@ int	ft_branch_meta(t_token *meta, t_tree **tree, t_token **tokens)
 		ft_free_all(tree, tokens, NULL, word);
 		return (1);
 	}
-	(*tree) = ft_tree_init(word, ft_take_meta(meta->content));
+	(*tree) = ft_tree_init(word, ft_take_meta(meta->content), (*data)->path);
 	if (!(*tree))
 	{
 		ft_free_all(tree, tokens, NULL, word);
@@ -164,14 +164,14 @@ int	ft_branch_meta(t_token *meta, t_tree **tree, t_token **tokens)
 	}
 	left = ft_put_all_left(tokens, meta);
 	right = ft_put_all_right(&meta->next);
-	ft_yggdrasil(&left, &(*tree)->left);
-	ft_yggdrasil(&right, &(*tree)->right);
+	ft_yggdrasil(&left, &(*tree)->left, data);
+	ft_yggdrasil(&right, &(*tree)->right, data);
 	ft_free_tokens(&left);
 	ft_free_tokens(&right);
 	return (0);
 }
 
-int	ft_branch_word(t_tree **tree, t_token **tokens)
+int	ft_branch_word(t_tree **tree, t_token **tokens, char *path)
 {
 	char	**word;
 
@@ -181,7 +181,7 @@ int	ft_branch_word(t_tree **tree, t_token **tokens)
 		ft_free_all(tree, tokens, NULL, word);
 		return (1);
 	}
-	(*tree) = ft_tree_init(word, ft_is_builtin((*tokens)));
+	(*tree) = ft_tree_init(word, ft_is_builtin((*tokens)), path);
 	if (!(*tree))
 	{
 		ft_free_all(tree, tokens, NULL, word);
@@ -190,7 +190,7 @@ int	ft_branch_word(t_tree **tree, t_token **tokens)
 	return (0);
 }
 
-void	ft_yggdrasil(t_token **tokens, t_tree **tree)
+void	ft_yggdrasil(t_token **tokens, t_tree **tree, t_data **data)
 {
 	t_token	*token_pipe;
 	t_token	*token_red;
@@ -198,7 +198,7 @@ void	ft_yggdrasil(t_token **tokens, t_tree **tree)
 	token_pipe = ft_search_pipe(tokens);
 	if (token_pipe)
 	{
-		if (ft_branch_meta(token_pipe, tree, tokens))
+		if (ft_branch_meta(token_pipe, tree, tokens, data))
 			return ;
 		return ;
 	}
@@ -207,13 +207,13 @@ void	ft_yggdrasil(t_token **tokens, t_tree **tree)
 		token_red = ft_search_red(tokens);
 		if (token_red)
 		{
-			if (ft_branch_meta(token_red, tree, tokens))
+			if (ft_branch_meta(token_red, tree, tokens, data))
 				return ;
 			return ;
 		}
 		else
 		{
-			if (ft_branch_word(tree, tokens))
+			if (ft_branch_word(tree, tokens, (*data)->path))
 				return ;
 		}
 	}
