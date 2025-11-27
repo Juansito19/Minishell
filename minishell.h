@@ -207,8 +207,17 @@ void			ft_free_all(t_tree **tree, t_token **token, char **input, char **str);
 int				ft_open_quote(char *input);
 int				ft_pipe_check(char *s);
 int				ft_redir_check(char *s);
-int				ft_redir_bucle_check(char *s, char quote);
 int				ft_big_prick_parse(char *input);
+
+/* _____________________________________________________________________ */
+
+/* _____________________________________________________________________ */
+
+/* ============================ */
+/* ====== parse_utils_1 ======= */
+/* ============================ */
+
+int				ft_redir_bucle_check(char *s, char quote);
 char			ft_quote_track(char c);
 
 /* _____________________________________________________________________ */
