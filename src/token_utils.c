@@ -4,7 +4,7 @@
 /* ========= tokens utils ========== */
 /* ================================= */
 
-t_token	*ft_token_init(void *content, t_token_type type)
+t_token	*ft_token_init(void *content, t_type type)
 {
 	t_token	*new_token;
 

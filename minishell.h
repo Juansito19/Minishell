@@ -55,7 +55,8 @@
 #  define RST "\033[0m"
 # endif
 
-typedef	enum {
+typedef enum s_type
+{
 	T_PIPE = 1,
 	T_REDIR_IN,
 	T_REDIR_OUT,
@@ -67,7 +68,7 @@ typedef	enum {
 	T_CMD,
 	T_BUILTIN,
 	T_FD
-} t_token_type;
+}	t_type;
 
 // typedef	enum {
 // 	T_CMD,
@@ -88,7 +89,7 @@ typedef	enum {
  */
 typedef struct s_token
 {
-	t_token_type	type;		/* Token classification (word/operator) */
+	t_type			type;		/* Token classification (word/operator) */
 	char			*content;	/* Token string content */
 	struct s_token	*next;		/* Pointer to next token in list */
 }	t_token;
@@ -107,7 +108,7 @@ typedef struct s_tree
 	int				outfile;		/* Output file descriptor */
 	int				pipe[2];		/* Pipe descriptors [read, write] */
 	char			*path;			/* Builtin command identifier */
-	t_token_type	type;			/* Node type (cmd/pipe/redir) */
+	t_type			type;			/* Node type (cmd/pipe/redir) */
 	struct s_tree	*left;			/* Left child (cmd before pipe) */
 	struct s_tree	*right;			/* Right child (cmd after pipe) */
 }	t_tree;
@@ -133,9 +134,9 @@ typedef struct s_data
 /* =========tokens========== */
 /* ========================= */
 
-t_token			*ft_token(char *s, int i);
-int				ft_token_word(t_token **tokens, char *s, int *ind);
-int				ft_token_meta(t_token **tokens, char *s, int *ind, t_token_type type);
+t_token		*ft_token(char *s, int i);
+int			ft_token_word(t_token **tokens, char *s, int *ind);
+int			ft_token_meta(t_token **tokens, char *s, int *ind, t_type type);
 
 /* _____________________________________________________________________ */
 
@@ -143,9 +144,9 @@ int				ft_token_meta(t_token **tokens, char *s, int *ind, t_token_type type);
 /* ========= tokens utils ========== */
 /* ================================= */
 
-t_token			*ft_token_init(void *content, t_token_type type);
-void			ft_tokenadd_back(t_token **tokens, t_token *new);
-int				ft_tk_size(t_token *lst);
+t_token		*ft_token_init(void *content, t_type type);
+void		ft_tokenadd_back(t_token **tokens, t_token *new);
+int			ft_tk_size(t_token *lst);
 
 /* _____________________________________________________________________ */
 
@@ -153,12 +154,12 @@ int				ft_tk_size(t_token *lst);
 /* ========= yggdrasil ======== */
 /* ============================ */
 
-t_token			*ft_put_all_left(t_token **tokens, t_token *token_pipe);
-t_token			*ft_put_all_right(t_token **tokens);
-void			ft_treeadd_right(t_tree **tree, t_tree *new);
-void			ft_treeadd_left(t_tree **tree, t_tree *new);
-char			**ft_fill_word_type(t_token *token, int	size);
-void			ft_yggdrasil(t_token **tokens, t_tree **tree, t_data **data);
+t_token		*ft_put_all_left(t_token **tokens, t_token *token_pipe);
+t_token		*ft_put_all_right(t_token **tokens);
+void		ft_treeadd_right(t_tree **tree, t_tree *new);
+void		ft_treeadd_left(t_tree **tree, t_tree *new);
+char		**ft_fill_word_type(t_token *token, int size);
+void		ft_yggdrasil(t_token **tokens, t_tree **tree, t_data **data);
 
 /* _____________________________________________________________________ */
 
@@ -166,11 +167,11 @@ void			ft_yggdrasil(t_token **tokens, t_tree **tree, t_data **data);
 /* ======== yggdrasil utils ======== */
 /* ================================= */
 
-t_tree			*ft_tree_init(char **content, t_token_type type, char *path);
-t_token			*ft_search_pipe(t_token **tokens);
-t_token			*ft_search_red(t_token **tokens);
-void			ft_treeadd_right(t_tree **tree, t_tree *new);
-void			ft_treeadd_left(t_tree **tree, t_tree *new);
+t_tree		*ft_tree_init(char **content, t_type type, char *path);
+t_token		*ft_search_pipe(t_token **tokens);
+t_token		*ft_search_red(t_token **tokens);
+void		ft_treeadd_right(t_tree **tree, t_tree *new);
+void		ft_treeadd_left(t_tree **tree, t_tree *new);
 
 /* _____________________________________________________________________ */
 
@@ -178,12 +179,12 @@ void			ft_treeadd_left(t_tree **tree, t_tree *new);
 /* ========== utils =========== */
 /* ============================ */
 
-void			ft_random_banner(void);
-int				ft_is_metachar(char c);
-int				ft_find_path(t_data **data, char **envp);
-t_token_type	ft_is_builtin(t_token *token);
-t_token_type	ft_is_red(char *content);
-t_token_type	ft_take_meta(char *content);
+void		ft_random_banner(void);
+int			ft_is_metachar(char c);
+int			ft_find_path(t_data **data, char **envp);
+t_type		ft_is_builtin(t_token *token);
+t_type		ft_is_red(char *content);
+t_type		ft_take_meta(char *content);
 
 /* _____________________________________________________________________ */
 
@@ -193,10 +194,10 @@ t_token_type	ft_take_meta(char *content);
 /* ========== clean =========== */
 /* ============================ */
 
-void			ft_clean_yggdrasil(t_tree **tree);
-void			ft_free_tokens(t_token **head);
-void			ft_clean_data(t_data **data);
-void			ft_free_all(t_tree **tree, t_token **token, char **input, char **str);
+void		ft_clean_yggdrasil(t_tree **tree);
+void		ft_free_tokens(t_token **head);
+void		ft_clean_data(t_data **data);
+void		ft_free_all(t_tree **tree, t_token **token, char *input, char **s);
 
 /* _____________________________________________________________________ */
 
@@ -204,10 +205,10 @@ void			ft_free_all(t_tree **tree, t_token **token, char **input, char **str);
 /* ========== parse =========== */
 /* ============================ */
 
-int				ft_open_quote(char *input);
-int				ft_pipe_check(char *s);
-int				ft_redir_check(char *s);
-int				ft_big_prick_parse(char *input);
+int			ft_open_quote(char *input);
+int			ft_pipe_check(char *s);
+int			ft_redir_check(char *s);
+int			ft_big_prick_parse(char *input);
 
 /* _____________________________________________________________________ */
 
@@ -217,8 +218,8 @@ int				ft_big_prick_parse(char *input);
 /* ====== parse_utils_1 ======= */
 /* ============================ */
 
-int				ft_redir_bucle_check(char *s, char quote);
-char			ft_quote_track(char c);
+int			ft_redir_bucle_check(char *s, char quote);
+char		ft_quote_track(char c);
 
 /* _____________________________________________________________________ */
 
@@ -226,11 +227,11 @@ char			ft_quote_track(char c);
 /* ========== banner ========== */
 /* ============================ */
 
-void			ft_banner_1(void);
-void			ft_banner_2(void);
-void			ft_banner_3(void);
-void			ft_banner_4a(void);
-void			ft_banner_4b(void);
+void		ft_banner_1(void);
+void		ft_banner_2(void);
+void		ft_banner_3(void);
+void		ft_banner_4a(void);
+void		ft_banner_4b(void);
 
 /* _____________________________________________________________________ */
 
@@ -240,11 +241,11 @@ void			ft_banner_4b(void);
 /* ========== print =========== */
 /* ============================ */
 
-void			print_token(t_token **token);
-void			ft_write_type_branch(t_token_type type);
-void			print_tree(t_tree **tree);
-void			print_tree_recursive(t_tree *tree, int depth, char *prefix);
-void			fprint_tree(t_tree **tree);
+void		print_token(t_token **token);
+void		ft_write_type_branch(t_type type);
+void		print_tree(t_tree **tree);
+void		print_tree_recursive(t_tree *tree, int depth, char *prefix);
+void		fprint_tree(t_tree **tree);
 
 /* _____________________________________________________________________ */
 
@@ -254,7 +255,7 @@ void			fprint_tree(t_tree **tree);
 /* ========== error =========== */
 /* ============================ */
 
-int				ft_print_error(int error_code, char *s);
+int			ft_print_error(int error_code, char *s);
 
 /* _____________________________________________________________________ */
 
