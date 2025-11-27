@@ -29,11 +29,13 @@
 /*NO ESTA MAL PERO LE FALTAN COSAS SEGUN IA, SEGUN LA 
 NUEVA GESTIONA LA MEZCLA DE COMILLAS TRATANDOLAS COMO CHAR*/
 
-int	ft_q_p_parse(char *input)
+int	ft_big_prick_parse(char *input)
 {
 	if (ft_open_quote(input))
 		return (1);
 	if (ft_pipe_check(input))
+		return (1);
+	if (ft_redir_check(input))
 		return (1);
 	return (0);
 }
@@ -62,25 +64,34 @@ int	ft_open_quote(char *input)
 	return (0);
 }
 
-/* comrpobamos en las primeras etapas que las pipes que manejamos son correctas
-1.- no hay pipes en el inicio ni en el final
-2.- no hay pipes seguidas (error por ahora)
+int	ft_redir_bucle_check(char *s, char quote)
+{
+	int		i;
 
-IMPORTANTE(ESTO NO APLICA EN CASO DE COMILLAS:
-P.J: echo "| hola ||")
+	i = 0;
+	while (s[i])
+	{
+		quote = ft_quote_track(s[i]);
+		if ((s[i] == '>' || s[i] == '<') && !quote)
+		{
+			if (s[i] == '>' && s[i + 1] == '>')
+				i += 2;
+			else if (s[i] == '<' && s[i + 1] == '<')
+				i += 2;
+			else
+				i++;
+			while (s[i] && s[i] <= 32)
+				i++;
+			if (s[i] == '>' || s[i] == '<' || s[i] == '|' || s[i] == '\0')
+				return (1);
+			continue ;
+		}
+		i++;
+	}
+	return (0);
+}
 
-
-*/
-/*ambas fallan todavia cuando encuentro dos pipes seguidos
-o dos redirs seguidos
-"     || "
-"   <>   "
-
-no funciona, intentar con flags
-
-*/
-
-int	redir_check(char *s)
+int	ft_redir_check(char *s)
 {
 	int		i;
 	char	quote;
@@ -89,22 +100,29 @@ int	redir_check(char *s)
 	quote = 0;
 	while (s[i] && s[i] <= 32)
 		i++;
-	if (s[i] == '|')
+	if (s[i] == '<')
 		return (1);
-	while (s[i])
-	{
-		quote = ft_quote_track(s[i]);
-		if (s[i] == '|' && !quote)
-		{
-			i++;
-			while (s[i] && s[i] <= 32)
-				i++;
-			if (s[i] == '|' || s[i] == '\0')
-				return (1);
-			continue ;
-		}
-		i++;
-	}
+	if (ft_redir_bucle_check(s, quote))
+		return (1);
+	// while (s[i])
+	// {
+	// 	quote = ft_quote_track(s[i]);
+	// 	if ((s[i] == '>' || s[i] == '<') && !quote)
+	// 	{
+	// 		if (s[i] == '>' && s[i + 1] == '>')
+	// 			i += 2;
+	// 		else if (s[i] == '<' && s[i + 1] == '<')
+	// 			i += 2;
+	// 		else
+	// 			i++;
+	// 		while (s[i] && s[i] <= 32)
+	// 			i++;
+	// 		if (s[i] == '>' || s[i] == '<' || s[i] == '|' || s[i] == '\0')
+	// 			return (1);
+	// 		continue ;
+	// 	}
+	// 	i++;
+	// }
 	return (0);
 }
 
