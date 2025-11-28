@@ -1,7 +1,7 @@
 #include "../minishell.h"
 
 /* ========================== */
-/* ==========utils=========== */
+/* ========= utils ========== */
 /* ========================== */
 
 void	ft_random_banner(void)
@@ -24,7 +24,7 @@ void	ft_random_banner(void)
 
 int	ft_find_path(t_data **data, char **envp)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (envp[i])
