@@ -1,7 +1,7 @@
 #include "../minishell.h"
 
 /* ========================== */
-/* ==========error=========== */
+/* ========= error ========== */
 /* ========================== */
 
 int ft_print_error(int error_code, char *s)

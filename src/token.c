@@ -1,7 +1,7 @@
 #include "../minishell.h"
 
 /* ========================= */
-/* =========tokens========== */
+/* ======== tokens ========= */
 /* ========================= */
 
 int	ft_token_word(t_token **tokens, char *s, int *ind)

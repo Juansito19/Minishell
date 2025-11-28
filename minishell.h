@@ -1,6 +1,7 @@
 #ifndef MINISHEL_H
 # define MINISHEL_H
 # include "libft/libft.h"
+# include "errors.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>

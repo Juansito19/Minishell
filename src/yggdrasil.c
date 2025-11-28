@@ -1,7 +1,7 @@
 #include "../minishell.h"
 
 /* ========================== */
-/* ========yggdrasil========= */
+/* ======= yggdrasil ======== */
 /* ========================== */
 
 t_token	*ft_put_all_left(t_token **tokens, t_token *token_pipe)
