@@ -34,7 +34,7 @@ static void	write_bucle(int i, char **str)
 int	ft_echo(int ac, char **str)
 {
 	int	i;
-	int	j;
+	// int	j;
 
 	if (ac < 2 || str[1] == NULL)
 	{

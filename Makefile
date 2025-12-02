@@ -25,7 +25,6 @@ SRC = src/main.c \
 		src/print.c \
 		src/clean.c \
 		src/error.c \
-
 		src/echo.c \
 
 OBJ = $(SRC:src/%.c=obj/%.o)
