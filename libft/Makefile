@@ -6,7 +6,7 @@
 #    By: jbrosio <jbrosio@student.42malaga.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/21 16:44:12 by Juan              #+#    #+#              #
-#    Updated: 2025/11/26 17:14:31 by jbrosio          ###   ########.fr        #
+#    Updated: 2025/11/30 23:26:14 by jbrosio          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,7 @@ SRC = src/ft_atod.c \
 		src/ft_split.c \
 		src/ft_strchr.c \
 		src/ft_strdup.c \
+		src/ft_array_dup.c \
 		src/ft_striteri.c \
 		src/ft_strjoin.c \
 		src/ft_strlcat.c \
@@ -70,6 +71,7 @@ SRC = src/ft_atod.c \
 		src/ft_strlen.c \
 		src/ft_strmapi.c \
 		src/ft_strncmp.c \
+		src/ft_strcmp.c \
 		src/ft_strnstr.c \
 		src/ft_strrchr.c \
 		src/ft_strtrim.c \

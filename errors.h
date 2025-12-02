@@ -18,12 +18,13 @@
 # define ERR_IS_DIRECTORY "%s: Is a directory"
 # define ERR_NOT_DIRECTORY "%s: Not a directory"
 
-# define ERR_CD_TOO_MANY_ARGS "cd: too many arguments"
-# define ERR_CD_NO_HOME "cd: HOME not set"
-# define ERR_CD_NO_SUCH_FILE "cd: No such file or directory"
-# define ERR_EXPORT_INVALID "export: `%s': not a valid identifier"
-# define ERR_UNSET_INVALID "unset: `%s': not a valid identifier"
+# define ERR_CD_TOO_MANY_ARGS "minishell: cd: too many arguments"
+# define ERR_CD_NO_HOME "minishell: cd: HOME not set"
+# define ERR_CD_NO_SUCH_FILE "minishell: cd: %s: No such file or directory"
+# define ERR_EXPORT_INVALID "minishell : export: `%s': not a valid identifier"
+# define ERR_UNSET_INVALID "minishell : unset: `%s': not a valid identifier"
 # define ERR_EXIT_NUMERIC "exit: %s: numeric argument required"
 # define ERR_EXIT_TOO_MANY "exit: too many arguments"
+
 
 #endif

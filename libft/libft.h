@@ -6,7 +6,7 @@
 /*   By: jbrosio <jbrosio@student.42malaga.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 20:34:17 by jbrosio           #+#    #+#             */
-/*   Updated: 2025/11/25 19:42:24 by jbrosio          ###   ########.fr       */
+/*   Updated: 2025/11/30 23:03:12 by jbrosio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,14 @@ char		*ft_strrchr(const char *s, int c);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 
 /**
+ * @brief Compares two strings.
+ * @param s1 First string.
+ * @param s2 Second string.
+ * @return Difference between first differing bytes, 0 if equal.
+ */
+int	ft_strcmp(char *s1, char *s2);
+
+/**
  * @brief Locates substring within string, searching up to len bytes.
  * @param big String to search in.
  * @param little Substring to find.
@@ -167,6 +175,13 @@ size_t		ft_strlcat(char *dst, const char *src, size_t size);
  * @return Pointer to new string or NULL if allocation fails.
  */
 char		*ft_strdup(const char *s);
+
+/**
+ * @brief Duplicates a array of strings with malloc.
+ * @param s Array of strings to duplicate.
+ * @return New string or NULL if allocation fails.
+ */
+char	**ft_array_dup(char **s);
 
 /**
  * @brief Concatenates two strings into new allocated string.
