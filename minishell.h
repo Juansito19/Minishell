@@ -1,5 +1,5 @@
-#ifndef MINISHEL_H
-# define MINISHEL_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 # include "libft/libft.h"
 # include "errors.h"
 # include <readline/readline.h>
@@ -294,6 +294,11 @@ int			ft_validate_av_unset(char *av);
 int			ft_unset_var(char ***env, char *av);
 int			ft_unset(char ***env, char **av);
 
+// ========== ECHO ============ //
+
+int			ft_echo(int ac, char **str);
+
 /* _____________________________________________________________________ */
+
 
 #endif
