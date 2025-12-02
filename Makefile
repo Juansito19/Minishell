@@ -26,6 +26,8 @@ SRC = src/main.c \
 		src/clean.c \
 		src/error.c \
 
+		src/echo.c \
+
 OBJ = $(SRC:src/%.c=obj/%.o)
 TOTAL_FILES := $(words $(SRC))
 COMPILED := 0
