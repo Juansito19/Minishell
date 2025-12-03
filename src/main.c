@@ -9,9 +9,9 @@ void	ft_check_input(t_data **data, char *input)
 	}
 	(*data)->tokens = ft_token(input, 0);
 	ft_search_quotes(&(*data)->tokens);
-	// print_token(&(*data)->tokens);
+	print_token(&(*data)->tokens);
 	ft_yggdrasil(&(*data)->tokens, &(*data)->yggdrasil, data);
-	fprint_tree(&(*data)->yggdrasil);
+	// fprint_tree(&(*data)->yggdrasil);
 }
 
 t_data	*ft_init_data(char **env)

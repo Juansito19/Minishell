@@ -56,7 +56,7 @@ t_type	ft_take_meta(char *content)
 
 t_type	ft_is_builtin(t_token **token)
 {
-	char	*builtins[7];
+	char	*builtins[8];
 	int		i;
 
 	if (!token || !(*token) || !(*token)->content)
