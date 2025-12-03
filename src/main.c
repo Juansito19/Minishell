@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "minishell.h"
 
 void	ft_check_input(t_data **data, char *input)
 {
@@ -59,10 +59,15 @@ int	ft_minishell(char **env)
 
 int	main(int ac, char **av, char **env)
 {
+	char	**cpy_env;
+
 	(void)ac;
 	(void)av;
-
+	cpy_env = ft_array_dup(env);
+	if (!cpy_env)
+		return (ft_pd_error(ERR_MALLOC, NULL));
 	ft_random_banner();
 	ft_minishell(env);
+	ft_free_all_array(cpy_env);
 	return (0);
 }

@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "minishell.h"
 
 void	ft_sort_env(char **env)
 {
@@ -34,7 +34,7 @@ char	**ft_add_var(char **env, char *var)
 	size = 0;
 	while (env[size])
 		size++;
-	res = ft_malloc(size + 2, sizeof(char *));
+	res = malloc(size + 2 * sizeof(char *));
 	if (!res)
 		return (NULL);
 	res[size + 1] = NULL;

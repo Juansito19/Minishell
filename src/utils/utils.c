@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "minishell.h"
 
 /* ========================== */
 /* ========= utils ========== */
@@ -48,16 +48,25 @@ int	ft_find_path(t_data **data, char **envp)
 
 int	ft_is_metachar(char c)
 {
-	if (c == 34)
-		return (T_DQUOTE);
-	if (c == 39)
-		return (T_SQUOTE);
+	// if (c == 34)
+		// return (T_DQUOTE);
+	// if (c == 39)
+		// return (T_SQUOTE);
 	if (c == 60)
 		return (T_REDIR_IN);
 	if (c == 62)
 		return (T_REDIR_OUT);
 	if (c == 124)
 		return (T_PIPE);
+	return (0);
+}
+
+t_type	ft_is_quote(char c)
+{
+	if (c == 34)
+		return (T_DQUOTE);
+	if (c == 39)
+		return (T_SQUOTE);
 	return (0);
 }
 
