@@ -36,6 +36,7 @@ PARSE = $(PAR_DIR)/parse.c \
 
 TOKEN = $(TOK_DIR)/token.c \
         $(TOK_DIR)/token_utils.c \
+        $(TOK_DIR)/search_quotes.c \
 
 UTILS = $(UTILS_DIR)/utils.c \
     	$(UTILS_DIR)/banner.c \
@@ -66,7 +67,7 @@ COMPILED := 0
 all: $(NAME)
 
 $(NAME): $(OBJ) $(MINISHELL_LIB) $(LIBFT)
-	@$(CC) $(CFLAGS) -g $(OBJ) $(MINISHELL_LIB) $(LIBFT) $(LDFLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ) $(MINISHELL_LIB) $(LIBFT) $(LDFLAGS) -o $(NAME)
 	@clear
 	@echo "\e[1;32m \e[0m"
 	@echo "\e[1;32m \e[0m"

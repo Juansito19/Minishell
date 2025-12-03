@@ -6,7 +6,7 @@
 /*   By: jbrosio <jbrosio@student.42malaga.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 18:01:09 by jbrosio           #+#    #+#             */
-/*   Updated: 2025/11/10 20:49:35 by jbrosio          ###   ########.fr       */
+/*   Updated: 2025/12/03 02:46:34 by jbrosio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ size_t	ft_strlen(const char *s)
 	size_t	i;
 
 	i = 0;
+	if (!s)
+		return (0);
 	while (s[i] != '\0')
 		i++;
 	return (i);
