@@ -111,30 +111,30 @@ void	ft_search_quotes(t_token **token)
 
 // void	ft_search_quotes(t_token **token)
 // {
-	// t_token	*aux;
-	// t_token	*prev;
-	// int		i;
+// 	t_token	*aux;
+// 	t_token	*prev;
+// 	int		i;
 
-	// aux = (*token);
-	// prev = NULL;
-	// while (aux)
-	// {
-	// 	i = 0;
-	// 	while (aux->content[i])
-	// 	{
-	// 		if (ft_is_quote(aux->content[i]))
-	// 		{
-	// 			ft_token_clean_word(&aux);
-				// if (aux->content[0] == '\0')
-				// 	ft_deltoken(token, &aux, &prev);
-		// 		break ;
-		// 	}
-		// 	i++;
-		// }
-		// if (!i)
-		// 	continue ;
-		// prev = aux;
-		// if (aux)
+// 	aux = (*token);
+// 	prev = NULL;
+// 	while (aux)
+// 	{
+// 		i = 0;
+// 		while (aux->content[i])
+// 		{
+// 			if (ft_is_quote(aux->content[i]))
+// 			{
+// 				ft_token_clean_word(&aux);
+// 				if (aux->content[0] == '\0')
+// 					ft_deltoken(token, &aux, &prev);
+// 				break ;
+// 			}
+// 			i++;
+// 		}
+// 		if (!i)
+// 			continue ;
+// 		prev = aux;
+// 		if (aux)
 // 		aux = aux->next;
 // 	}
 // }

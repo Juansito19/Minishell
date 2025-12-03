@@ -69,7 +69,8 @@ t_type	ft_is_builtin(t_token **token)
 	builtins[4] = "unset";
 	builtins[5] = "exit";
 	builtins[6] = "env";
-	while (i < 7)
+	builtins[7] = NULL;
+	while (builtins[i])
 	{
 		if (!ft_strcmp(builtins[i], (*token)->content))
 			return (T_BUILTIN);
