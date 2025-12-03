@@ -13,10 +13,10 @@ void	print_token(t_token **token)
 	temp = (*token);
 	while (temp)
 	{
-		printf("───────────────────────────────────\n");
-		printf(">> [%d] = %s\n", i, temp->content);
+		ft_printf("───────────────────────────────────\n");
+		ft_printf(">> [%d] = %s\n", i, temp->content);
 		ft_write_type_branch(temp->type);
-		printf("───────────────────────────────────\n");
+		ft_printf("───────────────────────────────────\n");
 		i++;
 		temp = temp->next;
 	}
@@ -53,20 +53,20 @@ void	print_tree(t_tree **tree)
 		return ;
 	ft_write_type_branch((*tree)->type);
 	ft_double_putstr_fd((*tree)->content, 1);
-	printf("───────────────────────────────────\n");
+	ft_printf("───────────────────────────────────\n");
 	tmp_left = (*tree);
 	while (tmp_left->left)
 	{
-		printf("───────────────────────────────────\n");
-		printf("[left]\n");
+		ft_printf("───────────────────────────────────\n");
+		ft_printf("[left]\n");
 		print_tree(&tmp_left->left);
 		tmp_left = tmp_left->left;
 	}
 	tmp_right = (*tree);
 	while (tmp_right->right)
 	{
-		printf("───────────────────────────────────\n");
-		printf("[right]\n");
+		ft_printf("───────────────────────────────────\n");
+		ft_printf("[right]\n");
 		print_tree(&tmp_right->right);
 		tmp_right = tmp_right->right;
 	}
@@ -77,14 +77,14 @@ void	print_tree_recursive(t_tree *tree, int depth, char *prefix)
 	if (!tree)
 		return ;
 	for (int i = 0; i < depth; i++)
-		printf("    ");
-	printf("%s", prefix);
+		ft_printf("    ");
+	ft_printf("%s", prefix);
 	ft_write_type_branch(tree->type);
 	for (int j = 0; j < depth; j++)
-		printf("    ");
+		ft_printf("    ");
 	for (int i = 0; tree->content[i]; i++)
-		printf("%s ", tree->content[i]);
-	printf("\n");
+		ft_printf("%s ", tree->content[i]);
+	ft_printf("\n");
 	if (tree->left)
 		print_tree_recursive(tree->left, depth + 1, "├─L─ ");
 	if (tree->right)
@@ -93,7 +93,7 @@ void	print_tree_recursive(t_tree *tree, int depth, char *prefix)
 
 void	fprint_tree(t_tree **tree)
 {
-	printf("\n=== ÁRBOL BINARIO ===\n");
+	ft_printf("\n=== ÁRBOL BINARIO ===\n");
 	print_tree_recursive(*tree, 0, "ROOT ");
-	printf("=====================\n");
+	ft_printf("=====================\n");
 }
