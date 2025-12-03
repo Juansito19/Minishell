@@ -66,7 +66,7 @@ int	ft_change_or_add_var(char ***env, char *av)
 		(*env)[i] = ft_strdup(av);
 		if (!(*env)[i])
 		{
-			ft_pd_error(ERR_MALLOC, NULL);
+			ft_pd_error(ERR_MALLOC, NULL, 12);
 			return (1);
 		}
 	}
@@ -74,7 +74,7 @@ int	ft_change_or_add_var(char ***env, char *av)
 	{
 		new_env = ft_add_var((*env), av);
 		if (!new_env)
-			return (ft_pd_error(ERR_MALLOC, NULL));
+			return (ft_pd_error(ERR_MALLOC, NULL, 12));
 		(*env) = new_env;
 	}
 	return (0);

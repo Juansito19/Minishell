@@ -60,7 +60,7 @@ int	ft_unset(char ***env, char **av)
 	while (av[i])
 	{
 		if (ft_validate_av_unset(av[i]))
-			ft_pd_error(ERR_UNSET_INVALID, av[i]);
+			ft_pd_error(ERR_UNSET_INVALID, av[i], 1);
 		else
 			ft_unset_var(env, av[i]);
 		i++;

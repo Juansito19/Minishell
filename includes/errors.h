@@ -29,6 +29,6 @@
 /* ========== error =========== */
 
 int			ft_print_error(int error_code, char *s);
-int			ft_pd_error(char *format, char *s);
+int			ft_pd_error(char *format, char *s, int error_code);
 
 #endif

@@ -30,6 +30,8 @@ BUILTINS = $(BUIL_DIR)/builtins.c \
 	$(BUIL_DIR)/pwd.c \
 	$(BUIL_DIR)/unset.c \
 	$(BUIL_DIR)/echo.c \
+	$(BUIL_DIR)/exit.c \
+	$(BUIL_DIR)/env.c \
 
 PARSE = $(PAR_DIR)/parse.c \
         $(PAR_DIR)/parse_utils.c \

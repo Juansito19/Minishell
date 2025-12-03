@@ -13,7 +13,7 @@ int	ft_print_error(int error_code, char *s)
 	return (1);
 }
 
-int	ft_pd_error(char *format, char *s)
+int	ft_pd_error(char *format, char *s, int error_code)
 {
 	if (s)
 	{
@@ -22,5 +22,5 @@ int	ft_pd_error(char *format, char *s)
 	}
 	else
 		ft_printf(format);
-	return (1);
+	return (error_code);
 }

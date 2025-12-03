@@ -97,7 +97,7 @@ int	ft_update_pwd_vars(char ***env, char *oldpwd)
 	{
 		tmp = ft_strjoin("OLDPWD=", oldpwd);
 		if (!tmp)
-			return (ft_pd_error(ERR_MALLOC, NULL));
+			return (ft_pd_error(ERR_MALLOC, NULL, 12));
 		ft_change_or_add_var(env, tmp);
 		free(tmp);
 	}
@@ -106,7 +106,7 @@ int	ft_update_pwd_vars(char ***env, char *oldpwd)
 	{
 		tmp = ft_strjoin("PWD=", pwd_now);
 		if (!tmp)
-			return (ft_pd_error(ERR_MALLOC, NULL));
+			return (ft_pd_error(ERR_MALLOC, NULL, 12));
 		ft_change_or_add_var(env, tmp);
 		free(tmp);
 		free(pwd_now);
@@ -123,7 +123,7 @@ char	*ft_take_path(char ***env, char *av)
 		path = ft_get_var_value(*env, "HOME");
 		if (!path)
 		{
-			ft_pd_error(ERR_CD_NO_SUCH_FILE, "HOME");
+			ft_pd_error(ERR_CD_NO_SUCH_FILE, "HOME", 1);
 			return (NULL);
 		}
 	}
@@ -132,7 +132,7 @@ char	*ft_take_path(char ***env, char *av)
 		path = ft_get_var_value(*env, "OLDPWD");
 		if (!path)
 		{
-			ft_pd_error(ERR_CD_NO_SUCH_FILE, "OLDPWD");
+			ft_pd_error(ERR_CD_NO_SUCH_FILE, "OLDPWD", 1);
 			return (NULL);
 		}
 		ft_printf("%s\n", path);
@@ -155,7 +155,7 @@ int	ft_cd(char ***env, char *av)
 	{
 		free(oldpwd);
 		free(path);
-		return (ft_pd_error(ERR_CD_NO_SUCH_FILE, path));
+		return (ft_pd_error(ERR_CD_NO_SUCH_FILE, path, 1));
 	}
 	if (ft_update_pwd_vars(env, oldpwd))
 	{
