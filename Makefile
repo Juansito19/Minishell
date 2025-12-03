@@ -45,7 +45,8 @@ UTILS = $(UTILS_DIR)/utils.c \
     	$(UTILS_DIR)/error.c \
 
 YGGDRASIL = $(YGGDR_DIR)/yggdrasil.c \
-		$(YGGDR_DIR)/yggdrasil_utils.c
+		$(YGGDR_DIR)/yggdrasil_utils.c \
+		$(YGGDR_DIR)/yggdrasil_branch.c
 
 MINISHELL_LIB = minishell.a
 

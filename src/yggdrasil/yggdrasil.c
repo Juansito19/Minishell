@@ -88,56 +88,6 @@ char	**ft_fill_word_type(t_token *token, int size)
 	return (content);
 }
 
-int	ft_brnch_meta(t_token *meta, t_tree **tree, t_token **tokens, t_data **data)
-{
-	t_token	*left;
-	t_token	*right;
-	char	**word;
-
-	word = ft_fill_word_type(meta, 1);
-	if (!word)
-	{
-		ft_free_all(tree, tokens, NULL, word);
-		return (1);
-	}
-	(*tree) = ft_tree_init(word, ft_take_meta(meta->content), (*data)->path);
-	if (!(*tree))
-	{
-		ft_free_all(tree, tokens, NULL, word);
-		return (1);
-	}
-	left = ft_put_all_left(tokens, meta);
-	right = ft_put_all_right(&meta->next);
-	if (left)
-		ft_yggdrasil(&left, &(*tree)->left, data);
-	if (right)
-		ft_yggdrasil(&right, &(*tree)->right, data);
-	ft_free_tokens(&left);
-	ft_free_tokens(&right);
-	return (0);
-}
-
-int	ft_branch_word(t_tree **tree, t_token **tokens, char *path)
-{
-	char	**word;
-	t_type	type;
-
-	word = ft_fill_word_type((*tokens), ft_tk_size((*tokens)));
-	if (!word)
-	{
-		ft_free_all(tree, tokens, NULL, word);
-		return (1);
-	}
-	type = ft_is_builtin((*tokens));
-	(*tree) = ft_tree_init(word, type, path);
-	if (!(*tree))
-	{
-		ft_free_all(tree, tokens, NULL, word);
-		return (1);
-	}
-	return (0);
-}
-
 void	ft_yggdrasil(t_token **tokens, t_tree **tree, t_data **data)
 {
 	t_token	*token_pipe;
@@ -146,7 +96,7 @@ void	ft_yggdrasil(t_token **tokens, t_tree **tree, t_data **data)
 	token_pipe = ft_search_pipe(tokens);
 	if (token_pipe)
 	{
-		if (ft_brnch_meta(token_pipe, tree, tokens, data))
+		if (ft_branch_m(token_pipe, tree, tokens, data))
 			return ;
 		return ;
 	}
@@ -155,13 +105,13 @@ void	ft_yggdrasil(t_token **tokens, t_tree **tree, t_data **data)
 		token_red = ft_search_red(tokens);
 		if (token_red)
 		{
-			if (ft_brnch_meta(token_red, tree, tokens, data))
+			if (ft_branch_m(token_red, tree, tokens, data))
 				return ;
 			return ;
 		}
 		else
 		{
-			if (ft_branch_word(tree, tokens, (*data)->path))
+			if (ft_branch_w(tree, tokens, (*data)->path))
 				return ;
 		}
 	}
