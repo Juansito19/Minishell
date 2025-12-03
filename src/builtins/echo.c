@@ -1,19 +1,8 @@
 #include "minishell.h"
 
-/*
+// ====== ECHO ====== //
 
-el primer parametro me dice cuantos argumentos trabajamos:
-no es lo mismo:
-	echo hola
-	echo -n hola
-	echo -n hola que tal
-el int me dice:
-echo			-> ac[0] el propio builtin
--n				-> ac[1] (flag que cambia el comportamiento si lo hay)
-hola que tal	-> ac[2, 3, ...] (lo que se debe imprimir como tal)
-*/
-
-static void	write_bucle(int i, char **str)
+void	write_bucle(int i, char **str)
 {
 	int	j;
 
@@ -31,32 +20,55 @@ static void	write_bucle(int i, char **str)
 	}
 }
 
+int	ft_flag_echo(int *ind, char **str)
+{
+	int	i;
+	int	j;
+	int	n_flag;
+
+	i = 0;
+	n_flag = 0;
+	while (str[i])
+	{
+		if (!ft_strncmp(str[i], "-n", 2))
+		{
+			j = 2;
+			while (str[i][j] && str[i][j] == 'n')
+				j++;
+			if (str[i][j] == '\0')
+				n_flag = 1;
+			else
+				break ;
+		}
+		else
+			break ;
+		i++;
+	}
+	*ind = i;
+	return (n_flag);
+}
+
 int	ft_echo(int ac, char **str)
 {
 	int	i;
+	int	n_flag;
 
-	if (ac < 2 || str[1] == NULL)
+	n_flag = 0;
+
+	if (ac < 2 || str[2] == NULL)
 	{
 		ft_putchar_fd('\n', 1);
 		return (0);
 	}
 	if (ac >= 2)
 	{
-		i = 1;
-		if (ft_strncmp(str[i], "-n", 2))
-		{
-			write_bucle(i, str);
-			ft_putchar_fd('\n', 1);
-		}
+		n_flag = ft_flag_echo(&i, str + 2);
+		if (n_flag)
+			write_bucle(i, str + 2);
 		else
 		{
-			if (str[i + 1])
-			{
-				i++;
-				write_bucle(i, str);
-			}
-			else if (str[i + 1] == NULL)
-				i++;
+			write_bucle(i, str + 2);
+			ft_putchar_fd('\n', 1);
 		}
 	}
 	return (0);
