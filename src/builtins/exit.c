@@ -24,7 +24,7 @@ int	ft_exit(t_data **data, char **env, char *input, char **status)
 		while (status[i][j])
 		{
 			if (!ft_isdigit(status[i][j]))
-				exit(ft_pd_error(ERR_EXIT_NUMERIC, status[i][j], 2));
+				exit(ft_pd_error(ERR_EXIT_NUMERIC, status[i], 2));
 			else if (ft_isdigit(status[i][j]))
 				j++;
 		}
