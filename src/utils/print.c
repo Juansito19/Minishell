@@ -15,6 +15,7 @@ void	print_token(t_token **token)
 	{
 		ft_printf("───────────────────────────────────\n");
 		ft_printf(">> [%d] = %s\n", i, temp->content);
+		ft_printf(">> type -> %d\n", temp->type);
 		ft_write_type_branch(temp->type);
 		ft_printf("───────────────────────────────────\n");
 		i++;
@@ -83,7 +84,7 @@ void	print_tree_recursive(t_tree *tree, int depth, char *prefix)
 	for (int j = 0; j < depth; j++)
 		ft_printf("    ");
 	for (int i = 0; tree->content[i]; i++)
-		ft_printf("%s ", tree->content[i]);
+		ft_printf("%s$\n", tree->content[i]);
 	ft_printf("\n");
 	if (tree->left)
 		print_tree_recursive(tree->left, depth + 1, "├─L─ ");
