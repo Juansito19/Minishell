@@ -39,10 +39,10 @@ int	ft_export_no_av(char **env)
 
 	i = 0;
 	if (!env)
-		return (ft_pd_error(ERR_MALLOC, NULL));
+		return (ft_pd_error(ERR_MALLOC, NULL, 12));
 	env_cpy = ft_array_dup(env);
 	if (!env_cpy)
-		return (ft_pd_error(ERR_MALLOC, NULL));
+		return (ft_pd_error(ERR_MALLOC, NULL, 12));
 	ft_sort_env(env_cpy);
 	while (env_cpy[i])
 	{
@@ -101,7 +101,7 @@ int	ft_export(char ***env, char **av)
 	while (av[i])
 	{
 		if (ft_validate_av_export(av[i]))
-			ft_pd_error(ERR_EXPORT_INVALID, av[i]);
+			ft_pd_error(ERR_EXPORT_INVALID, av[i], 1);
 		else
 		{
 			if (ft_change_or_add_var(env, av[i]))

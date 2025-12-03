@@ -32,4 +32,18 @@ int			ft_validate_av_unset(char *av);
 int			ft_unset_var(char ***env, char *av);
 int			ft_unset(char ***env, char **av);
 
+// ========== ECHO =========== //
+
+int			ft_echo(int ac, char **str);
+void		write_bucle(int i, char **str);
+int			ft_flag_echo(int *ind, char **str);
+
+// ========== ENV =========== //
+
+int			ft_env(char **env);
+
+// ========== EXIT =========== //
+
+int			ft_exit(t_data **data, char **env, char *input, char **status);
+
 #endif

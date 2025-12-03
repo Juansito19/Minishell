@@ -67,7 +67,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	cpy_env = ft_array_dup(env);
 	if (!cpy_env)
-		return (ft_pd_error(ERR_MALLOC, NULL));
+		return (ft_pd_error(ERR_MALLOC, NULL, 12));
 	ft_random_banner();
 	ft_minishell(env);
 	ft_free_all_array(cpy_env);
