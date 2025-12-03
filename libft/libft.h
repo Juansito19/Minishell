@@ -6,7 +6,7 @@
 /*   By: jbrosio <jbrosio@student.42malaga.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 20:34:17 by jbrosio           #+#    #+#             */
-/*   Updated: 2025/11/30 23:03:12 by jbrosio          ###   ########.fr       */
+/*   Updated: 2025/12/03 01:18:02 by jbrosio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <fcntl.h>
 # include <limits.h>
 # include <stdarg.h>
-# include "../minishell.h"
+# include "../includes/minishell.h"
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
@@ -181,7 +181,7 @@ char		*ft_strdup(const char *s);
  * @param s Array of strings to duplicate.
  * @return New string or NULL if allocation fails.
  */
-char	**ft_array_dup(char **s);
+char		**ft_array_dup(char **s);
 
 /**
  * @brief Concatenates two strings into new allocated string.
@@ -587,6 +587,6 @@ void		ft_double_putstr_fd(char **s, int fd);
  */
 char		*ft_dblstr_join(char **str);
 
-void		*ft_free_all_array(char **big);
+void		*ft_free_all_array(char **array);
 
 #endif

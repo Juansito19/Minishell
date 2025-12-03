@@ -26,5 +26,9 @@
 # define ERR_EXIT_NUMERIC "exit: %s: numeric argument required"
 # define ERR_EXIT_TOO_MANY "exit: too many arguments"
 
+/* ========== error =========== */
+
+int			ft_print_error(int error_code, char *s);
+int			ft_pd_error(char *format, char *s);
 
 #endif
