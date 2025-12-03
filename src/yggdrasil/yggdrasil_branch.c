@@ -38,13 +38,15 @@ int	ft_branch_w(t_tree **tree, t_token **tokens, char *path)
 	char	**word;
 	t_type	type;
 
+	if (!tokens || !(*tokens))
+		return (1);
 	word = ft_fill_word_type((*tokens), ft_tk_size((*tokens)));
 	if (!word)
 	{
 		ft_free_all(tree, tokens, NULL, word);
 		return (1);
 	}
-	type = ft_is_builtin((*tokens));
+	type = ft_is_builtin(tokens);
 	(*tree) = ft_tree_init(word, type, path);
 	if (!(*tree))
 	{

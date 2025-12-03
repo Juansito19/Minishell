@@ -1,0 +1,79 @@
+#include "minishell.h"
+
+/* =================================== */
+/* ========= type_validator ========== */
+/* =================================== */
+
+int	ft_is_metachar(char c)
+{
+	if (c == 60)
+		return (T_REDIR_IN);
+	if (c == 62)
+		return (T_REDIR_OUT);
+	if (c == 124)
+		return (T_PIPE);
+	return (0);
+}
+
+t_type	ft_is_quote(char c)
+{
+	if (c == 34)
+		return (T_DQUOTE);
+	if (c == 39)
+		return (T_SQUOTE);
+	return (0);
+}
+
+t_type	ft_is_red(char *content)
+{
+	if (!content || !content[0])
+		return (0);
+	if (!ft_strncmp(content, "<", 2))
+		return (T_REDIR_IN);
+	else if (!ft_strncmp(content, ">", 2))
+		return (T_REDIR_OUT);
+	else if (!ft_strncmp(content, "<<", 3))
+		return (T_HEREDOC);
+	else if (!ft_strncmp(content, ">>", 3))
+		return (T_APPEND);
+	return (0);
+}
+
+t_type	ft_take_meta(char *content)
+{
+	if (!ft_strncmp(content, "|", 2))
+		return (T_PIPE);
+	else if (!ft_strncmp(content, "<", 2))
+		return (T_REDIR_IN);
+	else if (!ft_strncmp(content, ">", 2))
+		return (T_REDIR_OUT);
+	else if (!ft_strncmp(content, ">>", 3))
+		return (T_APPEND);
+	else if (!ft_strncmp(content, "<<", 3))
+		return (T_HEREDOC);
+	return (0);
+}
+
+t_type	ft_is_builtin(t_token **token)
+{
+	char	*builtins[7];
+	int		i;
+
+	if (!token || !(*token) || !(*token)->content)
+		return (T_CMD);
+	i = 0;
+	builtins[0] = "echo";
+	builtins[1] = "cd";
+	builtins[2] = "pwd";
+	builtins[3] = "export";
+	builtins[4] = "unset";
+	builtins[5] = "exit";
+	builtins[6] = "env";
+	while (i < 7)
+	{
+		if (!ft_strcmp(builtins[i], (*token)->content))
+			return (T_BUILTIN);
+		i++;
+	}
+	return (T_CMD);
+}

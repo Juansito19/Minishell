@@ -4,16 +4,38 @@
 /* ======== tokens ========= */
 /* ========================= */
 
+int	ft_token_size(char *s)
+{
+	int	i;
+	int	quote;
+
+	i = 0;
+	quote = 0;
+	while (s[i] && !ft_is_metachar(s[i]))
+	{
+		if (ft_is_quote(s[i]) && !quote)
+			quote = 1;
+		else if (ft_is_quote(s[i]) && quote)
+			quote = 0;
+		if (!i && !quote && s[i] == ' ')
+			return (-1);
+		if (s[i] == ' ' && !quote)
+			return (i);
+		i++;
+	}
+	return (i);
+}
+
 int	ft_token_word(t_token **tokens, char *s, int *ind)
 {
 	t_token	*new;
 	char	*word;
-	int		i;
+	int		size;
 
-	i = 0;
-	while (s[i] && !ft_is_metachar(s[i]) && s[i] != ' ')
-		i++;
-	word = ft_substr(s, 0, i);
+	size = ft_token_size(s);
+	if (size < 0)
+		return (0);
+	word = ft_substr(s, 0, size);
 	if (!word)
 		return (-1);
 	new = ft_token_init(word, T_WORD);
@@ -23,7 +45,7 @@ int	ft_token_word(t_token **tokens, char *s, int *ind)
 		return (-1);
 	}
 	ft_tokenadd_back(tokens, new);
-	*ind += i;
+	*ind += size;
 	return (0);
 }
 
