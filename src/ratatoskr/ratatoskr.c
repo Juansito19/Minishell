@@ -94,6 +94,12 @@ int	ft_ratatoskr(t_tree **yggdrasil)
 		while (1)
 		{
 			line = readline("> "); // SEÑALES DE CTRL_C || CTRL_D
+			if (!line)
+			{
+				free(tmp_name);
+				close(fd);
+				return (1);
+			}
 			if (!ft_strncmp(line, eof_branch->content[0], ft_strlen(line)))
 				break ;
 			ft_fprintf(fd, "%s", line);
