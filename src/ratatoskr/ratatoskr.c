@@ -104,12 +104,14 @@ int	ft_ratatoskr(t_tree **yggdrasil)
 		if (line)
 			free(line);
 		ft_free_all_array(eof_branch->content);
-		tmp = ft_split(tmp_name, ' ');
+		tmp = malloc(2 * sizeof(char *));
 		if (!tmp)
 		{
 			free(tmp_name);
 			return (ft_pd_error(ERR_MALLOC, NULL, 12));
 		}
+		tmp[0] = tmp_name;
+		tmp[1] = NULL;
 		eof_branch->content = tmp;
 		eof_branch->type = T_FD;
 		(*yggdrasil)->type = T_REDIR_IN;
