@@ -54,12 +54,12 @@ void	ft_clean_data(t_data **data)
 
 void	*ft_free_all(t_tree **tree, t_token **token, char **input, char ***s)
 {
-	if ((*tree))
+	if (tree)
 	{
 		ft_clean_yggdrasil(tree);
 		*tree = NULL;
 	}
-	if ((*token))
+	if (token)
 	{
 		ft_free_tokens(token);
 		*token = NULL;
