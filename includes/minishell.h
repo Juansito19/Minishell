@@ -5,6 +5,7 @@
 # include "builtins.h"
 # include "utils.h"
 # include "parse.h"
+# include "ratatoskr.h"
 # include "banner.h"
 # include "errors.h"
 # include <readline/readline.h>
@@ -73,7 +74,8 @@ typedef enum s_type
 	T_WORD,
 	T_CMD,
 	T_BUILTIN,
-	T_FD
+	T_FD,
+	T_EOF,
 }	t_type;
 
 /**

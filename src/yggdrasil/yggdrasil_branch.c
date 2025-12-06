@@ -13,14 +13,14 @@ int	ft_branch_m(t_token *meta, t_tree **tree, t_token **tokens, t_data **data)
 	word = ft_fill_word_type(meta, 1);
 	if (!word)
 	{
-		ft_free_all(tree, tokens, NULL, word);
-		return (1);
+		ft_free_all(tree, tokens, NULL, &word);
+		return (ft_pd_error(ERR_MALLOC, NULL, 12));
 	}
 	(*tree) = ft_tree_init(word, ft_take_meta(meta->content), (*data)->path);
 	if (!(*tree))
 	{
-		ft_free_all(tree, tokens, NULL, word);
-		return (1);
+		ft_free_all(tree, tokens, NULL, &word);
+		return (ft_pd_error(ERR_MALLOC, NULL, 12));
 	}
 	left = ft_put_all_left(tokens, meta);
 	right = ft_put_all_right(&meta->next);
@@ -43,15 +43,15 @@ int	ft_branch_w(t_tree **tree, t_token **tokens, char *path)
 	word = ft_fill_word_type((*tokens), ft_tk_size((*tokens)));
 	if (!word)
 	{
-		ft_free_all(tree, tokens, NULL, word);
-		return (1);
+		ft_free_all(tree, tokens, NULL, &word);
+		return (ft_pd_error(ERR_MALLOC, NULL, 12));
 	}
 	type = ft_is_builtin(tokens);
 	(*tree) = ft_tree_init(word, type, path);
 	if (!(*tree))
 	{
-		ft_free_all(tree, tokens, NULL, word);
-		return (1);
+		ft_free_all(tree, tokens, NULL, &word);
+		return (ft_pd_error(ERR_MALLOC, NULL, 12));
 	}
 	return (0);
 }

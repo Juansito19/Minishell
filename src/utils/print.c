@@ -43,6 +43,8 @@ void	ft_write_type_branch(t_type type)
 		printf("branch [command]\n");
 	if (type == T_BUILTIN)
 		printf("branch [builtin]\n");
+	if (type == T_EOF)
+		printf("branch [EOF]\n");
 }
 
 void	print_tree(t_tree **tree)

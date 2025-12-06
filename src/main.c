@@ -9,8 +9,11 @@ void	ft_check_input(t_data **data, char *input)
 	}
 	(*data)->tokens = ft_token(input, 0);
 	ft_search_quotes(&(*data)->tokens);
-	// print_token(&(*data)->tokens);
+	// ponemos los maracadores de eof
+	ft_search_eof(&(*data)->tokens);
+	print_token(&(*data)->tokens);
 	ft_yggdrasil(&(*data)->tokens, &(*data)->yggdrasil, data);
+	ft_ratatoskr(&(*data)->yggdrasil);
 	fprint_tree(&(*data)->yggdrasil);
 }
 
@@ -53,7 +56,7 @@ int	ft_minishell(char **env)
 			ft_clean_data(&data);
 			break ;
 		}
-		ft_free_all(&data->yggdrasil, &data->tokens, input, NULL);
+		ft_free_all(&data->yggdrasil, &data->tokens, &input, NULL);
 	}
 	rl_clear_history();
 	return (0);

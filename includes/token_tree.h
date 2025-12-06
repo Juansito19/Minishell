@@ -18,16 +18,6 @@ int			ft_token_meta(t_token **tokens, char *s, int *ind, t_type type);
 // ================================= //
 
 /* ================================= */
-/* ======= yggdrasil branch ======== */
-/* ================================= */
-
-int			ft_branch_m(t_token *meta, t_tree **tree,
-				t_token **tokens, t_data **data);
-int			ft_branch_w(t_tree **tree, t_token **tokens, char *path);
-
-// ================================= //
-
-/* ================================= */
 /* ========= tokens utils ========== */
 /* ================================= */
 
@@ -54,10 +44,18 @@ int			ft_token_clean_word(t_token **token);
 
 t_token		*ft_put_all_left(t_token **tokens, t_token *token_pipe);
 t_token		*ft_put_all_right(t_token **tokens);
-void		ft_treeadd_right(t_tree **tree, t_tree *new);
-void		ft_treeadd_left(t_tree **tree, t_tree *new);
 char		**ft_fill_word_type(t_token *token, int size);
-void		ft_yggdrasil(t_token **tokens, t_tree **tree, t_data **data);
+int			ft_yggdrasil(t_token **tokens, t_tree **tree, t_data **data);
+
+// ================================= //
+
+/* ================================= */
+/* ======= yggdrasil branch ======== */
+/* ================================= */
+
+int			ft_branch_m(t_token *meta, t_tree **tree,
+				t_token **tokens, t_data **data);
+int			ft_branch_w(t_tree **tree, t_token **tokens, char *path);
 
 // ================================= //
 
