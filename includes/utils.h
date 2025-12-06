@@ -9,29 +9,29 @@ typedef struct s_data	t_data;
 
 /* ========== utils =========== */
 
-int			ft_find_path(t_data **data, char **envp);
+int		ft_find_path(t_data **data, char **envp);
 
 /* ===== type_validator ====== */
 
-int			ft_is_metachar(char c);
-t_type		ft_is_builtin(t_token **token);
-t_type		ft_is_red(char *content);
-t_type		ft_take_meta(char *content);
-t_type		ft_is_quote(char c);
+int		ft_is_metachar(char c);
+t_type	ft_is_builtin(t_token **token);
+t_type	ft_is_red(char *content);
+t_type	ft_take_meta(char *content);
+t_type	ft_is_quote(char c);
 
 /* ========== clean =========== */
 
-void		ft_clean_yggdrasil(t_tree **tree);
-void		ft_free_tokens(t_token **head);
-void		ft_clean_data(t_data **data);
-void		ft_free_all(t_tree **tree, t_token **token, char *input, char **s);
+void	ft_clean_yggdrasil(t_tree **tree);
+void	ft_free_tokens(t_token **head);
+void	ft_clean_data(t_data **data);
+void	*ft_free_all(t_tree **tree, t_token **token, char **input, char ***s);
 
 /* ========== print =========== */
 
-void		print_token(t_token **token);
-void		ft_write_type_branch(t_type type);
-void		print_tree(t_tree **tree);
-void		print_tree_recursive(t_tree *tree, int depth, char *prefix);
-void		fprint_tree(t_tree **tree);
+void	print_token(t_token **token);
+void	ft_write_type_branch(t_type type);
+void	print_tree(t_tree **tree);
+void	print_tree_recursive(t_tree *tree, int depth, char *prefix);
+void	fprint_tree(t_tree **tree);
 
 #endif

@@ -52,7 +52,7 @@ void	ft_clean_data(t_data **data)
 	free((*data));
 }
 
-void	ft_free_all(t_tree **tree, t_token **token, char *input, char **s)
+void	*ft_free_all(t_tree **tree, t_token **token, char **input, char ***s)
 {
 	if ((*tree))
 	{
@@ -66,12 +66,13 @@ void	ft_free_all(t_tree **tree, t_token **token, char *input, char **s)
 	}
 	if (s)
 	{
-		ft_free_all_array(s);
+		ft_free_all_array(*s);
 		*s = NULL;
 	}
 	if (input)
 	{
-		free(input);
-		input = NULL;
+		free(*input);
+		*input = NULL;
 	}
+	return (NULL);
 }
