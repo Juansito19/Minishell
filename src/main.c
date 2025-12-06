@@ -11,7 +11,7 @@ void	ft_check_input(t_data **data, char *input)
 	ft_search_quotes(&(*data)->tokens);
 	// ponemos los maracadores de eof
 	ft_search_eof(&(*data)->tokens);
-	print_token(&(*data)->tokens);
+	// print_token(&(*data)->tokens);
 	ft_yggdrasil(&(*data)->tokens, &(*data)->yggdrasil, data);
 	ft_ratatoskr(&(*data)->yggdrasil);
 	fprint_tree(&(*data)->yggdrasil);
