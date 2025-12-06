@@ -17,6 +17,7 @@ INCLUDES = $(INCLUDES_DIR)/minishell.h \
 		$(INCLUDES_DIR)/parse.h \
 		$(INCLUDES_DIR)/utils.h \
 		$(INCLUDES_DIR)/ratatoskr.h \
+		$(INCLUDES_DIR)/heimdall.h \
 
 BUIL_DIR = src/builtins
 PAR_DIR = src/parse
@@ -24,6 +25,7 @@ TOK_DIR = src/token
 UTILS_DIR = src/utils
 YGGDR_DIR = src/yggdrasil
 RATATOSKR_DIR = src/ratatoskr
+HEIMDALL_DIR = src/heimdall
 
 BUILTINS = $(BUIL_DIR)/builtins.c \
 	$(BUIL_DIR)/cd.c \
@@ -39,6 +41,8 @@ PARSE = $(PAR_DIR)/parse.c \
 		$(PAR_DIR)/parse_utils.c \
 
 RATATOSKR = $(RATATOSKR_DIR)/ratatoskr.c \
+
+HEIMDALL = $(HEIMDALL_DIR)/heimdall.c \
 
 TOKEN = $(TOK_DIR)/token.c \
         $(TOK_DIR)/token_utils.c \
@@ -68,6 +72,7 @@ SRC = src/main.c \
 		$(PARSE) \
 		$(UTILS) \
 		$(RATATOSKR) \
+		$(HEIMDALL) \
 
 OBJ = $(SRC:%.c=obj/%.o)
 TOTAL_FILES := $(words $(SRC))

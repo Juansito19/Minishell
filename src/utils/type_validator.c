@@ -76,7 +76,6 @@ t_type	ft_is_builtin(t_token **token)
 			return (T_BUILTIN);
 		i++;
 	}
-	// condicion para devolver tipo eof
 	if ((*token)->type == T_EOF)
 		return (T_EOF);
 	return (T_CMD);
