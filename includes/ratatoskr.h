@@ -3,6 +3,7 @@
 
 /* ========== ratatoskr ========== */
 
+void	*ft_free_pointers(char *number, char *tmp);
 void	ft_search_eof(t_token **token);
 char	*ft_make_unic_name(void);
 void	ft_find_branch_eof(t_tree **yggdrasil, t_tree **eof);

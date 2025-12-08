@@ -41,6 +41,7 @@ PARSE = $(PAR_DIR)/parse.c \
 		$(PAR_DIR)/parse_utils.c \
 
 RATATOSKR = $(RATATOSKR_DIR)/ratatoskr.c \
+			$(RATATOSKR_DIR)/ratatoskr_utils.c \
 
 HEIMDALL = $(HEIMDALL_DIR)/heimdall.c \
 
