@@ -42,4 +42,3 @@ int	ft_redir_bucle_check(char *s, char quote)
 	}
 	return (0);
 }
-

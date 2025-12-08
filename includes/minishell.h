@@ -127,5 +127,4 @@ typedef struct s_data
 	int		exit_status;	/* Last command exit status */
 }	t_data;
 
-
 #endif

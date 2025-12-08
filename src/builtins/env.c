@@ -9,4 +9,3 @@ int	ft_env(char **env)
 	ft_double_putstr_fd(env, 1);
 	return (0);
 }
-

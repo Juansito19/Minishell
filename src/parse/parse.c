@@ -4,7 +4,6 @@
 /* ========= parse ========== */
 /* ========================== */
 
-
 /* ========== funcion principial =========== */
 
 int	ft_big_prick_parse(char *input)
