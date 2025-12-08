@@ -74,7 +74,7 @@ t_token	*ft_search_red(t_token **tokens)
 		return (NULL);
 	while (tmp)
 	{
-		if (ft_is_red(tmp->content))
+		if (ft_is_red(tmp->type))
 			return (tmp);
 		tmp = tmp->next;
 	}

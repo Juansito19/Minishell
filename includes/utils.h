@@ -15,7 +15,7 @@ int		ft_find_path(t_data **data, char **envp);
 
 int		ft_is_metachar(char c);
 t_type	ft_is_builtin(t_token **token);
-t_type	ft_is_red(char *content);
+t_type	ft_is_red(t_type type);
 t_type	ft_take_meta(char *content);
 t_type	ft_is_quote(char c);
 

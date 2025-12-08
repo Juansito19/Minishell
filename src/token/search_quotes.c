@@ -1,5 +1,9 @@
 #include "minishell.h"
 
+/*MIRAR LOGICA DE TOKENS*/
+/*MIRAR LOGICA DE TOKENS*/
+/*MIRAR LOGICA DE TOKENS*/
+
 void	ft_put_word(char *s, char **word, int i, int state)
 {
 	int	j;

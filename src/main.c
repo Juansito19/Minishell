@@ -8,10 +8,13 @@ void	ft_check_input(t_data **data, char *input)
 		return ;
 	}
 	(*data)->tokens = ft_token(input, 0);
+	// ft_real_quote(&(*data)->tokens);
+	// esta funcion hay que revisarla
+	//		|
+	//		V
 	ft_search_quotes(&(*data)->tokens);
-	// ponemos los maracadores de eof
-	ft_search_eof(&(*data)->tokens);
 	// print_token(&(*data)->tokens);
+	ft_search_eof(&(*data)->tokens);
 	ft_yggdrasil(&(*data)->tokens, &(*data)->yggdrasil, data);
 	ft_ratatoskr(&(*data)->yggdrasil);
 	fprint_tree(&(*data)->yggdrasil);

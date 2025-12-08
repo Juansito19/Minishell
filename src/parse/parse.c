@@ -52,7 +52,7 @@ int	ft_redir_check(char *s)
 
 	i = 0;
 	quote = 0;
-	while (s[i] && s[i] <= 32)
+	while (s[i] && ft_is_space(s[i]))
 		i++;
 	if (s[i] == '<')
 		return (1);
@@ -70,7 +70,7 @@ int	ft_pipe_check(char *s)
 
 	i = 0;
 	quote = 0;
-	while (s[i] && s[i] <= 32)
+	while (s[i] && ft_is_space(s[i]))
 		i++;
 	if (s[i] == '|')
 		return (1);
@@ -80,7 +80,7 @@ int	ft_pipe_check(char *s)
 		if (s[i] == '|' && !quote)
 		{
 			i++;
-			while (s[i] && s[i] <= 32)
+			while (s[i] && ft_is_space(s[i]))
 				i++;
 			if (s[i] == '|' || s[i] == '\0')
 				return (1);
