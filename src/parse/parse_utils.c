@@ -4,14 +4,45 @@
 /* ======= parse_utils ======== */
 /* ============================ */
 
-char	ft_quote_track(char c)
-{
-	char	quote;
+/*MODIFICAR FUNCIONES PARSEO COMILLAS, USAR BANDERAS INT*/
+/*MODIFICAR FUNCIONES PARSEO COMILLAS, USAR BANDERAS INT*/
+/*MODIFICAR FUNCIONES PARSEO COMILLAS, USAR BANDERAS INT*/
 
-	quote = 0;
+// void	ft_real_quote(t_token **token)
+// {
+// 	t_token	*aux;
+// 	int		f_quote;
+
+// 	f_quote = 0;
+// 	if (!(*token) || !token)
+// 		return ;
+// 	aux = (*token);
+// 	while ((*token))
+// 	{
+// 		if (!f_quote && ft_is_quote((*token)->content[0]) == 6)
+// 			f_quote = 1;
+// 		else if (!f_quote && ft_is_quote((*token)->content[0]) == 7)
+// 			f_quote = 2;
+// 		else if (f_quote == 1 && ft_is_quote((*token)->content[0]) == 6)
+// 			f_quote = 0;
+// 		else if (f_quote == 2 && ft_is_quote((*token)->content[0]) == 7)
+// 			f_quote = 0;
+// 		else if (f_quote == 2 && ft_is_quote((*token)->content[0]) == 6)
+// 			(*token)->type = T_CMD;
+// 		else if (f_quote == 1 && ft_is_quote((*token)->content[0]) == 7)
+// 			(*token)->type = T_CMD;
+// 		else
+// 			(*token)->type = T_CMD;
+// 		(*token) = (*token)->next;
+// 	}
+// 	(*token) = aux;
+// }
+
+char	ft_quote_track(char c, char quote)
+{
 	if (!quote && (c == '\'' || c == '\"'))
 		quote = c;
-	else
+	else if (quote && c == quote)
 		quote = 0;
 	return (quote);
 }
@@ -23,7 +54,7 @@ int	ft_redir_bucle_check(char *s, char quote)
 	i = 0;
 	while (s[i])
 	{
-		quote = ft_quote_track(s[i]);
+		quote = ft_quote_track(s[i], quote);
 		if ((s[i] == '>' || s[i] == '<') && !quote)
 		{
 			if (s[i] == '>' && s[i + 1] == '>')
@@ -42,4 +73,3 @@ int	ft_redir_bucle_check(char *s, char quote)
 	}
 	return (0);
 }
-

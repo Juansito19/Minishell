@@ -11,7 +11,6 @@ void	ft_random_banner(void)
 
 	pid = getpid();
 	banner_choice = (pid % 4) + 1;
-
 	if (banner_choice == 1)
 		ft_banner_1();
 	else if (banner_choice == 2)

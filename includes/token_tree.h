@@ -32,9 +32,10 @@ int			ft_tk_size(t_token *lst);
 /* ================================= */
 
 void		ft_search_quotes(t_token **token);
-void		ft_put_word(char *s, char **word, int i, int state);
+void		ft_put_word(char *s, char **word, int i, int *state);
 int			ft_token_word_size(char *s, int i, int count, int state);
 int			ft_token_clean_word(t_token **token);
+// int			ft_token_clean_word(t_token **token, int state);
 
 // ================================= //
 

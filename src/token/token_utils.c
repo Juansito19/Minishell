@@ -41,5 +41,3 @@ int	ft_tk_size(t_token *lst)
 	}
 	return (i);
 }
-
-

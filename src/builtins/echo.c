@@ -54,7 +54,6 @@ int	ft_echo(int ac, char **str)
 	int	n_flag;
 
 	n_flag = 0;
-
 	if (ac < 2 || str[2] == NULL)
 	{
 		ft_putchar_fd('\n', 1);

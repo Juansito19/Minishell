@@ -9,9 +9,8 @@ void	ft_check_input(t_data **data, char *input)
 	}
 	(*data)->tokens = ft_token(input, 0);
 	ft_search_quotes(&(*data)->tokens);
-	// ponemos los maracadores de eof
+	print_token(&(*data)->tokens);
 	ft_search_eof(&(*data)->tokens);
-	// print_token(&(*data)->tokens);
 	ft_yggdrasil(&(*data)->tokens, &(*data)->yggdrasil, data);
 	ft_ratatoskr(&(*data)->yggdrasil);
 	fprint_tree(&(*data)->yggdrasil);
@@ -71,7 +70,8 @@ int	main(int ac, char **av, char **env)
 	cpy_env = ft_array_dup(env);
 	if (!cpy_env)
 		return (ft_pd_error(ERR_MALLOC, NULL, 12));
-	ft_random_banner();
+	// ft_random_banner();
+	ft_banner_3();
 	ft_minishell(env);
 	ft_free_all_array(cpy_env);
 	return (0);
