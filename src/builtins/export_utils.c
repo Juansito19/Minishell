@@ -1,5 +1,9 @@
 #include "minishell.h"
 
+// ========================== //
+// ====== EXPORT_UTILS ====== //
+// ========================== //
+
 void	ft_sort_env(char **env)
 {
 	char	*aux;

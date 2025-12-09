@@ -46,4 +46,6 @@ int			ft_env(char **env);
 
 int			ft_exit(t_data **data, char ***env, char **input, char **status);
 
+/* ============================ */
+
 #endif

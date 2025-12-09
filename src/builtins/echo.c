@@ -1,6 +1,8 @@
 #include "minishell.h"
 
+// ================== //
 // ====== ECHO ====== //
+// ================== //
 
 void	write_bucle(int i, char **str)
 {
