@@ -11,12 +11,18 @@ int	ft_token_size(char *s)
 
 	i = 0;
 	quote = 0;
-	while (s[i] && !ft_is_metachar(s[i]))
+	while (s[i])
 	{
-		if (ft_is_quote(s[i]) && !quote)
-			quote = 1;
-		else if (ft_is_quote(s[i]) && quote)
+		if (ft_is_quote(s[i]) == T_DQUOTE && !quote)
+			quote = 2;
+		else if (ft_is_quote(s[i]) == T_DQUOTE && quote == 2)
 			quote = 0;
+		else if (ft_is_quote(s[i]) == T_SQUOTE && !quote)
+			quote = 1;
+		else if (ft_is_quote(s[i]) == T_SQUOTE && quote == 1)
+			quote = 0;
+		if (ft_is_metachar(s[i]) && !quote)
+			break ;
 		if (!i && !quote && s[i] == ' ')
 			return (-1);
 		if (s[i] == ' ' && !quote)
