@@ -1,5 +1,9 @@
 #include "minishell.h"
 
+/* ================================ */
+/* ======= ratatoskr_utils ======== */
+/* ================================ */
+
 void	*ft_free_pointers(char *number, char *tmp)
 {
 	if (tmp)

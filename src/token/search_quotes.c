@@ -1,5 +1,9 @@
 #include "minishell.h"
 
+/* ================================ */
+/* ======== search_quotes ========= */
+/* ================================ */
+
 void	ft_put_word(char *s, char **word, int i, int *state)
 {
 	int	j;
@@ -19,10 +23,10 @@ void	ft_put_word(char *s, char **word, int i, int *state)
 			(*word)[++j] = s[i];
 		else if (ft_is_quote(s[i]) == T_SQUOTE && *state == 2)
 			(*word)[++j] = s[i];
-		else if (s[i] == '$' && *state == 2)
-			(*word)[++j] = s[i];
-		else if (s[i] == '$' && *state == 1)
-			(*word)[++j] = s[i];
+		else if (s[i] == '$' && *state == 2)	// -
+			(*word)[++j] = s[i];				// |--> esto creo que es al pedo
+		else if (s[i] == '$' && *state == 1)	// |	   (tener en cuenta)
+			(*word)[++j] = s[i];				// -
 		else if (!ft_is_quote(s[i]))
 			(*word)[++j] = s[i];
 		i++;
@@ -45,10 +49,10 @@ int	ft_token_word_size(char *s, int i, int count, int state)
 			count++;
 		else if (ft_is_quote(s[i]) == T_SQUOTE && state == 2)
 			count++;
-		else if (s[i] == '$' && state == 2)
-			count++;
-		else if (s[i] == '$' && state == 1)
-			count++;
+		else if (s[i] == '$' && state == 2)	// -
+			count++;						// |---> esto creo que es al pedo
+		else if (s[i] == '$' && state == 1)	// |	     (tener en cuenta)
+			count++;						// -
 		else if (!ft_is_quote(s[i]))
 			count++;
 		i++;
@@ -56,7 +60,7 @@ int	ft_token_word_size(char *s, int i, int count, int state)
 	return (count);
 }
 
-void	ft_change_type_token(t_type type, int *flag)
+void	ft_change_flag(t_type type, int *flag)
 {
 	if (type == T_DQUOTE && *flag == 0)
 		*flag = 2;
@@ -80,7 +84,7 @@ int	ft_token_clean_word(t_token **token)
 	while ((*token)->content[x])
 	{
 		type = ft_is_quote((*token)->content[x]);
-		ft_change_type_token(type, &flag);
+		ft_change_flag(type, &flag);
 		x++;
 	}
 	i = ft_token_word_size((*token)->content, 0, 0, flag);

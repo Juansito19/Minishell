@@ -1,5 +1,9 @@
 #include "minishell.h"
 
+// ================= //
+// ====== EXIT ===== //
+// ================= //
+
 static void	ft_terminator(t_data **data, char ***env, char **input)
 {
 	ft_clean_data(data);

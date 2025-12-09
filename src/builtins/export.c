@@ -1,6 +1,8 @@
 #include "minishell.h"
 
+// ==================== //
 // ====== EXPORT ====== //
+// ==================== //
 
 /* 
 Sin argumentos: muestra todas las variables de 
