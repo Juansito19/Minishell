@@ -9,6 +9,9 @@ void	ft_check_input(t_data **data, char *input)
 	}
 	(*data)->tokens = ft_token(input, 0);
 	ft_search_quotes(&(*data)->tokens);
+	// Aca se expanden las variables
+	// Hay que agregar la logica para " echo $? "
+	// SOLO EXPANDE en el caso que le sigan ['] sino queda como esta
 	print_token(&(*data)->tokens);
 	ft_search_eof(&(*data)->tokens);
 	ft_yggdrasil(&(*data)->tokens, &(*data)->yggdrasil, data);

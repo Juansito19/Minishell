@@ -68,9 +68,9 @@ int	ft_chg_b(t_tree **yggdrasil, char **tmp_name, int fd, t_tree **eof_branch)
 			close(fd);
 			return (1);
 		}
-		if (!ft_strncmp(line, (*eof_branch)->content[0], ft_strlen(line)))
+		if (!ft_strcmp(line, (*eof_branch)->content[0]))
 			break ;
-		ft_fprintf(fd, "%s", line);
+		ft_fprintf(fd, "%s\n", line);
 		free(line);
 		line = NULL;
 	}
