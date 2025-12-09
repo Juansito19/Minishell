@@ -76,7 +76,7 @@ int	ft_pipe_check(char *s)
 		return (1);
 	while (s[i])
 	{
-		quote = ft_quote_track(s[i]);
+		quote = ft_quote_track(s[i], quote);
 		if (s[i] == '|' && !quote)
 		{
 			i++;

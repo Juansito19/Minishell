@@ -38,14 +38,11 @@
 // 	(*token) = aux;
 // }
 
-char	ft_quote_track(char c)
+char	ft_quote_track(char c, char quote)
 {
-	char	quote;
-
-	quote = 0;
 	if (!quote && (c == '\'' || c == '\"'))
 		quote = c;
-	else
+	else if (quote && c == quote)
 		quote = 0;
 	return (quote);
 }
@@ -57,7 +54,7 @@ int	ft_redir_bucle_check(char *s, char quote)
 	i = 0;
 	while (s[i])
 	{
-		quote = ft_quote_track(s[i]);
+		quote = ft_quote_track(s[i], quote);
 		if ((s[i] == '>' || s[i] == '<') && !quote)
 		{
 			if (s[i] == '>' && s[i + 1] == '>')
