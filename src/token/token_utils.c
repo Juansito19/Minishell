@@ -8,10 +8,19 @@ t_token	*ft_token_init(void *content, t_type type)
 {
 	t_token	*new_token;
 
+	if (!content)
+	{
+		ft_pd_error(ERR_MALLOC, NULL, 12);
+		return (NULL);
+	}
 	new_token = (t_token *)malloc(1 * sizeof(t_token));
 	if (!new_token)
+	{
+		ft_pd_error(ERR_MALLOC, NULL, 12);
 		return (NULL);
+	}
 	new_token->next = NULL;
+	new_token->expand = 0;
 	new_token->content = content;
 	new_token->type = type;
 	return (new_token);

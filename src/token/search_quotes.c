@@ -90,7 +90,7 @@ int	ft_token_clean_word(t_token **token)
 	i = ft_token_word_size((*token)->content, 0, 0, flag);
 	word = malloc(i + 1 * sizeof(char));
 	if (!word)
-		return (1);
+		return (ft_pd_error(ERR_MALLOC, NULL, 12));
 	word[i] = '\0';
 	ft_put_word((*token)->content, &word, 0, &flag);
 	(*token)->type = T_CMD;
@@ -112,7 +112,8 @@ void	ft_search_quotes(t_token **token)
 		{
 			if (ft_is_quote(aux->content[i]))
 			{
-				ft_token_clean_word(&aux);
+				if (ft_token_clean_word(&aux))
+					return ;
 				break ;
 			}
 			i++;

@@ -45,6 +45,8 @@ void	ft_clean_data(t_data **data)
 		return ;
 	if ((*data)->path)
 		free((*data)->path);
+	if ((*data)->env)
+		ft_free_all_array((*data)->env);
 	if ((*data)->yggdrasil)
 		ft_clean_yggdrasil(&(*data)->yggdrasil);
 	if ((*data)->tokens)

@@ -94,6 +94,11 @@ int	ft_ratatoskr(t_tree **yggdrasil)
 		if (!tmp_name)
 			return (1);
 		fd = open(tmp_name, O_CREAT | O_WRONLY, 0644);
+		if (fd < 0)
+		{
+			free(tmp_name);
+			return (ft_pd_error(ERR_NO_SUCH_FILE, tmp_name, 1));
+		}
 		ft_find_branch_eof(&(*yggdrasil)->right, &eof_branch);
 		ft_chg_b(yggdrasil, &tmp_name, fd, &eof_branch);
 	}

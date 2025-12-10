@@ -71,4 +71,14 @@ void		ft_treeadd_left(t_tree **tree, t_tree *new);
 
 // ================================= //
 
+/* ========================== */
+/* ======== expander ======== */
+/* ========================== */
+
+void		ft_need_to_expand(t_token **token);
+int			ft_expand_var(t_token **token, char **env);
+int			ft_expand(t_token **token, char **env);
+
+// =========================== //
+
 #endif

@@ -42,8 +42,6 @@ int	ft_token_word(t_token **tokens, char *s, int *ind)
 	if (size < 0)
 		return (0);
 	word = ft_substr(s, 0, size);
-	if (!word)
-		return (-1);
 	new = ft_token_init(word, T_WORD);
 	if (!new)
 	{
@@ -66,8 +64,6 @@ int	ft_token_meta(t_token **tokens, char *s, int *ind, t_type type)
 		word = ft_substr(s, 0, 2);
 	else
 		word = ft_substr(s, 0, 1);
-	if (!word)
-		return (-1);
 	new = ft_token_init(word, type);
 	if (!new)
 	{

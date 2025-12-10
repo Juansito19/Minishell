@@ -8,11 +8,12 @@ void	ft_check_input(t_data **data, char *input)
 		return ;
 	}
 	(*data)->tokens = ft_token(input, 0);
-	ft_search_quotes(&(*data)->tokens);
-	// Aca se expanden las variables
-	// Hay que agregar la logica para " echo $? "
-	// SOLO EXPANDE en el caso que le sigan ['] sino queda como esta
+	printf("PRIMERO\n");
 	print_token(&(*data)->tokens);
+	ft_expand(&(*data)->tokens, (*data)->env);
+	printf("SEGUNDO\n");
+	print_token(&(*data)->tokens);
+	ft_search_quotes(&(*data)->tokens);
 	ft_search_eof(&(*data)->tokens);
 	ft_yggdrasil(&(*data)->tokens, &(*data)->yggdrasil, data);
 	ft_ratatoskr(&(*data)->yggdrasil);
@@ -25,40 +26,45 @@ t_data	*ft_init_data(char **env)
 
 	data = malloc(1 * sizeof(t_data));
 	if (!data)
+	{
+		ft_pd_error(ERR_MALLOC, NULL, 12);
 		return (NULL);
-	data->exit_status = -1;
+	}
+	data->exit_status = 0;
 	data->infile = -1;
 	data->outfile = -1;
 	data->path = NULL;
 	ft_find_path(&data, env);
+	data->env = ft_array_dup(env);
 	data->tokens = NULL;
 	data->yggdrasil = NULL;
 	return (data);
 }
 
-int	ft_minishell(char **env)
+int	ft_minishell(t_data **data)
 {
 	char	*input;
-	t_data	*data;
 
-	data = ft_init_data(env);
+	input = NULL;
 	while (1)
 	{
 		input = readline("bostero$> ");
 		if (!input)
 		{
+			free(input);
+			ft_clean_data(data);
 			printf("exit\n");
 			break ;
 		}
-		ft_check_input(&data, input);
+		ft_check_input(data, input);
 		add_history(input);
 		if (!ft_strncmp(input, "exit", 5))
 		{
 			free(input);
-			ft_clean_data(&data);
+			ft_clean_data(data);
 			break ;
 		}
-		ft_free_all(&data->yggdrasil, &data->tokens, &input, NULL);
+		ft_free_all(&(*data)->yggdrasil, &(*data)->tokens, &input, NULL);
 	}
 	rl_clear_history();
 	return (0);
@@ -66,16 +72,15 @@ int	ft_minishell(char **env)
 
 int	main(int ac, char **av, char **env)
 {
-	char	**cpy_env;
+	t_data	*data;
 
 	(void)ac;
 	(void)av;
-	cpy_env = ft_array_dup(env);
-	if (!cpy_env)
+	data = ft_init_data(env);
+	if (!data)
 		return (ft_pd_error(ERR_MALLOC, NULL, 12));
 	// ft_random_banner();
 	ft_banner_3();
-	ft_minishell(env);
-	ft_free_all_array(cpy_env);
+	ft_minishell(&data);
 	return (0);
 }
