@@ -35,6 +35,7 @@ void	ft_clean_yggdrasil(t_tree **tree);
 void	ft_free_tokens(t_token **head);
 void	ft_clean_data(t_data **data);
 void	*ft_free_all(t_tree **tree, t_token **token, char **input, char ***s);
+int		ft_clean_expanders(t_expand **expander);
 
 /* ============================ */
 
