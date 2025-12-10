@@ -6,7 +6,7 @@
 /*   By: jbrosio <jbrosio@student.42malaga.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 23:00:43 by jbrosio           #+#    #+#             */
-/*   Updated: 2025/11/30 23:00:56 by jbrosio          ###   ########.fr       */
+/*   Updated: 2025/12/10 18:33:54 by jbrosio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	**ft_array_dup(char **s)
 
 	i = 0;
 	size = 0;
+	if (!s || !*s)
+		return (NULL);
 	while (s[size])
 		size++;
 	res = ft_calloc(size + 1, sizeof(char *));

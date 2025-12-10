@@ -88,6 +88,7 @@ typedef struct s_token
 {
 	t_type			type;		/* Token classification (word/operator) */
 	char			*content;	/* Token string content */
+	int				expand;		/* Expand's flag [0]no, [1]yes */
 	struct s_token	*next;		/* Pointer to next token in list */
 }	t_token;
 
@@ -122,6 +123,7 @@ typedef struct s_data
 	t_token	*tokens;		/* Linked list of input tokens */
 	t_tree	*yggdrasil;		/* Binary tree of yggdrasil */
 	char	*path;			/* PATH environment variable */
+	char	**env;			/* Environments variables */
 	int		infile;			/* Standard input backup fd */
 	int		outfile;		/* Standard output backup fd */
 	int		exit_status;	/* Last command exit status */

@@ -23,6 +23,22 @@ void	ft_free_tokens(t_token **head)
 	*head = NULL;
 }
 
+int	ft_clean_expanders(t_expand **expander)
+{
+	if ((*expander)->init_quote)
+		free((*expander)->init_quote);
+	if ((*expander)->end_quote)
+		free((*expander)->end_quote);
+	if ((*expander)->var)
+		free((*expander)->var);
+	if ((*expander)->tmp_var)
+		free((*expander)->tmp_var);
+	if ((*expander)->aux)
+		free((*expander)->aux);
+	free((*expander));
+	return (1);
+}
+
 void	ft_clean_yggdrasil(t_tree **tree)
 {
 	if (!(*tree))
@@ -45,6 +61,8 @@ void	ft_clean_data(t_data **data)
 		return ;
 	if ((*data)->path)
 		free((*data)->path);
+	if ((*data)->env)
+		ft_free_all_array((*data)->env);
 	if ((*data)->yggdrasil)
 		ft_clean_yggdrasil(&(*data)->yggdrasil);
 	if ((*data)->tokens)

@@ -15,6 +15,7 @@ void	print_token(t_token **token)
 	{
 		ft_printf("───────────────────────────────────\n");
 		ft_printf(">> [%d] = %s\n", i, temp->content);
+		ft_printf(">> expander -> %d\n", temp->expand);
 		ft_printf(">> type -> %d\n", temp->type);
 		ft_write_type_branch(temp->type);
 		ft_printf("───────────────────────────────────\n");

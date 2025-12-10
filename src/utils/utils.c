@@ -32,15 +32,12 @@ int	ft_find_path(t_data **data, char **envp)
 		{
 			(*data)->path = ft_strdup(envp[i]);
 			if (!(*data)->path)
-				return (ft_print_error(12, NULL));
+				return (ft_pd_error(ERR_MALLOC, NULL, 12));
 			break ;
 		}
 		i++;
 	}
 	if (!(*data)->path)
-	{
-		// ft_print_error(0, "Error: PATH variable not found in environment\n");
-		return (1);
-	}
+		return (ft_pd_error(ERR_VAR_NOTFOUND, "PATH", 1));
 	return (0);
 }

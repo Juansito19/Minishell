@@ -48,6 +48,8 @@ HEIMDALL = $(HEIMDALL_DIR)/heimdall.c \
 TOKEN = $(TOK_DIR)/token.c \
         $(TOK_DIR)/token_utils.c \
         $(TOK_DIR)/search_quotes.c \
+        $(TOK_DIR)/mimir.c \
+        $(TOK_DIR)/mimir_utils.c \
 
 UTILS = $(UTILS_DIR)/utils.c \
     	$(UTILS_DIR)/banner.c \

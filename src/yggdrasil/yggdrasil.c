@@ -70,7 +70,10 @@ char	**ft_fill_word_type(t_token *token, int size)
 
 	content = ft_calloc(size + 1, sizeof(char *));
 	if (!content)
+	{
+		ft_pd_error(ERR_MALLOC, NULL, 12);
 		return (NULL);
+	}
 	i = 0;
 	aux = token;
 	while (i < size)
@@ -78,10 +81,8 @@ char	**ft_fill_word_type(t_token *token, int size)
 		content[i] = ft_strdup(aux->content);
 		if (!content[i])
 		{
-			ft_free_all_array(content);
-			free(content);
 			ft_pd_error(ERR_MALLOC, NULL, 12);
-			return (NULL);
+			return (ft_free_all_array(content));
 		}
 		aux = aux->next;
 		i++;

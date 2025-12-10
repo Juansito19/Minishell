@@ -9,9 +9,9 @@ int	ft_token_size(char *s)
 	int	i;
 	int	quote;
 
-	i = 0;
+	i = -1;
 	quote = 0;
-	while (s[i])
+	while (s[++i])
 	{
 		if (ft_is_quote(s[i]) == T_DQUOTE && !quote)
 			quote = 2;
@@ -27,7 +27,6 @@ int	ft_token_size(char *s)
 			return (-1);
 		if (s[i] == ' ' && !quote)
 			return (i);
-		i++;
 	}
 	return (i);
 }
@@ -41,9 +40,10 @@ int	ft_token_word(t_token **tokens, char *s, int *ind)
 	size = ft_token_size(s);
 	if (size < 0)
 		return (0);
-	word = ft_substr(s, 0, size);
-	if (!word)
-		return (-1);
+	if (s[1] && s[0] == '$' && ft_is_quote(s[1]))
+		word = ft_substr(s, 1, size);
+	else
+		word = ft_substr(s, 0, size);
 	new = ft_token_init(word, T_WORD);
 	if (!new)
 	{
@@ -66,8 +66,6 @@ int	ft_token_meta(t_token **tokens, char *s, int *ind, t_type type)
 		word = ft_substr(s, 0, 2);
 	else
 		word = ft_substr(s, 0, 1);
-	if (!word)
-		return (-1);
 	new = ft_token_init(word, type);
 	if (!new)
 	{

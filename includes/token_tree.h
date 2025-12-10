@@ -2,6 +2,17 @@
 # define TOKEN_TREE_H
 # include "./minishell.h"
 
+typedef struct s_expand
+{
+	char	*init_quote;
+	char	*end_quote;
+	char	*var;
+	char	*tmp_var;
+	char	*aux;
+	int		s_init;
+	int		s_end;
+}	t_expand;
+
 typedef enum s_type		t_type;
 typedef struct s_token	t_token;
 typedef struct s_tree	t_tree;
@@ -70,5 +81,29 @@ void		ft_treeadd_right(t_tree **tree, t_tree *new);
 void		ft_treeadd_left(t_tree **tree, t_tree *new);
 
 // ================================= //
+
+/* ================================= */
+/* ============= mimir ============= */
+/* ================================= */
+
+void		ft_aux_need_to_expand(t_token **tkn, int state);
+void		ft_need_to_expand(t_token **token);
+int			ft_expand_var(t_token **token, char **env, int exit_status);
+int			ft_mimir(t_token **token, char **env, int exit_status);
+int			ft_process_var(t_expand **exp, char **env, int exit, char *cont);
+
+/* ================================= */
+
+/* ================================= */
+/* ========== mimir utils ========== */
+/* ================================= */
+
+t_expand	*ft_init_expanders(void);
+int			ft_found_var(t_expand **exp, t_token **token);
+int			ft_no_found_var(t_expand **exp, t_token **token);
+int			ft_handle_end_quote(t_expand **exp, char *content);
+int			ft_handle_init_quote(t_expand **exp, char *content);
+
+/* ================================= */
 
 #endif
