@@ -1,10 +1,10 @@
-#include "../minishell.h"
+#include "minishell.h"
 
 /* ================================= */
-/* ========== tree utils =========== */
+/* ======= yggdrasil utils ========= */
 /* ================================= */
 
-t_tree	*ft_tree_init(char **content, t_token_type type)
+t_tree	*ft_tree_init(char **content, t_type type, char *path)
 {
 	t_tree	*new_tree;
 
@@ -17,7 +17,12 @@ t_tree	*ft_tree_init(char **content, t_token_type type)
 	new_tree->outfile = -1;
 	new_tree->pipe[0] = -1;
 	new_tree->pipe[1] = -1;
-	new_tree->path = NULL;
+	new_tree->path = ft_strdup(path);
+	if (!new_tree->path)
+	{
+		ft_pd_error(ERR_MALLOC, NULL, 12);
+		return (NULL);
+	}
 	new_tree->type = type;
 	new_tree->content = content;
 	return (new_tree);
@@ -72,7 +77,7 @@ t_token	*ft_search_red(t_token **tokens)
 		return (NULL);
 	while (tmp)
 	{
-		if (ft_is_red(tmp->content))
+		if (ft_is_red(tmp->type))
 			return (tmp);
 		tmp = tmp->next;
 	}

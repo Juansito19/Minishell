@@ -1,27 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_double_free.c                                   :+:      :+:    :+:   */
+/*   ft_array_dup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbrosio <jbrosio@student.42malaga.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/10 20:13:19 by jbrosio           #+#    #+#             */
-/*   Updated: 2025/12/03 01:06:17 by jbrosio          ###   ########.fr       */
+/*   Created: 2025/11/30 23:00:43 by jbrosio           #+#    #+#             */
+/*   Updated: 2025/12/10 18:33:54 by jbrosio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-void	*ft_free_all_array(char **array)
+char	**ft_array_dup(char **s)
 {
+	char	**res;
+	int		size;
 	int		i;
 
 	i = 0;
-	while (array[i])
+	size = 0;
+	if (!s || !*s)
+		return (NULL);
+	while (s[size])
+		size++;
+	res = ft_calloc(size + 1, sizeof(char *));
+	if (!res)
+		return (NULL);
+	while (s[i] && size > 0)
 	{
-		free(array[i]);
+		res[i] = ft_strdup(s[i]);
+		if (!res[i])
+			return (ft_free_all_array(res));
 		i++;
+		size--;
 	}
-	free(array);
-	return (NULL);
+	return (res);
 }

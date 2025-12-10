@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "minishell.h"
 
 /* ========================== */
 /* ==========print=========== */
@@ -13,15 +13,18 @@ void	print_token(t_token **token)
 	temp = (*token);
 	while (temp)
 	{
-		printf("───────────────────────────────────\n");
-		printf(">> [%d] = %s\n", i, temp->content);
-		printf("───────────────────────────────────\n");
+		ft_printf("───────────────────────────────────\n");
+		ft_printf(">> [%d] = %s\n", i, temp->content);
+		ft_printf(">> expander -> %d\n", temp->expand);
+		ft_printf(">> type -> %d\n", temp->type);
+		ft_write_type_branch(temp->type);
+		ft_printf("───────────────────────────────────\n");
 		i++;
 		temp = temp->next;
 	}
 }
 
-void	ft_write_type_branch(t_token_type type)
+void	ft_write_type_branch(t_type type)
 {
 	if (type == T_PIPE)
 		printf("branch [PIPE]\n");
@@ -41,6 +44,8 @@ void	ft_write_type_branch(t_token_type type)
 		printf("branch [command]\n");
 	if (type == T_BUILTIN)
 		printf("branch [builtin]\n");
+	if (type == T_EOF)
+		printf("branch [EOF]\n");
 }
 
 void	print_tree(t_tree **tree)
@@ -52,20 +57,20 @@ void	print_tree(t_tree **tree)
 		return ;
 	ft_write_type_branch((*tree)->type);
 	ft_double_putstr_fd((*tree)->content, 1);
-	printf("───────────────────────────────────\n");
+	ft_printf("───────────────────────────────────\n");
 	tmp_left = (*tree);
 	while (tmp_left->left)
 	{
-		printf("───────────────────────────────────\n");
-		printf("[left]\n");
+		ft_printf("───────────────────────────────────\n");
+		ft_printf("[left]\n");
 		print_tree(&tmp_left->left);
 		tmp_left = tmp_left->left;
 	}
 	tmp_right = (*tree);
 	while (tmp_right->right)
 	{
-		printf("───────────────────────────────────\n");
-		printf("[right]\n");
+		ft_printf("───────────────────────────────────\n");
+		ft_printf("[right]\n");
 		print_tree(&tmp_right->right);
 		tmp_right = tmp_right->right;
 	}
@@ -76,14 +81,14 @@ void	print_tree_recursive(t_tree *tree, int depth, char *prefix)
 	if (!tree)
 		return ;
 	for (int i = 0; i < depth; i++)
-		printf("    ");
-	printf("%s", prefix);
+		ft_printf("    ");
+	ft_printf("%s", prefix);
 	ft_write_type_branch(tree->type);
 	for (int j = 0; j < depth; j++)
-		printf("    ");
+		ft_printf("    ");
 	for (int i = 0; tree->content[i]; i++)
-		printf("%s\n", tree->content[i]);
-	printf("\n");
+		ft_printf("%s$\n", tree->content[i]);
+	ft_printf("\n");
 	if (tree->left)
 		print_tree_recursive(tree->left, depth + 1, "├─L─ ");
 	if (tree->right)
@@ -92,20 +97,7 @@ void	print_tree_recursive(t_tree *tree, int depth, char *prefix)
 
 void	fprint_tree(t_tree **tree)
 {
-	printf("\n=== ÁRBOL BINARIO ===\n");
+	ft_printf("\n=== ÁRBOL BINARIO ===\n");
 	print_tree_recursive(*tree, 0, "ROOT ");
-	printf("=====================\n");
+	ft_printf("=====================\n");
 }
-
-// === ÁRBOL BINARIO ===
-// |
-// ROOT branch [PIPE]  
-// ls
-//     ├─L─ branch [command]  
-// |
-//     └─R─ branch [PIPE]  
-// ls
-//         ├─L─ branch [command]  
-// ls
-//         └─R─ branch [command]  
-// =====================

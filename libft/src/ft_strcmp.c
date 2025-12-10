@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_double_free.c                                   :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbrosio <jbrosio@student.42malaga.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/10 20:13:19 by jbrosio           #+#    #+#             */
-/*   Updated: 2025/12/03 01:06:17 by jbrosio          ###   ########.fr       */
+/*   Created: 2025/11/30 22:58:43 by jbrosio           #+#    #+#             */
+/*   Updated: 2025/11/30 22:59:09 by jbrosio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-void	*ft_free_all_array(char **array)
+int	ft_strcmp(char *s1, char *s2)
 {
-	int		i;
+	int	i;
 
 	i = 0;
-	while (array[i])
+	if (!s1 || !s2)
+		return (-1);
+	while (s1[i] && s2[i])
 	{
-		free(array[i]);
+		if (s1[i] != s2[i])
+			return ((int)(s1[i] - s2[i]));
 		i++;
 	}
-	free(array);
-	return (NULL);
+	return ((int)(s1[i] - s2[i]));
 }

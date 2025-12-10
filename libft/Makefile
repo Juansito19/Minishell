@@ -6,7 +6,7 @@
 #    By: jbrosio <jbrosio@student.42malaga.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/21 16:44:12 by Juan              #+#    #+#              #
-#    Updated: 2025/11/23 22:15:19 by jbrosio          ###   ########.fr        #
+#    Updated: 2025/12/03 11:23:24 by jbrosio          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRC = src/ft_atod.c \
 		src/ft_isalnum.c \
 		src/ft_isalpha.c \
 		src/ft_isascii.c \
+		src/ft_isspace.c \
 		src/ft_isdigit.c \
 		src/ft_isprint.c \
 		src/ft_itoa.c \
@@ -62,6 +63,7 @@ SRC = src/ft_atod.c \
 		src/ft_split.c \
 		src/ft_strchr.c \
 		src/ft_strdup.c \
+		src/ft_array_dup.c \
 		src/ft_striteri.c \
 		src/ft_strjoin.c \
 		src/ft_strlcat.c \
@@ -69,6 +71,7 @@ SRC = src/ft_atod.c \
 		src/ft_strlen.c \
 		src/ft_strmapi.c \
 		src/ft_strncmp.c \
+		src/ft_strcmp.c \
 		src/ft_strnstr.c \
 		src/ft_strrchr.c \
 		src/ft_strtrim.c \
@@ -93,13 +96,13 @@ run:
 
 ## converting .c to .o
 obj/%.o: src/%.c
-	@sleep 0.01
+# 	@sleep 0.01
 	@mkdir -p obj
 	@$(CC) $(CFLAGS) -fPIC -c $< -o $@
-	@$(eval COMPILED=$(shell echo $$(($(COMPILED)+1))))
-	@$(eval PROGRESS=$(shell echo $$(($(COMPILED)*50/$(TOTAL_FILES)))))
-	@printf "\r\e[32mLIBFT = [%-50s] %d/%d files\e[0m" \
-		$$(printf '█%.0s' $$(seq 1 $(PROGRESS))) $(COMPILED) $(TOTAL_FILES)
+# 	@$(eval COMPILED=$(shell echo $$(($(COMPILED)+1))))
+# 	@$(eval PROGRESS=$(shell echo $$(($(COMPILED)*50/$(TOTAL_FILES)))))
+# 	@printf "\r\e[32mLIBFT = [%-50s] %d/%d files\e[0m" \
+# 		$$(printf '█%.0s' $$(seq 1 $(PROGRESS))) $(COMPILED) $(TOTAL_FILES)
 
 ## library
 $(NAME) : $(OBJ)
