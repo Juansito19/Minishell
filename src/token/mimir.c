@@ -4,6 +4,9 @@
 /* ======== mimir ======= */
 /* ====================== */
 
+/*añado el comentario de '~' para saber que debemos expandirlo
+NO ES PERMANENTE*/
+
 void	ft_aux_need_to_expand(t_token **tkn, int state)
 {
 	int		i;
@@ -19,6 +22,8 @@ void	ft_aux_need_to_expand(t_token **tkn, int state)
 			state = 1;
 		else if (ft_is_quote((*tkn)->content[i]) == T_SQUOTE && state == 1)
 			state = 0;
+		// else if ((*tkn)->content[i] == '~' && (*tkn)->content[i + 1] == '\0')
+		// 	(*tkn)->content = "home/$User";
 		else if ((*tkn)->content[i] == '$' && (*tkn)->content[i + 1] == '\0')
 			return ;
 		else if ((*tkn)->content[i] == '$' && state == 1)

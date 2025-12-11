@@ -45,6 +45,23 @@ int	ft_open_quote(char *input)
 
 /* ========== parseo redirecciones =========== */
 
+/*
+
+añado este if / else al ft_redir_check
+
+ANTES:
+if (s[i] == '<')
+	return (1);
+
+if (s[i] == '<')
+	{
+		if (s[i + 1] && s[i + 1] == '<')
+			return (0);
+		else
+			return (1);
+	}
+*/
+
 int	ft_redir_check(char *s)
 {
 	int		i;
@@ -55,7 +72,12 @@ int	ft_redir_check(char *s)
 	while (s[i] && ft_is_space(s[i]))
 		i++;
 	if (s[i] == '<')
-		return (1);
+	{
+		if (s[i + 1] && s[i + 1] == '<')
+			return (0);
+		else
+			return (1);
+	}
 	if (ft_redir_bucle_check(s, quote))
 		return (1);
 	return (0);
