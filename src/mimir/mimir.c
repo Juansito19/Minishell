@@ -22,8 +22,6 @@ void	ft_aux_need_to_expand(t_token **tkn, int state)
 			state = 1;
 		else if (ft_is_quote((*tkn)->content[i]) == T_SQUOTE && state == 1)
 			state = 0;
-		// else if ((*tkn)->content[i] == '~' && (*tkn)->content[i + 1] == '\0')
-		// 	(*tkn)->content = "home/$User";
 		else if ((*tkn)->content[i] == '$' && (*tkn)->content[i + 1] == '\0')
 			return ;
 		else if ((*tkn)->content[i] == '$' && state == 1)
@@ -66,6 +64,74 @@ int	ft_process_var(t_expand **exp, char **env, int exit, char *cont)
 	else
 		(*exp)->tmp_var = ft_get_var_value(env, (*exp)->var + 1);
 	free((*exp)->var);
+	return (0);
+}
+
+// t_exp_var	*init_vars(char *content)
+// {
+// 	t_exp_var	*vars;
+
+// 	vars = malloc(1 * sizeof(t_exp_var));
+// 	if (!vars)
+// 		return (NULL);
+// 	vars->content = content;
+// 	vars->expand = 0;
+// 	vars->next = NULL;
+// 	return (vars);
+// }
+
+/* 
+
+* a tenter en cuenta *
+
+unovo-ru@c2r5s3:~/42/minishell/minishell$ echo $HOME/$$HOME
+/home/unovo-ru/2587068HOME
+unovo-ru@c2r5s3:~/42/minishell/minishell$ echo $HO/ME/$HOME
+/ME//home/unovo-ru
+unovo-ru@c2r5s3:~/42/minishell/minishell$ echo $/HO/ME/$HOME
+$/HO/ME//home/unovo-ru
+unovo-ru@c2r5s3:~/42/minishell/minishell$ echo $/HO/ME/$HOM
+$/HO/ME/
+unovo-ru@c2r5s3:~/42/minishell/minishell$ echo $$$HOME
+
+*/
+
+int	ft_check_two_var(t_token **token, t_expand **exp)
+{
+	int			i;
+	int			dollar;
+
+	i = 0;
+	while ((*token)->content[i])
+	{
+		if ((*token)->content[i] == '$' && !dollar)
+			dollar = 1;
+		if ((*token)->content[i] == '$' && dollar)
+		{
+			(*exp)->dollar = 1;
+			break ;
+		}
+		i++;
+	}
+	i = 0;
+	while ((*token)->content[i])
+	{
+		if ((*token)->content[i] == '/')
+		{
+			(*exp)->slash = 1;
+			break ;
+		}
+		i++;
+	}
+	if ((*exp)->dollar)
+	{
+		(*exp)->split = ft_split_dollar((*token)->content, '$');
+		if (!(*exp)->split)
+			return (-1);
+		// hacemos cosas
+	}
+	else
+		return (1);
 	return (0);
 }
 
@@ -114,6 +180,8 @@ int	ft_mimir(t_token **token, char **env, int exit_status)
 	(*token) = aux;
 	return (0);
 }
+
+
 
 
 // int	ft_expand_var(t_token **token, char **env, int exit_status)

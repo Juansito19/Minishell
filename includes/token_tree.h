@@ -6,12 +6,22 @@ typedef struct s_expand
 {
 	char	*init_quote;
 	char	*end_quote;
+	char	**split;
 	char	*var;
 	char	*tmp_var;
 	char	*aux;
 	int		s_init;
 	int		s_end;
+	int		slash;
+	int		dollar;
 }	t_expand;
+
+typedef struct s_ex_var
+{
+	char			*content;
+	int				expand;
+	struct s_ex_var	*next;
+}	t_exp_var;
 
 typedef enum s_type		t_type;
 typedef struct s_token	t_token;
@@ -103,6 +113,14 @@ int			ft_found_var(t_expand **exp, t_token **token);
 int			ft_no_found_var(t_expand **exp, t_token **token);
 int			ft_handle_end_quote(t_expand **exp, char *content);
 int			ft_handle_init_quote(t_expand **exp, char *content);
+
+/* ================================= */
+
+/* ================================= */
+/* ========== split utils ========== */
+/* ================================= */
+
+char		**ft_split_dollar(char const *s, char c);
 
 /* ================================= */
 

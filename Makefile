@@ -26,6 +26,7 @@ UTILS_DIR = src/utils
 YGGDR_DIR = src/yggdrasil
 RATATOSKR_DIR = src/ratatoskr
 HEIMDALL_DIR = src/heimdall
+MIMIR_DIR = src/mimir
 
 BUILTINS = $(BUIL_DIR)/builtins.c \
 	$(BUIL_DIR)/cd.c \
@@ -45,11 +46,13 @@ RATATOSKR = $(RATATOSKR_DIR)/ratatoskr.c \
 
 HEIMDALL = $(HEIMDALL_DIR)/heimdall.c \
 
+MIMIR = $(MIMIR_DIR)/mimir.c \
+		$(MIMIR_DIR)/mimir_utils.c \
+		$(MIMIR_DIR)/split_mimir.c \
+
 TOKEN = $(TOK_DIR)/token.c \
         $(TOK_DIR)/token_utils.c \
         $(TOK_DIR)/search_quotes.c \
-        $(TOK_DIR)/mimir.c \
-        $(TOK_DIR)/mimir_utils.c \
 
 UTILS = $(UTILS_DIR)/utils.c \
     	$(UTILS_DIR)/banner.c \
@@ -76,6 +79,7 @@ SRC = src/main.c \
 		$(UTILS) \
 		$(RATATOSKR) \
 		$(HEIMDALL) \
+		$(MIMIR) \
 
 OBJ = $(SRC:%.c=obj/%.o)
 TOTAL_FILES := $(words $(SRC))
