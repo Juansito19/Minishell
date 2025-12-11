@@ -31,6 +31,8 @@ int	ft_clean_expanders(t_expand **expander)
 		free((*expander)->end_quote);
 	if ((*expander)->var)
 		free((*expander)->var);
+	if ((*expander)->split)
+		ft_free_all_array((*expander)->split);
 	if ((*expander)->tmp_var)
 		free((*expander)->tmp_var);
 	if ((*expander)->aux)

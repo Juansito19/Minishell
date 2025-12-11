@@ -8,8 +8,11 @@ void	ft_check_input(t_data **data, char *input)
 		return ;
 	}
 	(*data)->tokens = ft_token(input, 0);
+	printf("====PRIMERO====\n");
+	print_token(&(*data)->tokens);
 	ft_mimir(&(*data)->tokens, (*data)->env, (*data)->exit_status);
 	ft_search_quotes(&(*data)->tokens);
+	printf("====SEGUNDO====\n");
 	print_token(&(*data)->tokens);
 	ft_search_eof(&(*data)->tokens);
 	ft_yggdrasil(&(*data)->tokens, &(*data)->yggdrasil, data);
@@ -45,6 +48,7 @@ int	ft_minishell(t_data **data)
 	input = NULL;
 	while (1)
 	{
+		/*LLAMADA DE LA FUNCION SEÑALES (CNTR + C Y CNTROL + \)*/
 		input = readline("bostero$> ");
 		if (!input)
 		{

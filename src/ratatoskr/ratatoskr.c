@@ -61,7 +61,8 @@ int	ft_chg_b(t_tree **yggdrasil, char **tmp_name, int fd, t_tree **eof_branch)
 
 	while (1)
 	{
-		line = readline("> "); // SEÑALES DE CTRL_C || CTRL_D
+		/*LLAMADA DE LA FUNCION SEÑALES (CNTR + C Y CNTROL + \)*/
+		line = readline("> ");
 		if (!line)
 		{
 			free(*tmp_name);
@@ -106,3 +107,19 @@ int	ft_ratatoskr(t_tree **yggdrasil)
 	ft_ratatoskr(&(*yggdrasil)->right);
 	return (0);
 }
+
+
+/*
+
+LLAMADA DE LA FUNCION SEÑALES (CNTR + C Y CNTROL + \)
+
+(usar funciones de readline en un orden concreto)
+
+justo antes del fork en el ejecutor
+
+funciones que se utilizaran:
+-- > rl_on_new_line,
+-- > rl_replace_line,
+-- > rl_redisplay
+
+*/

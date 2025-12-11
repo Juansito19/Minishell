@@ -13,11 +13,14 @@ t_expand	*ft_init_expanders(void)
 		return (NULL);
 	expander->init_quote = NULL;
 	expander->end_quote = NULL;
+	expander->split = NULL;
 	expander->var = NULL;
 	expander->tmp_var = NULL;
 	expander->aux = NULL;
 	expander->s_end = 0;
 	expander->s_init = 0;
+	expander->slash = 0;
+	expander->dollar = 0;
 	return (expander);
 }
 
