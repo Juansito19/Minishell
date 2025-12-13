@@ -46,10 +46,60 @@ void	ft_need_to_expand(t_token **token)
 	}
 }
 
+int	ft_process_var_aux(t_expand **exp, char **env, int exit)
+{
+	int	i;
+
+	i = 0;
+	printf("hola?\n");
+	if ((*exp)->slash)
+	{
+		while ((*exp)->var[i])
+		{
+			if ((*exp)->var[i] == '/')
+				break ;
+			i++;
+		}
+		(*exp)->tmp_var = ft_substr((*exp)->var, 0, i);
+		printf("var -> %s\n", (*exp)->var);
+		(*exp)->aux = ft_substr((*exp)->var, i, ft_strlen((*exp)->var + i));
+		free((*exp)->var);
+		(*exp)->var = NULL;
+		if (!ft_strcmp((*exp)->var, "$?"))
+			(*exp)->var = ft_itoa(exit);
+		else
+			(*exp)->var = ft_get_var_value(env, (*exp)->tmp_var + 1);
+		free((*exp)->tmp_var);
+		(*exp)->tmp_var = NULL;
+		if (!(*exp)->var)
+		{
+			(*exp)->tmp_var = ft_strdup((*exp)->aux);
+		}
+		else
+		{
+			(*exp)->tmp_var = ft_strjoin((*exp)->var, (*exp)->aux);
+		}
+	}
+	else
+	{
+		if (!ft_strcmp((*exp)->var, "$?"))
+			(*exp)->tmp_var = ft_itoa(exit);
+		else
+			(*exp)->tmp_var = ft_get_var_value(env, (*exp)->tmp_var + 1);
+		printf("var -> %s\n", (*exp)->var);
+	}
+	return (0);
+}
+
 int	ft_process_var(t_expand **exp, char **env, int exit, char *cont)
 {
 	int	init;
 	int	end;
+
+	int			i;
+	int			j;
+	int			x;
+	int			dollar;
 
 	init = (*exp)->s_init;
 	end = (*exp)->s_end;
@@ -59,13 +109,185 @@ int	ft_process_var(t_expand **exp, char **env, int exit, char *cont)
 		(*exp)->var = ft_strdup(cont);
 	if (!(*exp)->var)
 		return (ft_pd_error(ERR_MALLOC, NULL, 12));
-	if (!ft_strcmp((*exp)->var, "$?"))
-		(*exp)->tmp_var = ft_itoa(exit);
+	// if (!ft_strcmp((*exp)->var, "$?"))
+	// 	(*exp)->tmp_var = ft_itoa(exit);
 	else
-		(*exp)->tmp_var = ft_get_var_value(env, (*exp)->var + 1);
-	free((*exp)->var);
+	{
+		// (*exp)->tmp_var = ft_get_var_value(env, (*exp)->var + 1);
+		i = 0;
+		dollar = 0;
+		while ((*exp)->var[i])
+		{
+			if ((*exp)->var[i] == '$' && !dollar)
+				dollar = 1;
+			else if ((*exp)->var[i] == '$' && dollar)
+			{
+				(*exp)->dollar = 1;
+				break ;
+			}
+			i++;
+		}
+		i = 0;
+		while ((*exp)->var[i])
+		{
+			if ((*exp)->var[i] == '/')
+			{
+				(*exp)->slash = 1;
+				break ;
+			}
+			i++;
+		}
+		if ((*exp)->dollar)
+		{
+			(*exp)->split = ft_split_dollar((*exp)->var, '$');
+			if (!(*exp)->split)
+				return (-1);
+			i = 0;
+			while ((*exp)->split[i])
+			{
+				printf("%s [len] -> %zu\n", (*exp)->split[i], ft_strlen((*exp)->split[i]));
+				if ((*exp)->split[i][1] && (*exp)->split[i][1] == '/')
+					i++;
+				else if (ft_strlen((*exp)->split[i]) == 1)
+				{
+					printf("entra?\n");
+					i++;
+				}
+				else
+				{
+					j = 0;
+					x = 0;
+					(*exp)->slash = 0;
+					while ((*exp)->split[i][x])
+					{
+						if ((*exp)->split[i][x] == '/')
+						{
+							(*exp)->slash = 1;
+							break ;
+						}
+						x++;
+					}
+					if ((*exp)->slash)
+					{
+						(*exp)->tmp_var = ft_substr((*exp)->split[i], 0, x);
+						(*exp)->aux = ft_substr((*exp)->split[i], x, ft_strlen((*exp)->split[i] + x));
+						free((*exp)->split[i]);
+						(*exp)->split[i] = NULL;
+						if (!ft_strcmp((*exp)->split[i], "$?"))
+						{
+							(*exp)->split[i] = ft_itoa(exit);
+						}
+						else
+						{
+							(*exp)->split[i] = ft_get_var_value(env, (*exp)->tmp_var + 1);
+						}
+						free((*exp)->tmp_var);
+						(*exp)->tmp_var = NULL;
+						if (!(*exp)->split[i])
+						{
+							(*exp)->split[i] = ft_strdup((*exp)->aux);
+						}
+						else
+						{
+							(*exp)->tmp_var = ft_strjoin((*exp)->split[i], (*exp)->aux);
+							free((*exp)->split[i]);
+							(*exp)->split[i] = NULL;
+							(*exp)->split[i] = ft_strdup((*exp)->tmp_var);
+							free((*exp)->tmp_var);
+							(*exp)->tmp_var = NULL;
+							free((*exp)->aux);
+							(*exp)->aux = NULL;
+						}
+					}
+					else
+					{
+						if (!ft_strcmp((*exp)->split[i], "$?"))
+							(*exp)->tmp_var = ft_itoa(exit);
+						else
+							(*exp)->tmp_var = ft_get_var_value(env, (*exp)->split[i] + 1);
+						if ((*exp)->split[i])
+							free((*exp)->split[i]);
+						(*exp)->split[i] = NULL;
+						(*exp)->split[i] = ft_strdup((*exp)->tmp_var);
+						if ((*exp)->tmp_var)
+						{
+							free((*exp)->tmp_var);
+							(*exp)->tmp_var = NULL;
+						}
+					}
+					i++;
+				}
+			}
+			(*exp)->aux = ft_strdup((*exp)->split[0]);
+			i = 1;
+			while ((*exp)->split[i])
+			{
+				if ((*exp)->var)
+					free((*exp)->var);
+				(*exp)->var = NULL;
+				(*exp)->var = ft_strjoin((*exp)->aux, (*exp)->split[i]);
+				free((*exp)->aux);
+				(*exp)->aux = NULL;
+				(*exp)->aux = ft_strdup((*exp)->var);
+				i++;
+			}
+			(*exp)->tmp_var = ft_strdup((*exp)->aux);
+		}
+		else
+		{
+			i = 0;
+			if ((*exp)->slash)
+			{
+				ft_process_var_aux(exp, env, exit);
+			}
+			else
+			{
+				if (!ft_strcmp((*exp)->var, "$?"))
+					(*exp)->tmp_var = ft_itoa(exit);
+				else
+					(*exp)->tmp_var = ft_get_var_value(env, (*exp)->var + 1);
+			}
+		}
+	}
+	if ((*exp)->var)
+		free((*exp)->var);
 	return (0);
 }
+
+			// 	while ((*exp)->var[i])
+			// 	{
+			// 		if ((*exp)->var[i] == '/')
+			// 			break ;
+			// 		i++;
+			// 	}
+			// 	// separamos [$HOME] [/hola]
+			// 	(*exp)->tmp_var = ft_substr((*exp)->var, 0, i);
+			// 	// tmp_var = [$HOME] 
+			// 	(*exp)->aux = ft_substr((*exp)->var, i, ft_strlen((*exp)->var + i));
+			// 	// aux = [/hola]
+			// 	free((*exp)->var);
+			// 	(*exp)->var = NULL;
+			// 	if (!ft_strcmp((*exp)->var, "$?"))
+			// 		(*exp)->var = ft_itoa(exit);
+			// 	else
+			// 		(*exp)->var = ft_get_var_value(env, (*exp)->tmp_var + 1);
+			// 	free((*exp)->tmp_var);
+			// 	(*exp)->tmp_var = NULL;
+			// 	if (!(*exp)->var)
+			// 	{
+			// 		(*exp)->tmp_var = ft_strdup((*exp)->aux);
+			// 	}
+			// 	else
+			// 	{
+			// 		(*exp)->tmp_var = ft_strjoin((*exp)->var, (*exp)->aux);
+			// 	}
+			// }
+			// else
+			// {
+			// 	if (!ft_strcmp((*exp)->var, "$?"))
+			// 		(*exp)->tmp_var = ft_itoa(exit);
+			// 	else
+			// 		(*exp)->tmp_var = ft_get_var_value(env, (*exp)->tmp_var + 1);
 
 // t_exp_var	*init_vars(char *content)
 // {
@@ -96,44 +318,56 @@ unovo-ru@c2r5s3:~/42/minishell/minishell$ echo $$$HOME
 
 */
 
-int	ft_check_two_var(t_token **token, t_expand **exp)
-{
-	int			i;
-	int			dollar;
+// int	ft_check_two_var(t_token **token, t_expand **exp)
+// {
+// 	int			i;
+// 	int			dollar;
 
-	i = 0;
-	while ((*token)->content[i])
-	{
-		if ((*token)->content[i] == '$' && !dollar)
-			dollar = 1;
-		if ((*token)->content[i] == '$' && dollar)
-		{
-			(*exp)->dollar = 1;
-			break ;
-		}
-		i++;
-	}
-	i = 0;
-	while ((*token)->content[i])
-	{
-		if ((*token)->content[i] == '/')
-		{
-			(*exp)->slash = 1;
-			break ;
-		}
-		i++;
-	}
-	if ((*exp)->dollar)
-	{
-		(*exp)->split = ft_split_dollar((*token)->content, '$');
-		if (!(*exp)->split)
-			return (-1);
-		// hacemos cosas
-	}
-	else
-		return (1);
-	return (0);
-}
+// 	i = 0;
+// 	while ((*token)->content[i])
+// 	{
+// 		if ((*token)->content[i] == '$' && !dollar)
+// 			dollar = 1;
+// 		if ((*token)->content[i] == '$' && dollar)
+// 		{
+// 			(*exp)->dollar = 1;
+// 			break ;
+// 		}
+// 		i++;
+// 	}
+// 	i = 0;
+// 	while ((*token)->content[i])
+// 	{
+// 		if ((*token)->content[i] == '/')
+// 		{
+// 			(*exp)->slash = 1;
+// 			break ;
+// 		}
+// 		i++;
+// 	}
+// 	if ((*exp)->dollar)
+// 	{
+// 		(*exp)->split = ft_split_dollar((*token)->content, '$');
+// 		if (!(*exp)->split)
+// 			return (-1);
+// 		// hacemos cosas
+// 	}
+// 	else
+// 	{
+// 		i = 0;
+// 		if ((*exp)->slash)
+// 		{
+// 			while ((*token)->content[i])
+// 			{
+// 				if ((*token)->content[i] == '/')
+// 					break ;
+// 				i++;
+// 			}
+// 		}
+// 		return (1);
+// 	}
+// 	return (0);
+// }
 
 int	ft_expand_var(t_token **token, char **env, int exit_status)
 {
