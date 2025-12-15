@@ -44,7 +44,6 @@ static char	**array_const(char const *s1, char **big, char c, int count)
 			tmp = ft_substr(s1, i, counter(&s1[i], c));
 			if (!tmp)
 				return (NULL);
-			// mirar el join o este caso $$HOME$HOME
 			big[j] = ft_strjoin("$", tmp);
 			if (!big[j])
 				return (free_all_array(big));

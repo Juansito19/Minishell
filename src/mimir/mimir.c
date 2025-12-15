@@ -51,7 +51,6 @@ int	ft_process_var_aux(t_expand **exp, char **env, int exit)
 	int	i;
 
 	i = 0;
-	printf("hola?\n");
 	if ((*exp)->slash)
 	{
 		while ((*exp)->var[i])
@@ -61,24 +60,27 @@ int	ft_process_var_aux(t_expand **exp, char **env, int exit)
 			i++;
 		}
 		(*exp)->tmp_var = ft_substr((*exp)->var, 0, i);
-		printf("var -> %s\n", (*exp)->var);
+		if (!(*exp)->tmp_var)
+			return (ft_pd_error(ERR_MALLOC, NULL, 12));
 		(*exp)->aux = ft_substr((*exp)->var, i, ft_strlen((*exp)->var + i));
+		if (!(*exp)->aux)
+			return (ft_pd_error(ERR_MALLOC, NULL, 12));
 		free((*exp)->var);
 		(*exp)->var = NULL;
 		if (!ft_strcmp((*exp)->var, "$?"))
 			(*exp)->var = ft_itoa(exit);
 		else
 			(*exp)->var = ft_get_var_value(env, (*exp)->tmp_var + 1);
+		if (!(*exp)->var)
+			return (ft_pd_error(ERR_MALLOC, NULL, 12));
 		free((*exp)->tmp_var);
 		(*exp)->tmp_var = NULL;
 		if (!(*exp)->var)
-		{
 			(*exp)->tmp_var = ft_strdup((*exp)->aux);
-		}
 		else
-		{
 			(*exp)->tmp_var = ft_strjoin((*exp)->var, (*exp)->aux);
-		}
+		if (!(*exp)->tmp_var)
+			return (ft_pd_error(ERR_MALLOC, NULL, 12));
 	}
 	else
 	{
@@ -86,7 +88,8 @@ int	ft_process_var_aux(t_expand **exp, char **env, int exit)
 			(*exp)->tmp_var = ft_itoa(exit);
 		else
 			(*exp)->tmp_var = ft_get_var_value(env, (*exp)->tmp_var + 1);
-		printf("var -> %s\n", (*exp)->var);
+		if (!(*exp)->tmp_var)
+			return (ft_pd_error(ERR_MALLOC, NULL, 12));
 	}
 	return (0);
 }
@@ -109,11 +112,8 @@ int	ft_process_var(t_expand **exp, char **env, int exit, char *cont)
 		(*exp)->var = ft_strdup(cont);
 	if (!(*exp)->var)
 		return (ft_pd_error(ERR_MALLOC, NULL, 12));
-	// if (!ft_strcmp((*exp)->var, "$?"))
-	// 	(*exp)->tmp_var = ft_itoa(exit);
 	else
 	{
-		// (*exp)->tmp_var = ft_get_var_value(env, (*exp)->var + 1);
 		i = 0;
 		dollar = 0;
 		while ((*exp)->var[i])
@@ -141,18 +141,14 @@ int	ft_process_var(t_expand **exp, char **env, int exit, char *cont)
 		{
 			(*exp)->split = ft_split_dollar((*exp)->var, '$');
 			if (!(*exp)->split)
-				return (-1);
+				return (ft_pd_error(ERR_MALLOC, NULL, 12));
 			i = 0;
 			while ((*exp)->split[i])
 			{
-				printf("%s [len] -> %zu\n", (*exp)->split[i], ft_strlen((*exp)->split[i]));
 				if ((*exp)->split[i][1] && (*exp)->split[i][1] == '/')
 					i++;
 				else if (ft_strlen((*exp)->split[i]) == 1)
-				{
-					printf("entra?\n");
 					i++;
-				}
 				else
 				{
 					j = 0;
@@ -170,23 +166,23 @@ int	ft_process_var(t_expand **exp, char **env, int exit, char *cont)
 					if ((*exp)->slash)
 					{
 						(*exp)->tmp_var = ft_substr((*exp)->split[i], 0, x);
+						if (!(*exp)->tmp_var)
+							return (ft_pd_error(ERR_MALLOC, NULL, 12));
 						(*exp)->aux = ft_substr((*exp)->split[i], x, ft_strlen((*exp)->split[i] + x));
+						if (!(*exp)->aux)
+							return (ft_pd_error(ERR_MALLOC, NULL, 12));
 						free((*exp)->split[i]);
 						(*exp)->split[i] = NULL;
 						if (!ft_strcmp((*exp)->split[i], "$?"))
-						{
 							(*exp)->split[i] = ft_itoa(exit);
-						}
 						else
-						{
 							(*exp)->split[i] = ft_get_var_value(env, (*exp)->tmp_var + 1);
-						}
+						if (!(*exp)->split[i])
+							return (ft_pd_error(ERR_MALLOC, NULL, 12));
 						free((*exp)->tmp_var);
 						(*exp)->tmp_var = NULL;
 						if (!(*exp)->split[i])
-						{
 							(*exp)->split[i] = ft_strdup((*exp)->aux);
-						}
 						else
 						{
 							(*exp)->tmp_var = ft_strjoin((*exp)->split[i], (*exp)->aux);
@@ -198,6 +194,8 @@ int	ft_process_var(t_expand **exp, char **env, int exit, char *cont)
 							free((*exp)->aux);
 							(*exp)->aux = NULL;
 						}
+						if (!(*exp)->split[i])
+							return (ft_pd_error(ERR_MALLOC, NULL, 12));
 					}
 					else
 					{
@@ -205,10 +203,14 @@ int	ft_process_var(t_expand **exp, char **env, int exit, char *cont)
 							(*exp)->tmp_var = ft_itoa(exit);
 						else
 							(*exp)->tmp_var = ft_get_var_value(env, (*exp)->split[i] + 1);
+						if (!(*exp)->tmp_var)
+							return (ft_pd_error(ERR_MALLOC, NULL, 12));
 						if ((*exp)->split[i])
 							free((*exp)->split[i]);
 						(*exp)->split[i] = NULL;
 						(*exp)->split[i] = ft_strdup((*exp)->tmp_var);
+						if (!(*exp)->split[i])
+							return (ft_pd_error(ERR_MALLOC, NULL, 12));
 						if ((*exp)->tmp_var)
 						{
 							free((*exp)->tmp_var);
@@ -219,6 +221,8 @@ int	ft_process_var(t_expand **exp, char **env, int exit, char *cont)
 				}
 			}
 			(*exp)->aux = ft_strdup((*exp)->split[0]);
+			if (!(*exp)->aux)
+				return (ft_pd_error(ERR_MALLOC, NULL, 12));
 			i = 1;
 			while ((*exp)->split[i])
 			{
@@ -229,23 +233,27 @@ int	ft_process_var(t_expand **exp, char **env, int exit, char *cont)
 				free((*exp)->aux);
 				(*exp)->aux = NULL;
 				(*exp)->aux = ft_strdup((*exp)->var);
+				if (!(*exp)->aux)
+					return (ft_pd_error(ERR_MALLOC, NULL, 12));
 				i++;
 			}
 			(*exp)->tmp_var = ft_strdup((*exp)->aux);
+			if (!(*exp)->tmp_var)
+				return (ft_pd_error(ERR_MALLOC, NULL, 12));
 		}
 		else
 		{
 			i = 0;
 			if ((*exp)->slash)
-			{
 				ft_process_var_aux(exp, env, exit);
-			}
 			else
 			{
 				if (!ft_strcmp((*exp)->var, "$?"))
 					(*exp)->tmp_var = ft_itoa(exit);
 				else
 					(*exp)->tmp_var = ft_get_var_value(env, (*exp)->var + 1);
+				if (!(*exp)->tmp_var)
+					return (ft_pd_error(ERR_MALLOC, NULL, 12));
 			}
 		}
 	}
