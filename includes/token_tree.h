@@ -113,6 +113,7 @@ int			ft_found_var(t_expand **exp, t_token **token);
 int			ft_no_found_var(t_expand **exp, t_token **token);
 int			ft_handle_end_quote(t_expand **exp, char *content);
 int			ft_handle_init_quote(t_expand **exp, char *content);
+int			ft_process_var_aux(t_expand **exp, char **env, int exit);
 
 /* ================================= */
 
