@@ -27,16 +27,22 @@ int	ft_clean_expanders(t_expand **expander)
 {
 	if ((*expander)->init_quote)
 		free((*expander)->init_quote);
+	printf("10\n");
 	if ((*expander)->end_quote)
 		free((*expander)->end_quote);
+	printf("20\n");
 	if ((*expander)->var)
 		free((*expander)->var);
+	printf("30\n");
 	if ((*expander)->split)
-		ft_free_all_array((*expander)->split);
+	ft_free_all_array((*expander)->split);
+	printf("40\n");
 	if ((*expander)->tmp_var)
 		free((*expander)->tmp_var);
+	printf("50\n");
 	if ((*expander)->aux)
 		free((*expander)->aux);
+	printf("60\n");
 	free((*expander));
 	return (1);
 }
