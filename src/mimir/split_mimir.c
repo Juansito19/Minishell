@@ -28,35 +28,6 @@ static int	counter(const char *str, char c)
 	return (i);
 }
 
-static char	**array_const(char const *s1, char **big, char c, int count)
-{
-	char	*tmp;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	tmp = NULL;
-	while (s1[i] && j < count)
-	{
-		if (s1[i] != c)
-		{
-			tmp = ft_substr(s1, i, counter(&s1[i], c));
-			if (!tmp)
-				return (NULL);
-			big[j] = ft_strjoin("$", tmp);
-			if (!big[j])
-				return (free_all_array(big));
-			j++;
-			i = i + (counter(&s1[i], c));
-			free(tmp);
-			tmp = NULL;
-		}
-		i++;
-	}
-	return (big);
-}
-
 static int	count_words(char const *str, char c)
 {
 	int	i;
@@ -81,6 +52,34 @@ static int	count_words(char const *str, char c)
 	return (count);
 }
 
+static char	**array_const(char const *s1, char **big, char c, int i)
+{
+	char	*tmp;
+	int		j;
+
+	j = -1;
+	while (s1[i] && (j < count_words(s1, c)))
+	{
+		if (s1[i] != c)
+		{
+			tmp = ft_substr(s1, i, counter(&s1[i], c));
+			if (!tmp)
+				return (free_all_array(big));
+			if (i > 0)
+				big[++j] = ft_strjoin("$", tmp);
+			else
+				big[++j] = ft_strdup(tmp);
+			free(tmp);
+			if (!big[j])
+				return (free_all_array(big));
+			i = i + counter(&s1[i], c);
+		}
+		else
+			i++;
+	}
+	return (big);
+}
+
 char	**ft_split_dollar(char const *s, char c)
 {
 	char	**big;
@@ -93,5 +92,5 @@ char	**ft_split_dollar(char const *s, char c)
 	if (!big)
 		return (NULL);
 	big[count] = NULL;
-	return (array_const(s, big, c, count));
+	return (array_const(s, big, c, 0));
 }

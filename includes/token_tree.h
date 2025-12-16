@@ -12,8 +12,9 @@ typedef struct s_expand
 	char	*aux;
 	int		s_init;
 	int		s_end;
-	int		slash;
+	int		limit;
 	int		dollar;
+	int		expand;
 }	t_expand;
 
 typedef struct s_ex_var

@@ -19,8 +19,9 @@ t_expand	*ft_init_expanders(void)
 	expander->aux = NULL;
 	expander->s_end = 0;
 	expander->s_init = 0;
-	expander->slash = 0;
+	expander->limit = 0;
 	expander->dollar = 0;
+	expander->expand = 0;
 	return (expander);
 }
 

@@ -4,8 +4,101 @@
 /* ======== mimir ======= */
 /* ====================== */
 
-/*añado el comentario de '~' para saber que debemos expandirlo
-NO ES PERMANENTE*/
+void	ft_find_dollar(t_expand **exp, char *s)
+{
+	int	i;
+	int	dollar;
+
+	i = 0;
+	dollar = 0;
+	while (s[i])
+	{
+		if (s[i] == '$' && !dollar)
+			dollar = 1;
+		else if (s[i] == '$' && dollar)
+		{
+			(*exp)->dollar = 1;
+			break ;
+		}
+		i++;
+	}
+}
+
+int	ft_find_limit(t_expand **exp, char *s, int i)
+{
+	(*exp)->limit = 0;
+	if (s[i] == '$')
+	{
+		while (s[++i])
+		{
+			if (!ft_isalnum(s[i]) && s[i] != '_')
+			{
+				(*exp)->limit = 1;
+				return (i);
+			}
+		}
+	}
+	else
+	{
+		while (s[i])
+		{
+			if (s[i] == '$')
+			{
+				(*exp)->limit = 1;
+				return (i);
+			}
+			i++;
+		}
+	}
+	return (i);
+}
+
+// int	ft_find_limit(t_expand **exp, char *s)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	(*exp)->limit = 0;
+// 	while (s[i])
+// 	{
+// 		if (s[i] == '$' && s[i + 1])
+// 		{
+// 			while (s[++i])
+// 			{
+// 				if (!ft_isalnum(s[i]) && s[i] != '_')
+// 				{
+// 					(*exp)->limit = 1;
+// 					return (i);
+// 				}
+// 			}
+// 		}
+// 		i++;
+// 	}
+// 	return (i);
+// }
+
+// int	ft_limit_dollar_expand(char	*s)
+// {
+// 	int		i;
+// 	int		limit;
+
+// 	i = 0;
+// 	limit = 0;
+// 	while (s[i])
+// 	{
+// 		if (s[i] == '$' && s[i + 1] && s[i + 1] != '/' && limit)
+// 			limit = 0;
+// 		else if (s[i] == '$' && s[i + 1] && s[i + 1] == '/' && !limit)
+// 			limit = 1;
+// 		else if (s[i] == '/' && s[i + 1] && s[i + 1] == '$' && limit)
+// 			limit = 0;
+// 		i++;
+// 	}
+// 	if (limit)
+// 		return (1);
+// 	else
+// 		return (0);
+// }
 
 void	ft_aux_need_to_expand(t_token **tkn, int state)
 {
@@ -46,63 +139,66 @@ void	ft_need_to_expand(t_token **token)
 	}
 }
 
-int	ft_process_var_aux(t_expand **exp, char **env, int exit)
-{
-	int	i;
+// int	ft_process_var_aux(t_expand **exp, char **env, int exit)
+// {
+// 	int	i;
 
-	i = 0;
-	if ((*exp)->slash)
-	{
-		while ((*exp)->var[i])
-		{
-			if ((*exp)->var[i] == '/')
-				break ;
-			i++;
-		}
-		(*exp)->tmp_var = ft_substr((*exp)->var, 0, i);
-		if (!(*exp)->tmp_var)
-			return (ft_pd_error(ERR_MALLOC, NULL, 12));
-		(*exp)->aux = ft_substr((*exp)->var, i, ft_strlen((*exp)->var + i));
-		if (!(*exp)->aux)
-			return (ft_pd_error(ERR_MALLOC, NULL, 12));
-		free((*exp)->var);
-		(*exp)->var = NULL;
-		if (!ft_strcmp((*exp)->var, "$?"))
-			(*exp)->var = ft_itoa(exit);
-		else
-			(*exp)->var = ft_get_var_value(env, (*exp)->tmp_var + 1);
-		if (!(*exp)->var)
-			return (ft_pd_error(ERR_MALLOC, NULL, 12));
-		free((*exp)->tmp_var);
-		(*exp)->tmp_var = NULL;
-		if (!(*exp)->var)
-			(*exp)->tmp_var = ft_strdup((*exp)->aux);
-		else
-			(*exp)->tmp_var = ft_strjoin((*exp)->var, (*exp)->aux);
-		if (!(*exp)->tmp_var)
-			return (ft_pd_error(ERR_MALLOC, NULL, 12));
-	}
-	else
-	{
-		if (!ft_strcmp((*exp)->var, "$?"))
-			(*exp)->tmp_var = ft_itoa(exit);
-		else
-			(*exp)->tmp_var = ft_get_var_value(env, (*exp)->tmp_var + 1);
-		if (!(*exp)->tmp_var)
-			return (ft_pd_error(ERR_MALLOC, NULL, 12));
-	}
-	return (0);
-}
+// 	if ((*exp)->limit)
+// 	{
+// 		i = ft_find_limit(exp, (*exp)->var);
+// 		(*exp)->tmp_var = ft_substr((*exp)->var, 0, i);
+// 		if (!(*exp)->tmp_var)
+// 		{
+// 			printf("1\n");
+// 			return (ft_pd_error(ERR_MALLOC, NULL, 12));
+// 		}
+// 		(*exp)->aux = ft_substr((*exp)->var, i, ft_strlen((*exp)->var + i));
+// 		if (!(*exp)->aux)
+// 		{
+// 			printf("2\n");
+// 			return (ft_pd_error(ERR_MALLOC, NULL, 12));
+// 		}
+// 		free((*exp)->var);
+// 		(*exp)->var = NULL;
+// 		if (!ft_strcmp((*exp)->var, "$?"))
+// 			(*exp)->var = ft_itoa(exit);
+// 		else
+// 		{
+// 			printf("tmp_var -> %s\n", (*exp)->tmp_var);
+// 			(*exp)->var = ft_get_var_value(env, (*exp)->tmp_var + 1);
+// 		}
+// 		free((*exp)->tmp_var);
+// 		(*exp)->tmp_var = NULL;
+// 		if (!(*exp)->var)
+// 		{
+// 			printf("aux -> %s\n", (*exp)->aux);
+// 			(*exp)->tmp_var = ft_strdup((*exp)->aux);
+// 		}
+// 		else
+// 			(*exp)->tmp_var = ft_strjoin((*exp)->var, (*exp)->aux);
+// 		if (!(*exp)->tmp_var)
+// 		{
+// 			printf("4\n");
+// 			return (ft_pd_error(ERR_MALLOC, NULL, 12));
+// 		}
+// 	}
+// 	else
+// 	{
+// 		if (!ft_strcmp((*exp)->var, "$?"))
+// 			(*exp)->tmp_var = ft_itoa(exit);
+// 		else
+// 			(*exp)->tmp_var = ft_get_var_value(env, (*exp)->tmp_var + 1);
+// 	}
+// 	return (0);
+// }
 
 int	ft_process_var(t_expand **exp, char **env, int exit, char *cont)
 {
 	int	init;
 	int	end;
-
 	int			i;
 	int			j;
 	int			x;
-	int			dollar;
 
 	init = (*exp)->s_init;
 	end = (*exp)->s_end;
@@ -114,217 +210,268 @@ int	ft_process_var(t_expand **exp, char **env, int exit, char *cont)
 		return (ft_pd_error(ERR_MALLOC, NULL, 12));
 	else
 	{
+		ft_find_limit(exp, (*exp)->var, 0);
+		(*exp)->split = ft_split_dollar((*exp)->var, '$');
+		if (!(*exp)->split)
+			return (ft_pd_error(ERR_MALLOC, NULL, 12));
 		i = 0;
-		dollar = 0;
-		while ((*exp)->var[i])
+		while ((*exp)->split[i])
 		{
-			if ((*exp)->var[i] == '$' && !dollar)
-				dollar = 1;
-			else if ((*exp)->var[i] == '$' && dollar)
-			{
-				(*exp)->dollar = 1;
-				break ;
-			}
-			i++;
-		}
-		i = 0;
-		while ((*exp)->var[i])
-		{
-			if ((*exp)->var[i] == '/')
-			{
-				(*exp)->slash = 1;
-				break ;
-			}
-			i++;
-		}
-		if ((*exp)->dollar)
-		{
-			(*exp)->split = ft_split_dollar((*exp)->var, '$');
-			if (!(*exp)->split)
-				return (ft_pd_error(ERR_MALLOC, NULL, 12));
-			i = 0;
-			while ((*exp)->split[i])
-			{
-				if ((*exp)->split[i][1] && (*exp)->split[i][1] == '/')
-					i++;
-				else if (ft_strlen((*exp)->split[i]) == 1)
-					i++;
-				else
-				{
-					j = 0;
-					x = 0;
-					(*exp)->slash = 0;
-					while ((*exp)->split[i][x])
-					{
-						if ((*exp)->split[i][x] == '/')
-						{
-							(*exp)->slash = 1;
-							break ;
-						}
-						x++;
-					}
-					if ((*exp)->slash)
-					{
-						(*exp)->tmp_var = ft_substr((*exp)->split[i], 0, x);
-						if (!(*exp)->tmp_var)
-							return (ft_pd_error(ERR_MALLOC, NULL, 12));
-						(*exp)->aux = ft_substr((*exp)->split[i], x, ft_strlen((*exp)->split[i] + x));
-						if (!(*exp)->aux)
-							return (ft_pd_error(ERR_MALLOC, NULL, 12));
-						free((*exp)->split[i]);
-						(*exp)->split[i] = NULL;
-						if (!ft_strcmp((*exp)->split[i], "$?"))
-							(*exp)->split[i] = ft_itoa(exit);
-						else
-							(*exp)->split[i] = ft_get_var_value(env, (*exp)->tmp_var + 1);
-						if (!(*exp)->split[i])
-							return (ft_pd_error(ERR_MALLOC, NULL, 12));
-						free((*exp)->tmp_var);
-						(*exp)->tmp_var = NULL;
-						if (!(*exp)->split[i])
-							(*exp)->split[i] = ft_strdup((*exp)->aux);
-						else
-						{
-							(*exp)->tmp_var = ft_strjoin((*exp)->split[i], (*exp)->aux);
-							free((*exp)->split[i]);
-							(*exp)->split[i] = NULL;
-							(*exp)->split[i] = ft_strdup((*exp)->tmp_var);
-							free((*exp)->tmp_var);
-							(*exp)->tmp_var = NULL;
-							free((*exp)->aux);
-							(*exp)->aux = NULL;
-						}
-						if (!(*exp)->split[i])
-							return (ft_pd_error(ERR_MALLOC, NULL, 12));
-					}
-					else
-					{
-						if (!ft_strcmp((*exp)->split[i], "$?"))
-							(*exp)->tmp_var = ft_itoa(exit);
-						else
-							(*exp)->tmp_var = ft_get_var_value(env, (*exp)->split[i] + 1);
-						if (!(*exp)->tmp_var)
-							return (ft_pd_error(ERR_MALLOC, NULL, 12));
-						if ((*exp)->split[i])
-							free((*exp)->split[i]);
-						(*exp)->split[i] = NULL;
-						(*exp)->split[i] = ft_strdup((*exp)->tmp_var);
-						if (!(*exp)->split[i])
-							return (ft_pd_error(ERR_MALLOC, NULL, 12));
-						if ((*exp)->tmp_var)
-						{
-							free((*exp)->tmp_var);
-							(*exp)->tmp_var = NULL;
-						}
-					}
-					i++;
-				}
-			}
-			(*exp)->aux = ft_strdup((*exp)->split[0]);
-			if (!(*exp)->aux)
-				return (ft_pd_error(ERR_MALLOC, NULL, 12));
-			i = 1;
-			while ((*exp)->split[i])
-			{
-				if ((*exp)->var)
-					free((*exp)->var);
-				(*exp)->var = NULL;
-				(*exp)->var = ft_strjoin((*exp)->aux, (*exp)->split[i]);
-				free((*exp)->aux);
-				(*exp)->aux = NULL;
-				(*exp)->aux = ft_strdup((*exp)->var);
-				if (!(*exp)->aux)
-					return (ft_pd_error(ERR_MALLOC, NULL, 12));
+			if ((*exp)->split[i][0] != '$')
 				i++;
-			}
-			(*exp)->tmp_var = ft_strdup((*exp)->aux);
-			if (!(*exp)->tmp_var)
-				return (ft_pd_error(ERR_MALLOC, NULL, 12));
-		}
-		else
-		{
-			i = 0;
-			if ((*exp)->slash)
-				ft_process_var_aux(exp, env, exit);
+			else if ((*exp)->split[i][1] && (*exp)->split[i][1] == '/')
+				i++;
+			else if (ft_strlen((*exp)->split[i]) == 1)
+				i++;
 			else
 			{
-				if (!ft_strcmp((*exp)->var, "$?"))
-					(*exp)->tmp_var = ft_itoa(exit);
+				j = 0;
+				x = ft_find_limit(exp, (*exp)->split[i], 0);
+				if ((*exp)->limit)
+				{
+					(*exp)->tmp_var = ft_substr((*exp)->split[i], 0, x);
+					if (!(*exp)->tmp_var)
+						return (ft_pd_error(ERR_MALLOC, NULL, 12));
+					(*exp)->aux = ft_substr((*exp)->split[i], x, ft_strlen((*exp)->split[i] + x));
+					if (!(*exp)->aux)
+						return (ft_pd_error(ERR_MALLOC, NULL, 12));
+					free((*exp)->split[i]);
+					(*exp)->split[i] = NULL;
+					if (!ft_strcmp((*exp)->split[i], "$?"))
+						(*exp)->split[i] = ft_itoa(exit);
+					else
+						(*exp)->split[i] = ft_get_var_value(env, (*exp)->tmp_var + 1);
+					free((*exp)->tmp_var);
+					(*exp)->tmp_var = NULL;
+					if (!(*exp)->split[i])
+						(*exp)->split[i] = ft_strdup((*exp)->aux);
+					else
+					{
+						(*exp)->tmp_var = ft_strjoin((*exp)->split[i], (*exp)->aux);
+						free((*exp)->split[i]);
+						(*exp)->split[i] = NULL;
+						(*exp)->split[i] = ft_strdup((*exp)->tmp_var);
+						free((*exp)->tmp_var);
+						(*exp)->tmp_var = NULL;
+						free((*exp)->aux);
+						(*exp)->aux = NULL;
+					}
+					if (!(*exp)->split[i])
+						return (ft_pd_error(ERR_MALLOC, NULL, 12));
+				}
 				else
-					(*exp)->tmp_var = ft_get_var_value(env, (*exp)->var + 1);
-				if (!(*exp)->tmp_var)
-					return (ft_pd_error(ERR_MALLOC, NULL, 12));
+				{
+					if (!ft_strcmp((*exp)->split[i], "$?"))
+						(*exp)->tmp_var = ft_itoa(exit);
+					else
+						(*exp)->tmp_var = ft_get_var_value(env, (*exp)->split[i] + 1);
+					if ((*exp)->split[i])
+						free((*exp)->split[i]);
+					(*exp)->split[i] = NULL;
+					(*exp)->split[i] = ft_strdup((*exp)->tmp_var);
+					if (!(*exp)->split[i])
+						return (ft_pd_error(ERR_MALLOC, NULL, 12));
+					if ((*exp)->tmp_var)
+					{
+						free((*exp)->tmp_var);
+						(*exp)->tmp_var = NULL;
+					}
+				}
+				i++;
 			}
 		}
+		(*exp)->aux = ft_strdup((*exp)->split[0]);
+		if (!(*exp)->aux)
+			return (ft_pd_error(ERR_MALLOC, NULL, 12));
+		i = 1;
+		while ((*exp)->split[i])
+		{
+			if ((*exp)->var)
+				free((*exp)->var);
+			(*exp)->var = NULL;
+			(*exp)->var = ft_strjoin((*exp)->aux, (*exp)->split[i]);
+			free((*exp)->aux);
+			(*exp)->aux = NULL;
+			(*exp)->aux = ft_strdup((*exp)->var);
+			if (!(*exp)->aux)
+				return (ft_pd_error(ERR_MALLOC, NULL, 12));
+			i++;
+		}
+		(*exp)->tmp_var = ft_strdup((*exp)->aux);
+		if (!(*exp)->tmp_var)
+			return (ft_pd_error(ERR_MALLOC, NULL, 12));
 	}
 	if ((*exp)->var)
 		free((*exp)->var);
 	return (0);
 }
 
-			// 	while ((*exp)->var[i])
-			// 	{
-			// 		if ((*exp)->var[i] == '/')
-			// 			break ;
-			// 		i++;
-			// 	}
-			// 	// separamos [$HOME] [/hola]
-			// 	(*exp)->tmp_var = ft_substr((*exp)->var, 0, i);
-			// 	// tmp_var = [$HOME] 
-			// 	(*exp)->aux = ft_substr((*exp)->var, i, ft_strlen((*exp)->var + i));
-			// 	// aux = [/hola]
-			// 	free((*exp)->var);
-			// 	(*exp)->var = NULL;
-			// 	if (!ft_strcmp((*exp)->var, "$?"))
-			// 		(*exp)->var = ft_itoa(exit);
-			// 	else
-			// 		(*exp)->var = ft_get_var_value(env, (*exp)->tmp_var + 1);
-			// 	free((*exp)->tmp_var);
-			// 	(*exp)->tmp_var = NULL;
-			// 	if (!(*exp)->var)
-			// 	{
-			// 		(*exp)->tmp_var = ft_strdup((*exp)->aux);
-			// 	}
-			// 	else
-			// 	{
-			// 		(*exp)->tmp_var = ft_strjoin((*exp)->var, (*exp)->aux);
-			// 	}
-			// }
-			// else
-			// {
-			// 	if (!ft_strcmp((*exp)->var, "$?"))
-			// 		(*exp)->tmp_var = ft_itoa(exit);
-			// 	else
-			// 		(*exp)->tmp_var = ft_get_var_value(env, (*exp)->tmp_var + 1);
-
-// t_exp_var	*init_vars(char *content)
+// int	ft_process_var(t_expand **exp, char **env, int exit, char *cont)
 // {
-// 	t_exp_var	*vars;
+// 	int	init;
+// 	int	end;
+// 	int			i;
+// 	int			j;
+// 	int			x;
+// int			dollar;
 
-// 	vars = malloc(1 * sizeof(t_exp_var));
-// 	if (!vars)
-// 		return (NULL);
-// 	vars->content = content;
-// 	vars->expand = 0;
-// 	vars->next = NULL;
-// 	return (vars);
+// 	init = (*exp)->s_init;
+// 	end = (*exp)->s_end;
+// 	if ((*exp)->init_quote && (*exp)->end_quote)
+// 		(*exp)->var = ft_strtrim(cont + init, (*exp)->end_quote);
+// 	else
+// 		(*exp)->var = ft_strdup(cont);
+// 	if (!(*exp)->var)
+// 		return (ft_pd_error(ERR_MALLOC, NULL, 12));
+// 	else
+// 	{
+// 		i = 0;
+// 		dollar = 0;
+// 		while ((*exp)->var[i])
+// 		{
+// 			if ((*exp)->var[i] == '$' && !dollar)
+// 				dollar = 1;
+// 			else if ((*exp)->var[i] == '$' && dollar)
+// 			{
+// 				(*exp)->dollar = 1;
+// 				break ;
+// 			}
+// 			i++;
+// 		}
+// 		i = 0;
+// 		while ((*exp)->var[i])
+// 		{
+// 			if ((*exp)->var[i] == '/')
+// 			{
+// 				(*exp)->limit = 1;
+// 				break ;
+// 			}
+// 			i++;
+// 		}
+// 		if ((*exp)->dollar)
+// 		{
+// 			(*exp)->split = ft_split_dollar((*exp)->var, '$');
+// 			if (!(*exp)->split)
+// 				return (ft_pd_error(ERR_MALLOC, NULL, 12));
+// 			i = 0;
+// 			while ((*exp)->split[i])
+// 			{
+// 				if ((*exp)->split[i][1] && (*exp)->split[i][1] == '/')
+// 					i++;
+// 				else if (ft_strlen((*exp)->split[i]) == 1)
+// 					i++;
+// 				else
+// 				{
+// 					j = 0;
+// 					x = 0;
+// 					(*exp)->limit = 0;
+// 					while ((*exp)->split[i][x])
+// 					{
+// 						if ((*exp)->split[i][x] == '/')
+// 						{
+// 							(*exp)->limit = 1;
+// 							break ;
+// 						}
+// 						x++;
+// 					}
+// 					if ((*exp)->limit)
+// 					{
+// 						(*exp)->tmp_var = ft_substr((*exp)->split[i], 0, x);
+// 						if (!(*exp)->tmp_var)
+// 							return (ft_pd_error(ERR_MALLOC, NULL, 12));
+// 						(*exp)->aux = ft_substr((*exp)->split[i], x, ft_strlen((*exp)->split[i] + x));
+// 						if (!(*exp)->aux)
+// 							return (ft_pd_error(ERR_MALLOC, NULL, 12));
+// 						free((*exp)->split[i]);
+// 						(*exp)->split[i] = NULL;
+// 						if (!ft_strcmp((*exp)->split[i], "$?"))
+// 							(*exp)->split[i] = ft_itoa(exit);
+// 						else
+// 							(*exp)->split[i] = ft_get_var_value(env, (*exp)->tmp_var + 1);
+// 						if (!(*exp)->split[i])
+// 							return (ft_pd_error(ERR_MALLOC, NULL, 12));
+// 						free((*exp)->tmp_var);
+// 						(*exp)->tmp_var = NULL;
+// 						if (!(*exp)->split[i])
+// 							(*exp)->split[i] = ft_strdup((*exp)->aux);
+// 						else
+// 						{
+// 							(*exp)->tmp_var = ft_strjoin((*exp)->split[i], (*exp)->aux);
+// 							free((*exp)->split[i]);
+// 							(*exp)->split[i] = NULL;
+// 							(*exp)->split[i] = ft_strdup((*exp)->tmp_var);
+// 							free((*exp)->tmp_var);
+// 							(*exp)->tmp_var = NULL;
+// 							free((*exp)->aux);
+// 							(*exp)->aux = NULL;
+// 						}
+// 						if (!(*exp)->split[i])
+// 							return (ft_pd_error(ERR_MALLOC, NULL, 12));
+// 					}
+// 					else
+// 					{
+// 						if (!ft_strcmp((*exp)->split[i], "$?"))
+// 							(*exp)->tmp_var = ft_itoa(exit);
+// 						else
+// 							(*exp)->tmp_var = ft_get_var_value(env, (*exp)->split[i] + 1);
+// 						if (!(*exp)->tmp_var)
+// 							return (ft_pd_error(ERR_MALLOC, NULL, 12));
+// 						if ((*exp)->split[i])
+// 							free((*exp)->split[i]);
+// 						(*exp)->split[i] = NULL;
+// 						(*exp)->split[i] = ft_strdup((*exp)->tmp_var);
+// 						if (!(*exp)->split[i])
+// 							return (ft_pd_error(ERR_MALLOC, NULL, 12));
+// 						if ((*exp)->tmp_var)
+// 						{
+// 							free((*exp)->tmp_var);
+// 							(*exp)->tmp_var = NULL;
+// 						}
+// 					}
+// 					i++;
+// 				}
+// 			}
+// 			(*exp)->aux = ft_strdup((*exp)->split[0]);
+// 			if (!(*exp)->aux)
+// 				return (ft_pd_error(ERR_MALLOC, NULL, 12));
+// 			i = 1;
+// 			while ((*exp)->split[i])
+// 			{
+// 				if ((*exp)->var)
+// 					free((*exp)->var);
+// 				(*exp)->var = NULL;
+// 				(*exp)->var = ft_strjoin((*exp)->aux, (*exp)->split[i]);
+// 				free((*exp)->aux);
+// 				(*exp)->aux = NULL;
+// 				(*exp)->aux = ft_strdup((*exp)->var);
+// 				if (!(*exp)->aux)
+// 					return (ft_pd_error(ERR_MALLOC, NULL, 12));
+// 				i++;
+// 			}
+// 			(*exp)->tmp_var = ft_strdup((*exp)->aux);
+// 			if (!(*exp)->tmp_var)
+// 				return (ft_pd_error(ERR_MALLOC, NULL, 12));
+// 		}
+// 		else
+// 		{
+// 			i = 0;
+// 			if ((*exp)->limit)
+// 				ft_process_var_aux(exp, env, exit);
+// 			else
+// 			{
+// 				if (!ft_strcmp((*exp)->var, "$?"))
+// 					(*exp)->tmp_var = ft_itoa(exit);
+// 				else
+// 					(*exp)->tmp_var = ft_get_var_value(env, (*exp)->var + 1);
+// 				if (!(*exp)->tmp_var)
+// 					return (ft_pd_error(ERR_MALLOC, NULL, 12));
+// 			}
+// 		}
+// 	}
+// 	if ((*exp)->var)
+// 		free((*exp)->var);
+// 	return (0);
 // }
-
-/* 
-
-* a tenter en cuenta *
-
-unovo-ru@c2r5s3:~/42/minishell/minishell$ echo $HOME/$$HOME
-/home/unovo-ru/2587068HOME
-unovo-ru@c2r5s3:~/42/minishell/minishell$ echo $HO/ME/$HOME
-/ME//home/unovo-ru
-unovo-ru@c2r5s3:~/42/minishell/minishell$ echo $/HO/ME/$HOME
-$/HO/ME//home/unovo-ru
-unovo-ru@c2r5s3:~/42/minishell/minishell$ echo $/HO/ME/$HOM
-$/HO/ME/
-unovo-ru@c2r5s3:~/42/minishell/minishell$ echo $$$HOME
-
-*/
 
 // int	ft_check_two_var(t_token **token, t_expand **exp)
 // {
@@ -348,7 +495,7 @@ unovo-ru@c2r5s3:~/42/minishell/minishell$ echo $$$HOME
 // 	{
 // 		if ((*token)->content[i] == '/')
 // 		{
-// 			(*exp)->slash = 1;
+// 			(*exp)->limit = 1;
 // 			break ;
 // 		}
 // 		i++;
@@ -363,7 +510,7 @@ unovo-ru@c2r5s3:~/42/minishell/minishell$ echo $$$HOME
 // 	else
 // 	{
 // 		i = 0;
-// 		if ((*exp)->slash)
+// 		if ((*exp)->limit)
 // 		{
 // 			while ((*token)->content[i])
 // 			{
@@ -422,9 +569,6 @@ int	ft_mimir(t_token **token, char **env, int exit_status)
 	(*token) = aux;
 	return (0);
 }
-
-
-
 
 // int	ft_expand_var(t_token **token, char **env, int exit_status)
 // {
