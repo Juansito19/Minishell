@@ -119,6 +119,18 @@ int			ft_process_var_aux(t_expand **exp, char **env, int exit);
 /* ================================= */
 
 /* ================================= */
+/* ========= mimir expander ======== */
+/* ================================= */
+
+int			ft_find_limit(t_expand **exp, char *s, int i);
+int			ft_expander_validator(t_expand **exp, int i, int size);
+void		ft_variable_search(t_expand **exp, char **env, int i, int exit);
+void		ft_need_to_expand(t_token **token);
+void		ft_aux_need_to_expand(t_token **tkn, int state);
+
+/* ================================= */
+
+/* ================================= */
 /* ========== split utils ========== */
 /* ================================= */
 
