@@ -12,8 +12,9 @@ typedef struct s_expand
 	char	*aux;
 	int		s_init;
 	int		s_end;
-	int		slash;
+	int		limit;
 	int		dollar;
+	int		expand;
 }	t_expand;
 
 typedef struct s_ex_var
@@ -114,6 +115,18 @@ int			ft_no_found_var(t_expand **exp, t_token **token);
 int			ft_handle_end_quote(t_expand **exp, char *content);
 int			ft_handle_init_quote(t_expand **exp, char *content);
 int			ft_process_var_aux(t_expand **exp, char **env, int exit);
+
+/* ================================= */
+
+/* ================================= */
+/* ========= mimir expander ======== */
+/* ================================= */
+
+int			ft_find_limit(t_expand **exp, char *s, int i);
+int			ft_expander_validator(t_expand **exp, int i, int size);
+void		ft_variable_search(t_expand **exp, char **env, int i, int exit);
+void		ft_need_to_expand(t_token **token);
+void		ft_aux_need_to_expand(t_token **tkn, int state);
 
 /* ================================= */
 
