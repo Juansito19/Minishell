@@ -8,11 +8,11 @@
 
 CANDIDATAS A MOVERSE DE ESTE ARCHIVO
 
-1_ft_find_limit
-2_ft_expander_validator
-3_ft_variable_search
-4_ft_aux_need_to_expand
-5_ft_need_to_expand
+1_ ft_find_limit
+2_ ft_expander_validator
+3_ ft_variable_search
+4_ ft_aux_need_to_expand
+5_ ft_need_to_expand
 
 */
 
@@ -396,9 +396,9 @@ int	ft_mimir(t_token **token, char **env, int exit_status)
 	return (0);
 }
 
-/**** esquizofrenia *****/
-/**** | | | | | | | *****/
-/**** V V V V V V V *****/
+/*    esquizofrenia    */
+/*    | | | | | | |    */
+/*    V V V V V V V    */
 
 // TERCERA 
 // int	ft_process_var(t_expand **exp, char **env, int exit, char *cont)

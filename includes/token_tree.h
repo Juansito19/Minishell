@@ -2,27 +2,28 @@
 # define TOKEN_TREE_H
 # include "./minishell.h"
 
+/**
+ * @brief Variable expansion state tracker (Mimir's wisdom).
+ * 
+ * Holds temporary data during environment variable expansion process.
+ * Tracks quotes, variable names, and positions to properly expand $VAR
+ * tokens while respecting quote contexts. Named after Mimir, the Norse
+ * god of knowledge, as it reveals hidden values from the environment.
+ */
 typedef struct s_expand
 {
-	char	*init_quote;
-	char	*end_quote;
-	char	**split;
-	char	*var;
-	char	*tmp_var;
-	char	*aux;
-	int		s_init;
-	int		s_end;
-	int		limit;
-	int		dollar;
-	int		expand;
+	char	*init_quote;	/* Text before $ (prefix) */
+	char	*end_quote;		/* Text after variable (suffix) */
+	char	**split;		/* Split result by $ delimiter */
+	char	*var;			/* Variable name to expand */
+	char	*tmp_var;		/* Expanded value from environment */
+	char	*aux;			/* Auxiliary string for concatenation */
+	int		s_init;			/* Start position of variable */
+	int		s_end;			/* End position of variable */
+	int		limit;			/* Boundary limit for parsing */
+	int		dollar;			/* Dollar sign position tracker */
+	int		expand;			/* Expansion flag: [0]no, [1]yes */
 }	t_expand;
-
-typedef struct s_ex_var
-{
-	char			*content;
-	int				expand;
-	struct s_ex_var	*next;
-}	t_exp_var;
 
 typedef enum s_type		t_type;
 typedef struct s_token	t_token;
