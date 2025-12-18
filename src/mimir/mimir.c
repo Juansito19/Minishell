@@ -16,6 +16,7 @@ CANDIDATAS A MOVERSE DE ESTE ARCHIVO
 
 */
 
+// Esta funcion ya no se usa
 void	ft_find_dollar(t_expand **exp, char *s)
 {
 	int	i;
@@ -114,24 +115,18 @@ void	ft_need_to_expand(t_token **token)
 // 	int	i;
 // 	int	x;
 
-// 	// --- PASO 1: PREPARACIÓN DE VAR (INPUT) ---
-// 	// Decidimos si recortamos comillas o duplicamos todo
 // 	if ((*exp)->init_quote && (*exp)->end_quote)
 // 		(*exp)->var = ft_strtrim(cont + (*exp)->s_init, (*exp)->end_quote);
 // 	else
 // 		(*exp)->var = ft_strdup(cont);
 // 	if (!(*exp)->var)
 // 		return (ft_pd_error(ERR_MALLOC, NULL, 12));
-// 	// --- PASO 2: SPLIT ---
 // 	(*exp)->split = ft_split_dollar((*exp)->var, '$');
 // 	if (!(*exp)->split)
 // 		return (ft_pd_error(ERR_MALLOC, NULL, 12));
-// 	// --- PASO 3: EXPANSIÓN (Fragmento por fragmento) ---
 // 	i = 0;
 // 	while ((*exp)->split[i])
 // 	{
-// 		printf("split[%d] -> %s\n", i, (*exp)->split[i]);
-// 		// Si NO es una variable (no empieza por $ o es solo "$"), pasamos
 // 		if ((*exp)->split[i][0] != '$' || ft_strlen((*exp)->split[i]) == 1)
 // 		{
 // 			i++;
@@ -142,79 +137,51 @@ void	ft_need_to_expand(t_token **token)
 // 			i++;
 // 			continue ;
 // 		}
-// 		// Calculamos dónde termina el nombre de la variable
 // 		x = ft_find_limit(exp, (*exp)->split[i], 0);
-// 		// A. Extraemos el NOMBRE de la variable en tmp_var (ej: "$USER")
 // 		(*exp)->tmp_var = ft_substr((*exp)->split[i], 0, x);
 // 		if (!(*exp)->tmp_var)
 // 			return (ft_pd_error(ERR_MALLOC, NULL, 12));
-// 		printf("tmp_var -> %s\n", (*exp)->tmp_var);
-// 		// B. Extraemos el SUFIJO en aux (ej: "/bin") si existe límite
 // 		if ((*exp)->limit)
 // 			(*exp)->aux = ft_substr((*exp)->split[i], x, ft_strlen((*exp)->split[i]));
 // 		else
 // 			(*exp)->aux = NULL;
-// 		printf("limit -> %s\n", (*exp)->aux);
-// 		// C. Obtenemos el VALOR y reemplazamos split[i]
-// 		// Primero liberamos el string original "$USER/bin"
 // 		free((*exp)->split[i]);
 // 		(*exp)->split[i] = NULL;
 // 		if (!ft_strcmp((*exp)->tmp_var, "$?"))
 // 			(*exp)->split[i] = ft_itoa(exit);
 // 		else
 // 			(*exp)->split[i] = ft_get_var_value(env, (*exp)->tmp_var + 1);
-// 		// Si la variable no existe, strdup vacío para evitar NULLs
 // 		if (!(*exp)->split[i])
 // 			(*exp)->split[i] = ft_strdup("");
-// 		// Liberamos el nombre temporal ("$USER") ya que ya tenemos el valor
 // 		free((*exp)->tmp_var);
 // 		(*exp)->tmp_var = NULL;
-// 		// D. Si había SUFIJO, lo unimos al valor recuperado
 // 		if ((*exp)->aux)
 // 		{
-// 			// Unimos VALOR + SUFIJO en tmp_var
 // 			(*exp)->tmp_var = ft_strjoin((*exp)->split[i], (*exp)->aux);
-// 			// Limpieza
-// 			free((*exp)->split[i]); // Liberamos valor solo
-// 			free((*exp)->aux);	  // Liberamos sufijo solo
+// 			free((*exp)->split[i]);
+// 			free((*exp)->aux);
 // 			(*exp)->aux = NULL;
-// 			// Guardamos el resultado combinado de vuelta en el array
 // 			(*exp)->split[i] = (*exp)->tmp_var; 
-// 			// Nota: No ponemos tmp_var a NULL aquí porque split[i] apunta a lo mismo, 
-// 			// simplemente lo reutilizaremos en la siguiente vuelta.
 // 		}
 // 		i++;
 // 	}
-// 	// --- PASO 4: RECONSTRUCCIÓN (Unir todo el array en tmp_var) ---
-// 	// Usaremos aux como acumulador
 // 	if ((*exp)->aux) 
 // 		free((*exp)->aux); // Por seguridad
 // 	(*exp)->aux = ft_strdup("");
 // 	i = 0;
 // 	while ((*exp)->split[i])
 // 	{
-// 		// Unimos lo que llevamos (aux) + el nuevo fragmento (split[i])
 // 		(*exp)->tmp_var = ft_strjoin((*exp)->aux, (*exp)->split[i]);
-		
-// 		free((*exp)->aux);	  // Liberamos el acumulado viejo
-// 		(*exp)->aux = (*exp)->tmp_var; // Actualizamos el acumulador
+// 		free((*exp)->aux);
+// 		(*exp)->aux = (*exp)->tmp_var;
 // 		i++;
 // 	}
-// 	// El resultado final está en aux y tmp_var (apuntan a lo mismo)
-// 	// Pero por claridad y seguridad de la estructura:
-// 	// La función debe dejar el resultado en tmp_var.
-		
-// 	// (*exp)->tmp_var YA tiene el resultado correcto del último strjoin.
-// 	// (*exp)->aux apunta a lo mismo. Ponemos aux a NULL para no tener doble free luego.
 // 	(*exp)->aux = NULL;
-// 	// Limpieza final de var (ya no se necesita el input original)
 // 	if ((*exp)->var)
 // 	{
 // 		free((*exp)->var);
 // 		(*exp)->var = NULL;
 // 	}
-// 	// Recuerda liberar la matriz (*exp)->split fuera o aquí si tienes ft_free_matrix
-// 	// ft_free_matrix((*exp)->split); 
 // 	return (0);
 // }
 
@@ -341,9 +308,9 @@ int	ft_expander_validator(t_expand **exp, int i, int size)
 		return (0);
 }
 
-// 		LA MARAVILLOSA - LA RICARDA - LA MANOSEABLE - LA JUGUETONA 
+// 			LA MARAVILLOSA - LA RICARDA - LA MANOSEABLE - LA JUGUETONA 
 // 					LA DULSONA - LA JUGOSA - LA POTENTE
-// 							 funcion separada (24 lineas)
+// 						funcion separada (24 lineas)
 // 							   |     |     |
 // 							   V     V     V
 
@@ -456,32 +423,25 @@ int	ft_mimir(t_token **token, char **env, int exit_status)
 // 	i = 0;
 // 	while ((*exp)->split[i])
 // 	{
-// 		// 1. Casos para NO expandir (texto normal o '$' solo)
 // 		if ((*exp)->split[i][0] != '$' || ft_strlen((*exp)->split[i]) == 1)
 // 		{
 // 			i++;
 // 			continue ;
 // 		}
-// 		// 2. Lógica de expansión
 // 		x = ft_find_limit(exp, (*exp)->split[i], 0);
-// 		// A. Extraemos el nombre de la variable ($VAR)
 // 		(*exp)->tmp_var = ft_substr((*exp)->split[i], 0, x);
-// 		// B. Obtenemos su valor
 // 		if (!ft_strcmp((*exp)->tmp_var, "$?"))
 // 			(expanded_part) = ft_itoa(exit);
 // 		else
 // 			(expanded_part) = ft_get_var_value(env, (*exp)->tmp_var + 1);
-// 		// Si ft_get_var_value devuelve NULL, lo tratamos como cadena vacía
 // 		if (!(expanded_part))
 // 			(expanded_part) = ft_strdup("");
 // 		free((*exp)->tmp_var); // Liberamos "$VAR" temporal
-// 		// C. Manejo del sufijo (si existe)
 // 		if ((*exp)->limit)
 // 		{
 // 			(*exp)->aux = ft_substr((*exp)->split[i], x, ft_strlen((*exp)->split[i] + x));
-// 			free((*exp)->split[i]); // Liberamos el original "$VAR/texto"
+// 			free((*exp)->split[i]);
 // 			(*exp)->split[i] = NULL;
-// 			// Unimos Valor + Sufijo
 // 			(*exp)->split[i] = ft_strjoin((expanded_part), (*exp)->aux);
 // 			free((expanded_part));
 // 			(expanded_part) = NULL;
@@ -490,7 +450,6 @@ int	ft_mimir(t_token **token, char **env, int exit_status)
 // 		}
 // 		else
 // 		{
-// 			// Sin sufijo, simplemente reemplazamos
 // 			free((*exp)->split[i]);
 // 			(*exp)->split[i] = (expanded_part);
 // 		}
@@ -508,7 +467,6 @@ int	ft_mimir(t_token **token, char **env, int exit_status)
 // 		i++;
 // 	}
 // 	(*exp)->tmp_var = ft_strdup((*exp)->aux);
-// 	// Recuerda liberar (*exp)->split y sus contenidos al final o usar una función ft_free_matrix
 // 	return (0);
 // }
 
