@@ -6,6 +6,7 @@ typedef enum s_type		t_type;
 typedef struct s_token	t_token;
 typedef struct s_tree	t_tree;
 typedef struct s_data	t_data;
+typedef struct s_expand	t_expand;
 
 /* ============================ */
 /* ========== utils =========== */

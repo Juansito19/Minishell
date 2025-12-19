@@ -6,6 +6,7 @@
 # include "utils.h"
 # include "parse.h"
 # include "ratatoskr.h"
+# include "mimir.h"
 # include "banner.h"
 # include "errors.h"
 # include <readline/readline.h>

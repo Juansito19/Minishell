@@ -17,6 +17,7 @@ INCLUDES = $(INCLUDES_DIR)/minishell.h \
 		$(INCLUDES_DIR)/parse.h \
 		$(INCLUDES_DIR)/utils.h \
 		$(INCLUDES_DIR)/ratatoskr.h \
+		$(INCLUDES_DIR)/mimir.h \
 		$(INCLUDES_DIR)/heimdall.h \
 
 BUIL_DIR = src/builtins
@@ -48,6 +49,7 @@ HEIMDALL = $(HEIMDALL_DIR)/heimdall.c \
 
 MIMIR = $(MIMIR_DIR)/mimir.c \
 		$(MIMIR_DIR)/mimir_utils.c \
+		$(MIMIR_DIR)/mimir_expander.c \
 		$(MIMIR_DIR)/split_mimir.c \
 
 TOKEN = $(TOK_DIR)/token.c \
