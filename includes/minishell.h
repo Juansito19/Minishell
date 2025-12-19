@@ -1,5 +1,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
+# define _XOPEN_SOURCE 700
+# define _GNU_SOURCE
 # include "../libft/libft.h"
 # include "token_tree.h"
 # include "builtins.h"
@@ -9,6 +11,7 @@
 # include "mimir.h"
 # include "banner.h"
 # include "errors.h"
+# include "signals.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
@@ -62,6 +65,8 @@
 # ifndef RST
 #  define RST "\033[0m"
 # endif
+
+extern int	g_status;
 
 typedef enum s_type
 {
