@@ -101,7 +101,8 @@ int	ft_ratatoskr(t_tree **yggdrasil)
 			return (ft_pd_error(ERR_NO_SUCH_FILE, tmp_name, 1));
 		}
 		ft_find_branch_eof(&(*yggdrasil)->right, &eof_branch);
-		ft_chg_b(yggdrasil, &tmp_name, fd, &eof_branch);
+		if (ft_chg_b(yggdrasil, &tmp_name, fd, &eof_branch))
+			return (1);
 	}
 	ft_ratatoskr(&(*yggdrasil)->left);
 	ft_ratatoskr(&(*yggdrasil)->right);

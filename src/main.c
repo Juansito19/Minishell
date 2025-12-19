@@ -48,7 +48,7 @@ int	ft_minishell(t_data **data)
 	input = NULL;
 	while (1)
 	{
-		/*LLAMADA DE LA FUNCION SEÑALES (CNTR + C Y CNTROL + \)*/
+		/*SEÑALES INTERACTIVO (CNTR + C Y CNTROL + \)*/
 		input = readline("bostero$> ");
 		if (!input)
 		{
@@ -59,6 +59,7 @@ int	ft_minishell(t_data **data)
 		}
 		ft_check_input(data, input);
 		add_history(input);
+		/*SEÑALES EJECUTOR (CNTR + C Y CNTROL + \)*/
 		if (!ft_strncmp(input, "exit", 5))
 		{
 			free(input);
