@@ -61,7 +61,7 @@ int	ft_chg_b(t_tree **yggdrasil, char **tmp_name, int fd, t_tree **eof_branch)
 
 	while (1)
 	{
-		/*LLAMADA DE LA FUNCION SEÑALES (CNTR + C Y CNTROL + \)*/
+		ft_hugin_signal();
 		line = readline("> ");
 		if (!line)
 		{

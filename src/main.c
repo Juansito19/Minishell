@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+int	g_status = 0;
+
 void	ft_check_input(t_data **data, char *input)
 {
 	if (ft_big_prick_parse(input))
@@ -48,7 +50,7 @@ int	ft_minishell(t_data **data)
 	input = NULL;
 	while (1)
 	{
-		/*SEÑALES INTERACTIVO (CNTR + C Y CNTROL + \)*/
+		ft_hugin_signal();
 		input = readline("bostero$> ");
 		if (!input)
 		{
@@ -59,13 +61,14 @@ int	ft_minishell(t_data **data)
 		}
 		ft_check_input(data, input);
 		add_history(input);
-		/*SEÑALES EJECUTOR (CNTR + C Y CNTROL + \)*/
+		ft_odin_signal();
 		if (!ft_strncmp(input, "exit", 5))
 		{
 			free(input);
 			ft_clean_data(data);
 			break ;
 		}
+		ft_files_destroyer(&(*data)->yggdrasil);
 		ft_free_all(&(*data)->yggdrasil, &(*data)->tokens, &input, NULL);
 	}
 	rl_clear_history();

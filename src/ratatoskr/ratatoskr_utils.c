@@ -38,3 +38,18 @@ char	*ft_make_unic_name(void)
 	ft_free_pointers(number, tmp);
 	return (name);
 }
+
+int	ft_files_destroyer(t_tree **yggdrasil)
+{
+	if (!(*yggdrasil))
+		return (0);
+	if ((*yggdrasil)->left)
+		ft_files_destroyer(&(*yggdrasil)->left);
+	if ((*yggdrasil)->right)
+		ft_files_destroyer(&(*yggdrasil)->right);
+	if ((*yggdrasil)->type == T_FD)
+		if (!ft_strncmp((*yggdrasil)->content[0], ".heredoc_", 9))
+			if (unlink((*yggdrasil)->content[0]) == -1)
+				return (1);
+	return (0);
+}
