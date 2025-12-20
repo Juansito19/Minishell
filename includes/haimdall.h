@@ -9,10 +9,10 @@ typedef struct s_data	t_data;
 /* ============================== */
 
 int	ft_bifrost(t_tree **ygg, char **av);
-int	ft_haimdall_cmd(t_data **data, t_tree **ygg, char **env, int forked);
-int	ft_haimdall_redir(t_data **data, t_tree **ygg, char **env, int forked);
-int	ft_haimdall_pipe(t_data **data, t_tree **ygg, char **env, int forked);
-int	ft_haimdall(t_data **data, t_tree **ygg, char **env, int forked);
+int	ft_heimdall_cmd(t_data **data, t_tree **ygg, char **env, int forked);
+int	ft_heimdall_redir(t_data **data, t_tree **ygg, char **env, int forked);
+int	ft_heimdall_pipe(t_data **data, t_tree **ygg, char **env, int forked);
+int	ft_heimdall(t_data **data, t_tree **ygg, char **env, int forked);
 
 /* ============================== */
 
