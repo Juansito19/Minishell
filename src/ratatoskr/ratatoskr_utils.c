@@ -48,8 +48,8 @@ int	ft_files_destroyer(t_tree **yggdrasil)
 	if ((*yggdrasil)->right)
 		ft_files_destroyer(&(*yggdrasil)->right);
 	if ((*yggdrasil)->type == T_FD)
-		if (!ft_strncmp((*yggdrasil)->content[0], ".heredoc_", 9))
-			if (unlink((*yggdrasil)->content[0]) == -1)
-				return (1);
+		// if (!ft_strncmp((*yggdrasil)->content[0], ".heredoc_", 9))
+		if (unlink((*yggdrasil)->content[0]) == -1)
+			return (1);
 	return (0);
 }
