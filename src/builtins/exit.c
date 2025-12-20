@@ -4,14 +4,14 @@
 // ====== EXIT ===== //
 // ================= //
 
-static void	ft_terminator(t_data **data, char ***env, char **input)
+static void	ft_terminator(t_data **data, char ***env)
 {
 	ft_clean_data(data);
-	ft_free_all(NULL, NULL, input, env);
+	ft_free_all(NULL, NULL, NULL, env);
 	clear_history();
 }
 
-int	ft_exit(t_data **data, char ***env, char **input, char **status)
+int	ft_exit(t_data **data, char ***env, char **status)
 {
 	int	i;
 	int	j;

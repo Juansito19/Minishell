@@ -22,7 +22,7 @@ void	write_bucle(int i, char **str)
 	}
 }
 
-int	ft_flag_echo(int *ind, char **str)
+int	ft_flag_echo(int *ind, char **str) echo -n puto
 {
 	int	i;
 	int	j;
