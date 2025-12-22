@@ -10,16 +10,16 @@ void	ft_check_input(t_data **data, char *input)
 		return ;
 	}
 	(*data)->tokens = ft_token(input, 0);
-	printf("====PRIMERO====\n");
-	print_token(&(*data)->tokens);
+	// printf("====PRIMERO====\n");
+	// print_token(&(*data)->tokens);
 	ft_mimir(&(*data)->tokens, (*data)->env, (*data)->exit_status);
 	ft_search_quotes(&(*data)->tokens);
-	printf("====SEGUNDO====\n");
-	print_token(&(*data)->tokens);
+	// printf("====SEGUNDO====\n");
+	// print_token(&(*data)->tokens);
 	ft_search_eof(&(*data)->tokens);
 	ft_yggdrasil(&(*data)->tokens, &(*data)->yggdrasil, data);
 	ft_ratatoskr(&(*data)->yggdrasil);
-	fprint_tree(&(*data)->yggdrasil);
+	// fprint_tree(&(*data)->yggdrasil);
 }
 
 t_data	*ft_init_data(char **env)
@@ -62,14 +62,10 @@ int	ft_minishell(t_data **data)
 		ft_check_input(data, input);
 		add_history(input);
 		ft_odin_signal();
-		if (!ft_strncmp(input, "exit", 5))
-		{
-			free(input);
-			ft_clean_data(data);
-			break ;
-		}
+		free(input);
+		ft_heimdall(data, &(*data)->yggdrasil, (*data)->env, 0);
 		ft_files_destroyer(&(*data)->yggdrasil);
-		ft_free_all(&(*data)->yggdrasil, &(*data)->tokens, &input, NULL);
+		ft_free_all(&(*data)->yggdrasil, &(*data)->tokens, NULL, NULL);
 	}
 	rl_clear_history();
 	return (0);

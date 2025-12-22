@@ -16,10 +16,7 @@ int	ft_print_error(int error_code, char *s)
 int	ft_pd_error(char *format, char *s, int error_code)
 {
 	if (s)
-	{
 		ft_printf(format, s);
-		ft_printf("\n");
-	}
 	else
 		ft_printf(format);
 	return (error_code);

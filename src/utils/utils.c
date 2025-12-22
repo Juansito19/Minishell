@@ -30,7 +30,7 @@ int	ft_find_path(t_data **data, char **envp)
 	{
 		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
 		{
-			(*data)->path = ft_strdup(envp[i]);
+			(*data)->path = ft_strdup(envp[i] + 5);
 			if (!(*data)->path)
 				return (ft_pd_error(ERR_MALLOC, NULL, 12));
 			break ;
