@@ -72,21 +72,21 @@ int	ft_heimdall_cmd(t_data **data, t_tree **ygg, char **env, int forked)
 	{
 		if (execve(av[0], av, env) < 0)
 			exit(ft_pd_error(ERR_EXECVE, NULL, 126));
+	}
+	else
+	{
+		(*ygg)->pid = fork();
+		if ((*ygg)->pid == -1)
+			return (WEXITSTATUS(status));
+		if ((*ygg)->pid == 0)
+		{
+			if (execve(av[0], av, env) < 0)
+				exit(ft_pd_error(ERR_EXECVE, NULL, 126));
+		}
 		else
 		{
-			(*ygg)->pid = fork();
-			if ((*ygg)->pid == -1)
-				return (WEXITSTATUS(status));
-			if ((*ygg)->pid == 0)
-			{
-				if (execve(av[0], av, env) < 0)
-					exit(ft_pd_error(ERR_EXECVE, NULL, 126));
-			}
-			else
-			{
-				waitpid((*ygg)->pid, &status, 0);
-				return (WEXITSTATUS(status));
-			}
+			waitpid((*ygg)->pid, &status, 0);
+			return (WEXITSTATUS(status));
 		}
 	}
 	return (0);
@@ -182,7 +182,7 @@ int	ft_heimdall(t_data **data, t_tree **ygg, char **env, int forked)
 		return (ft_heimdall_pipe(data, ygg, env, forked));
 	if (ft_is_red((*ygg)->type))
 		return (ft_heimdall_redir(data, ygg, env, forked));
-	if ((*ygg)->type == T_CMD)
+	if ((*ygg)->type == T_CMD || (*ygg)->type == T_BUILTIN)
 		return (ft_heimdall_cmd(data, ygg, env, forked));
 	// if ((*ygg)->type == T_BUILTIN) se comenta porque se cree que no esta separada de funcion de comandos
 	// 	return (ft_heimdall_builtin(ygg, env, forked));

@@ -18,10 +18,11 @@ static int	ft_count_words(char **av)
 
 int	ft_builtins(t_data **data, char **av, char **env)
 {
+	// printf("hola\n");
 	if (!ft_strcmp("cd", av[0]))
 		return (ft_cd(&(*data)->env, av[1]));
 	else if (!ft_strcmp("echo", av[0]))
-		return (ft_echo(ft_count_words(av), av + 1));
+		return (ft_echo(ft_count_words(av), av));
 	else if (!ft_strcmp("env", av[0]))
 		return (ft_env(env));
 	else if (!ft_strcmp("exit", av[0]))

@@ -56,19 +56,21 @@ int	ft_echo(int ac, char **str)
 	int	n_flag;
 
 	n_flag = 0;
-	if (ac < 2 || str[2] == NULL)
+	printf("ac -> %d\n", ac);
+	if (ac < 2)
 	{
+		// printf("holaaaa\n");
 		ft_putchar_fd('\n', 1);
 		return (0);
 	}
 	if (ac >= 2)
 	{
-		n_flag = ft_flag_echo(&i, str + 2);
+		n_flag = ft_flag_echo(&i, str + 1);
 		if (n_flag)
-			write_bucle(i, str + 2);
+			write_bucle(i, str + 1);
 		else
 		{
-			write_bucle(i, str + 2);
+			write_bucle(i, str + 1);
 			ft_putchar_fd('\n', 1);
 		}
 	}
