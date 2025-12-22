@@ -15,6 +15,7 @@ t_tree	*ft_tree_init(char **content, t_type type, char *path)
 	new_tree->left = NULL;
 	new_tree->infile = -1;
 	new_tree->outfile = -1;
+	new_tree->pid = 0;
 	new_tree->pipe[0] = -1;
 	new_tree->pipe[1] = -1;
 	new_tree->path = ft_strdup(path);

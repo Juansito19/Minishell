@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	ft_bifrost(t_tree **ygg, char **av)
+int	ft_bifrost(t_tree **ygg)
 {
 	char	*aux;
 	char	*tmp_dir;
@@ -8,9 +8,10 @@ int	ft_bifrost(t_tree **ygg, char **av)
 	int		i;
 
 	i = 0;
+	tmp_dir = NULL;
 	if (access((*ygg)->content[0], X_OK) == 0)
 		return (0);
-	path_dir = split((*ygg)->path);
+	path_dir = ft_split((*ygg)->path, ':');
 	if (!path_dir)
 		return (ft_pd_error(ERR_MALLOC, NULL, 12));
 	while (path_dir[i])
@@ -44,13 +45,16 @@ int	ft_bifrost(t_tree **ygg, char **av)
 		free(tmp_dir);
 		return (ft_pd_error(ERR_MALLOC, NULL, 12));
 	}
+	free(tmp_dir);
 	return (0);
 }
 
 int	ft_heimdall_cmd(t_data **data, t_tree **ygg, char **env, int forked)
 {
 	char	**av;
+	int		status;
 
+	status = 0;
 	av = (*ygg)->content;
 	if ((*ygg)->type == T_BUILTIN)
 	{
@@ -75,11 +79,13 @@ int	ft_heimdall_cmd(t_data **data, t_tree **ygg, char **env, int forked)
 			if ((*ygg)->pid == -1)
 				return (WEXITSTATUS(status));
 			if ((*ygg)->pid == 0)
+			{
 				if (execve(av[0], av, env) < 0)
 					exit(ft_pd_error(ERR_EXECVE, NULL, 126));
+			}
 			else
 			{
-				waitid((*ygg)->pid, &status, 0);
+				waitpid((*ygg)->pid, &status, 0);
 				return (WEXITSTATUS(status));
 			}
 		}
@@ -89,11 +95,13 @@ int	ft_heimdall_cmd(t_data **data, t_tree **ygg, char **env, int forked)
 
 int	ft_heimdall_redir(t_data **data, t_tree **ygg, char **env, int forked)
 {
-	int fd_file;
-	int fd_origin;
-	int fd_target;
-	int fd_status;
+	int	fd_file;
+	int	fd_origin;
+	int	fd_target;
+	int	fd_status;
+	int	status;
 
+	status = 0;
 	fd_file = 0;
 	fd_origin = -1;
 	fd_target = -1;
@@ -104,7 +112,7 @@ int	ft_heimdall_redir(t_data **data, t_tree **ygg, char **env, int forked)
 		fd_file = open((*ygg)->right->content[0], O_CREAT | O_TRUNC | O_WRONLY);		
 	else if ((*ygg)->type == T_APPEND)
 		fd_file = open((*ygg)->right->content[0], O_CREAT | O_TRUNC | O_WRONLY | O_APPEND);
-	if (status < 0) // esto creo que es fd_file
+	if (fd_file < 0) // esto creo que es fd_file
 		return (ft_pd_error(ERR_PERMISSION_DENIED, (*ygg)->right->content[0], fd_file));
 	if ((*ygg)->type == T_REDIR_IN)
 		fd_target = STDIN_FILENO;
@@ -117,7 +125,7 @@ int	ft_heimdall_redir(t_data **data, t_tree **ygg, char **env, int forked)
 		dup2(fd_file, fd_target);
 		close(fd_file);
 	}
-	status = fd_heimdall_cmd(data, &(*ygg)->left, env, forked);
+	status = ft_heimdall_cmd(data, &(*ygg)->left, env, forked);
 	if (!forked)
 	{
 		dup2(fd_origin, fd_target);
@@ -130,9 +138,11 @@ int	ft_heimdall_pipe(t_data **data, t_tree **ygg, char **env, int forked)
 {
 	int	left_pid;
 	int	right_pid;
+	int	status;
 
+	status = 0;
 	if (pipe((*ygg)->pipe)) // Hay que ver como le damos valor a exit_status a la hora de terminar
-		return (ft_pd_error(ERR_PIPE_FAILED, NULL, status));
+		return (ft_pd_error(ERR_PIPE_FAILED, NULL, 32));
 	left_pid = fork();
 	if (!left_pid)
 	{
@@ -158,7 +168,7 @@ int	ft_heimdall_pipe(t_data **data, t_tree **ygg, char **env, int forked)
 	close((*ygg)->pipe[0]);
 	close((*ygg)->pipe[1]);
 	waitpid(left_pid, NULL, 0);
-	waitpid(right_pid, &satus, 0);
+	waitpid(right_pid, &status, 0);
 	if (forked)
 		exit(WEXITSTATUS(status));
 	return (WEXITSTATUS(status));
@@ -166,7 +176,7 @@ int	ft_heimdall_pipe(t_data **data, t_tree **ygg, char **env, int forked)
 
 int	ft_heimdall(t_data **data, t_tree **ygg, char **env, int forked)
 {
-	if ( ygg | !(*ygg))
+	if (!ygg | !(*ygg))
 		return (0);
 	if ((*ygg)->type == T_PIPE)
 		return (ft_heimdall_pipe(data, ygg, env, forked));

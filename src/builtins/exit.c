@@ -19,7 +19,7 @@ int	ft_exit(t_data **data, char ***env, char **status)
 
 	i = 0;
 	exit_status = (*data)->exit_status;
-	ft_terminator(data, env, input);
+	ft_terminator(data, env);
 	if (!status)
 		exit(exit_status);
 	while (status[i])

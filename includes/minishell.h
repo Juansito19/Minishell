@@ -12,6 +12,7 @@
 # include "banner.h"
 # include "errors.h"
 # include "signals.h"
+# include "heimdall.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
@@ -110,6 +111,7 @@ typedef struct s_tree
 	char			**content;		/* Command and arguments array */
 	int				infile;			/* Input file descriptor */
 	int				outfile;		/* Output file descriptor */
+	int				pid;			/* pid */
 	int				pipe[2];		/* Pipe descriptors [read, write] */
 	char			*path;			/* Builtin command identifier */
 	t_type			type;			/* Node type (cmd/pipe/redir) */
