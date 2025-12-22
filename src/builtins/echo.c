@@ -56,10 +56,8 @@ int	ft_echo(int ac, char **str)
 	int	n_flag;
 
 	n_flag = 0;
-	printf("ac -> %d\n", ac);
 	if (ac < 2)
 	{
-		// printf("holaaaa\n");
 		ft_putchar_fd('\n', 1);
 		return (0);
 	}

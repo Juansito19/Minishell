@@ -62,12 +62,6 @@ int	ft_minishell(t_data **data)
 		ft_check_input(data, input);
 		add_history(input);
 		ft_odin_signal();
-		// if (!ft_strncmp(input, "exit", 5))
-		// {
-		// 	free(input);
-		// 	ft_clean_data(data);
-		// 	break ;
-		// }
 		free(input);
 		ft_heimdall(data, &(*data)->yggdrasil, (*data)->env, 0);
 		ft_files_destroyer(&(*data)->yggdrasil);
