@@ -71,7 +71,7 @@ int	ft_minishell(t_data **data)
 		free(input);
 		ft_heimdall(data, &(*data)->yggdrasil, (*data)->env, 0);
 		ft_files_destroyer(&(*data)->yggdrasil);
-		ft_free_all(&(*data)->yggdrasil, &(*data)->tokens, &input, NULL);
+		ft_free_all(&(*data)->yggdrasil, &(*data)->tokens, NULL, NULL);
 	}
 	rl_clear_history();
 	return (0);
