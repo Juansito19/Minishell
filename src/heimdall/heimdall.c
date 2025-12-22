@@ -32,7 +32,6 @@ int	ft_bifrost(t_tree **ygg)
 	}
 	if (path_dir[i] == NULL)
 	{
-		free(aux);
 		ft_free_all(NULL, NULL, &tmp_dir, &path_dir);
 		return (ft_pd_error(ERR_CMD_NOT_FOUND, (*ygg)->content[0], 12));
 	}
@@ -113,7 +112,7 @@ int	ft_heimdall_redir(t_data **data, t_tree **ygg, char **env, int forked)
 	else if ((*ygg)->type == T_APPEND)
 		fd_file = open((*ygg)->right->content[0], O_CREAT | O_TRUNC | O_WRONLY | O_APPEND);
 	if (fd_file < 0) // esto creo que es fd_file
-		return (ft_pd_error(ERR_PERMISSION_DENIED, (*ygg)->right->content[0], fd_file));
+		return (ft_pd_error(ERR_PERMISSION_DENIED, (*ygg)->right->content[0], 1));
 	if ((*ygg)->type == T_REDIR_IN)
 		fd_target = STDIN_FILENO;
 	else
@@ -125,7 +124,8 @@ int	ft_heimdall_redir(t_data **data, t_tree **ygg, char **env, int forked)
 		dup2(fd_file, fd_target);
 		close(fd_file);
 	}
-	status = ft_heimdall_cmd(data, &(*ygg)->left, env, forked);
+	if ((*ygg)->left)
+		status = ft_heimdall(data, &(*ygg)->left, env, forked);
 	if (!forked)
 	{
 		dup2(fd_origin, fd_target);
@@ -150,8 +150,8 @@ int	ft_heimdall_pipe(t_data **data, t_tree **ygg, char **env, int forked)
 		close((*ygg)->pipe[0]);
 		dup2((*ygg)->pipe[1], STDOUT_FILENO);
 		close((*ygg)->pipe[1]);
-		// mirar si va adentro o afuera del if ;)
-		ft_heimdall(data, ygg, env, forked);
+		if ((*ygg)->left)
+			ft_heimdall(data, &(*ygg)->left, env, forked);
 		exit(status);
 	}
 	right_pid = fork();
@@ -161,8 +161,8 @@ int	ft_heimdall_pipe(t_data **data, t_tree **ygg, char **env, int forked)
 		close((*ygg)->pipe[1]);
 		dup2((*ygg)->pipe[0], STDIN_FILENO);
 		close((*ygg)->pipe[0]);
-		// mirar si va adentro o afuera del if ;)
-		ft_heimdall(data, ygg, env, forked);
+		if ((*ygg)->right)
+			ft_heimdall(data, &(*ygg)->right, env, forked);
 		exit(status);
 	}
 	close((*ygg)->pipe[0]);
