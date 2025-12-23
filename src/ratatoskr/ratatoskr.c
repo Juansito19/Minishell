@@ -81,6 +81,7 @@ int	ft_chg_b(t_tree **yggdrasil, char **tmp_name, int fd, t_tree **eof_branch)
 	return (0);
 }
 
+// todo ratatoskr viaja a travez de tokens, NO de yggdrasil
 int	ft_ratatoskr(t_tree **yggdrasil)
 {
 	char	*tmp_name;

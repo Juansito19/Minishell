@@ -16,8 +16,18 @@ void	ft_check_input(t_data **data, char *input)
 	ft_search_quotes(&(*data)->tokens);
 	// printf("====SEGUNDO====\n");
 	// print_token(&(*data)->tokens);
+
+	// search_eof se mantiene porque ya busca a travez de tokens los EOF
 	ft_search_eof(&(*data)->tokens);
+
+	// yggdrasil sufre cambios:
+	// solo divide por pipes
+	// las redirecciones se unen a los comandos
 	ft_yggdrasil(&(*data)->tokens, &(*data)->yggdrasil, data);
+
+	// ratatosker tiene que ir antes que yggdrasil
+	// el cambio es porque si vamos a modificar a yggdrasil
+	// el modo de buscar se parece al de tokens
 	ft_ratatoskr(&(*data)->yggdrasil);
 	// fprint_tree(&(*data)->yggdrasil);
 }

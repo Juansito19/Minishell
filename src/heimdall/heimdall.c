@@ -68,7 +68,7 @@ int	ft_heimdall_cmd(t_data **data, t_tree **ygg, char **env, int forked)
 			exit(127);
 		return (127);
 	}
-	if (forked) // mirar por las dudas si esta bien forked o !forked
+	if (forked)
 	{
 		if (execve(av[0], av, env) < 0)
 			exit(ft_pd_error(ERR_EXECVE, NULL, 126));
@@ -80,6 +80,7 @@ int	ft_heimdall_cmd(t_data **data, t_tree **ygg, char **env, int forked)
 			return (WEXITSTATUS(status));
 		if ((*ygg)->pid == 0)
 		{
+			ft_odinson_signal();
 			if (execve(av[0], av, env) < 0)
 				exit(ft_pd_error(ERR_EXECVE, NULL, 126));
 		}
@@ -106,9 +107,9 @@ int	ft_heimdall_redir(t_data **data, t_tree **ygg, char **env, int forked)
 	fd_target = -1;
 	fd_status = 0;
 	if ((*ygg)->type == T_REDIR_IN)
-		fd_file = open((*ygg)->right->content[0], O_RDONLY);		
+		fd_file = open((*ygg)->right->content[0], O_RDONLY);
 	else if ((*ygg)->type == T_REDIR_OUT)
-		fd_file = open((*ygg)->right->content[0], O_CREAT | O_TRUNC | O_WRONLY);		
+		fd_file = open((*ygg)->right->content[0], O_CREAT | O_TRUNC | O_WRONLY);
 	else if ((*ygg)->type == T_APPEND)
 		fd_file = open((*ygg)->right->content[0], O_CREAT | O_TRUNC | O_WRONLY | O_APPEND);
 	if (fd_file < 0) // esto creo que es fd_file
@@ -146,6 +147,7 @@ int	ft_heimdall_pipe(t_data **data, t_tree **ygg, char **env, int forked)
 	left_pid = fork();
 	if (!left_pid)
 	{
+		ft_odinson_signal();
 		forked = 1;
 		close((*ygg)->pipe[0]);
 		dup2((*ygg)->pipe[1], STDOUT_FILENO);
@@ -157,6 +159,7 @@ int	ft_heimdall_pipe(t_data **data, t_tree **ygg, char **env, int forked)
 	right_pid = fork();
 	if (!right_pid)
 	{
+		ft_odinson_signal();
 		forked = 1;
 		close((*ygg)->pipe[1]);
 		dup2((*ygg)->pipe[0], STDIN_FILENO);
@@ -184,7 +187,5 @@ int	ft_heimdall(t_data **data, t_tree **ygg, char **env, int forked)
 		return (ft_heimdall_redir(data, ygg, env, forked));
 	if ((*ygg)->type == T_CMD || (*ygg)->type == T_BUILTIN)
 		return (ft_heimdall_cmd(data, ygg, env, forked));
-	// if ((*ygg)->type == T_BUILTIN) se comenta porque se cree que no esta separada de funcion de comandos
-	// 	return (ft_heimdall_builtin(ygg, env, forked));
 	return (0);
 }
