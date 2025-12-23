@@ -80,6 +80,7 @@ int	ft_heimdall_cmd(t_data **data, t_tree **ygg, char **env, int forked)
 			return (WEXITSTATUS(status));
 		if ((*ygg)->pid == 0)
 		{
+			ft_odinson_signal();
 			if (execve(av[0], av, env) < 0)
 				exit(ft_pd_error(ERR_EXECVE, NULL, 126));
 		}
@@ -146,6 +147,7 @@ int	ft_heimdall_pipe(t_data **data, t_tree **ygg, char **env, int forked)
 	left_pid = fork();
 	if (!left_pid)
 	{
+		ft_odinson_signal();
 		forked = 1;
 		close((*ygg)->pipe[0]);
 		dup2((*ygg)->pipe[1], STDOUT_FILENO);
@@ -157,6 +159,7 @@ int	ft_heimdall_pipe(t_data **data, t_tree **ygg, char **env, int forked)
 	right_pid = fork();
 	if (!right_pid)
 	{
+		ft_odinson_signal();
 		forked = 1;
 		close((*ygg)->pipe[1]);
 		dup2((*ygg)->pipe[0], STDIN_FILENO);
