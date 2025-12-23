@@ -11,7 +11,7 @@ int	ft_find_limit(t_expand **exp, char *s, int i)
 	{
 		while (s[++i])
 		{
-			if (!ft_isalnum(s[i]) && s[i] != '_')
+			if (!ft_isalnum(s[i]) && s[i] != '_' && s[i] != '?')
 			{
 				(*exp)->limit = 1;
 				return (i);
@@ -46,7 +46,11 @@ int	ft_expander_validator(t_expand **exp, int i, int size)
 		return (1);
 	// Si el siguiente no es caracter o '_' es el final de una variable
 	else if (!ft_isalpha((*exp)->split[i][1]) && (*exp)->split[i][1] != '_')
+	{
+		if ((*exp)->split[i][1] == '?')
+			return (0);
 		return (1);
+	}
 	else
 		return (0);
 }
