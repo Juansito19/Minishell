@@ -38,17 +38,15 @@ char	**ft_add_var(char **env, char *var)
 	size = 0;
 	while (env[size])
 		size++;
-	res = malloc(size + 2 * sizeof(char *));
+	res = ft_calloc(size + 2, sizeof(char *));
 	if (!res)
 		return (NULL);
-	res[size + 1] = NULL;
-	while (env[i] && size > 0)
+	while (env[i])
 	{
 		res[i] = ft_strdup(env[i]);
 		if (!res[i])
 			return (ft_free_all_array(res));
 		i++;
-		size--;
 	}
 	res[i] = ft_strdup(var);
 	if (!res[i])
