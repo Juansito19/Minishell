@@ -74,7 +74,7 @@ t_type	ft_is_builtin(t_token **token)
 
 	if (!token || !(*token) || !(*token)->content)
 		return (T_CMD);
-	i = 0;
+	i = -1;
 	builtins[0] = "echo";
 	builtins[1] = "cd";
 	builtins[2] = "pwd";
@@ -83,12 +83,9 @@ t_type	ft_is_builtin(t_token **token)
 	builtins[5] = "exit";
 	builtins[6] = "env";
 	builtins[7] = NULL;
-	while (builtins[i])
-	{
+	while (builtins[++i])
 		if (!ft_strcmp(builtins[i], (*token)->content))
 			return (T_BUILTIN);
-		i++;
-	}
 	if ((*token)->type == T_EOF)
 		return (T_EOF);
 	return (T_CMD);

@@ -38,3 +38,19 @@ char	*ft_make_unic_name(void)
 	ft_free_pointers(number, tmp);
 	return (name);
 }
+
+// Hay que verificar bien que pasa cuando no elimina los archivos ocultos
+// no elimina bien cuando hay mas de un herecod pegado uno al otro
+int	ft_files_destroyer(t_tree **yggdrasil)
+{
+	if (!(*yggdrasil))
+		return (0);
+	if ((*yggdrasil)->left)
+		ft_files_destroyer(&(*yggdrasil)->left);
+	if ((*yggdrasil)->right)
+		ft_files_destroyer(&(*yggdrasil)->right);
+	if ((*yggdrasil)->type == T_FD)
+		if (unlink((*yggdrasil)->content[0]) == -1)
+			return (1);
+	return (0);
+}

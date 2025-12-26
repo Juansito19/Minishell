@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrosio <jbrosio@student.42malaga.com>     +#+  +:+       +#+        */
+/*   By: unovo-ru <unovo-ru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:45:54 by jbrosio           #+#    #+#             */
-/*   Updated: 2025/11/10 20:49:35 by jbrosio          ###   ########.fr       */
+/*   Updated: 2025/12/22 22:55:19 by unovo-ru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ static char	**array_const(char const *s1, char **big, char c, int count)
 			j++;
 			i = i + (counter(&s1[i], c));
 		}
-		i++;
+		else
+			i++;
 	}
 	return (big);
 }

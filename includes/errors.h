@@ -29,6 +29,8 @@
 # define ERR_EXIT_NUMERIC "minishell: exit: %s: numeric argument required\n"
 # define ERR_EXIT_TOO_MANY "minishell: exit: too many arguments\n"
 
+# define ERR_SIGNAL "minishell: signal: signal %s fail\n"
+
 /* ============================ */
 /* ========== error =========== */
 /* ============================ */

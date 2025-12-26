@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+int	g_status = 0;
+
 void	ft_check_input(t_data **data, char *input)
 {
 	if (ft_big_prick_parse(input))
@@ -8,13 +10,26 @@ void	ft_check_input(t_data **data, char *input)
 		return ;
 	}
 	(*data)->tokens = ft_token(input, 0);
+	// printf("====PRIMERO====\n");
+	// print_token(&(*data)->tokens);
 	ft_mimir(&(*data)->tokens, (*data)->env, (*data)->exit_status);
 	ft_search_quotes(&(*data)->tokens);
-	print_token(&(*data)->tokens);
+	// printf("====SEGUNDO====\n");
+	// print_token(&(*data)->tokens);
+
+	// search_eof se mantiene porque ya busca a travez de tokens los EOF
 	ft_search_eof(&(*data)->tokens);
+
+	// yggdrasil sufre cambios:
+	// solo divide por pipes
+	// las redirecciones se unen a los comandos
 	ft_yggdrasil(&(*data)->tokens, &(*data)->yggdrasil, data);
+
+	// ratatosker tiene que ir antes que yggdrasil
+	// el cambio es porque si vamos a modificar a yggdrasil
+	// el modo de buscar se parece al de tokens
 	ft_ratatoskr(&(*data)->yggdrasil);
-	fprint_tree(&(*data)->yggdrasil);
+	// fprint_tree(&(*data)->yggdrasil);
 }
 
 t_data	*ft_init_data(char **env)
@@ -45,6 +60,7 @@ int	ft_minishell(t_data **data)
 	input = NULL;
 	while (1)
 	{
+		ft_hugin_signal();
 		input = readline("bostero$> ");
 		if (!input)
 		{
@@ -55,13 +71,11 @@ int	ft_minishell(t_data **data)
 		}
 		ft_check_input(data, input);
 		add_history(input);
-		if (!ft_strncmp(input, "exit", 5))
-		{
-			free(input);
-			ft_clean_data(data);
-			break ;
-		}
-		ft_free_all(&(*data)->yggdrasil, &(*data)->tokens, &input, NULL);
+		ft_odin_signal();
+		free(input);
+		ft_heimdall(data, &(*data)->yggdrasil, (*data)->env, 0);
+		ft_files_destroyer(&(*data)->yggdrasil);
+		ft_free_all(&(*data)->yggdrasil, &(*data)->tokens, NULL, NULL);
 	}
 	rl_clear_history();
 	return (0);

@@ -1,13 +1,18 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
+# define _XOPEN_SOURCE 700
+# define _GNU_SOURCE
 # include "../libft/libft.h"
 # include "token_tree.h"
 # include "builtins.h"
 # include "utils.h"
 # include "parse.h"
 # include "ratatoskr.h"
+# include "mimir.h"
 # include "banner.h"
 # include "errors.h"
+# include "signals.h"
+# include "heimdall.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
@@ -62,6 +67,8 @@
 #  define RST "\033[0m"
 # endif
 
+extern int	g_status;
+
 typedef enum s_type
 {
 	T_PIPE = 1,
@@ -104,6 +111,7 @@ typedef struct s_tree
 	char			**content;		/* Command and arguments array */
 	int				infile;			/* Input file descriptor */
 	int				outfile;		/* Output file descriptor */
+	int				pid;			/* pid */
 	int				pipe[2];		/* Pipe descriptors [read, write] */
 	char			*path;			/* Builtin command identifier */
 	t_type			type;			/* Node type (cmd/pipe/redir) */
