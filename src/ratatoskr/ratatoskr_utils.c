@@ -39,8 +39,6 @@ char	*ft_make_unic_name(void)
 	return (name);
 }
 
-// Hay que verificar bien que pasa cuando no elimina los archivos ocultos
-// no elimina bien cuando hay mas de un herecod pegado uno al otro
 int	ft_files_destroyer(t_tree **yggdrasil)
 {
 	if (!(*yggdrasil))
@@ -53,4 +51,29 @@ int	ft_files_destroyer(t_tree **yggdrasil)
 		if (unlink((*yggdrasil)->content[0]) == -1)
 			return (1);
 	return (0);
+}
+
+// Esta funcion utiliza dos tipos de salidas segun la señal recibida:
+// CTRL-C: sale por la 130, por lo que se comporta con el if
+// CTRL-D: sale por la 1, por lo que hace lo que esta fuera del if
+int	ft_signal_break(char **tmp_name, int fd, int fd_back, t_token **eof)
+{
+	if (g_status == 130)
+	{
+		ft_fprintf(1, "\n");
+		unlink(*tmp_name);
+		free(*tmp_name);
+		close(fd);
+		ft_hugin_signal();
+		dup2(fd_back, STDIN_FILENO);
+		close(fd_back);
+		return (130);
+	}
+	ft_pd_error(ERR_HEREDOC_CTRLD, (*eof)->content, 1);
+	unlink(*tmp_name);
+	free(*tmp_name);
+	close(fd);
+	dup2(fd_back, STDIN_FILENO);
+	close(fd_back);
+	return (1);
 }

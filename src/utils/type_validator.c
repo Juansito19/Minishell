@@ -88,5 +88,7 @@ t_type	ft_is_builtin(t_token **token)
 			return (T_BUILTIN);
 	if ((*token)->type == T_EOF)
 		return (T_EOF);
+	else if ((*token)->type == T_FD)
+		return (T_FD);
 	return (T_CMD);
 }
