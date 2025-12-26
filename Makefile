@@ -45,6 +45,7 @@ PARSE = $(PAR_DIR)/parse.c \
 		$(PAR_DIR)/parse_utils.c \
 
 SIGNAL = $(SIGNAL_DIR)/signals.c \
+		$(SIGNAL_DIR)/heimdall_signals.c \
 
 RATATOSKR = $(RATATOSKR_DIR)/ratatoskr.c \
 			$(RATATOSKR_DIR)/ratatoskr_utils.c \
