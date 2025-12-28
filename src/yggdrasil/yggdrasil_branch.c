@@ -33,8 +33,6 @@ int	ft_branch_m(t_token *meta, t_tree **tree, t_token **tokens, t_data **data)
 	return (0);
 }
 
-// Esta funcion deberia ser capaz de soportar a las redirecciones en general
-// Y tambien soportar a los comandos
 int	ft_branch_w(t_tree **tree, t_token **tokens, char *path)
 {
 	char	**word;

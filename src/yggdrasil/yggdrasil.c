@@ -103,7 +103,6 @@ int	ft_yggdrasil(t_token **tokens, t_tree **tree, t_data **data)
 	}
 	else
 	{
-		// de aqui desaparece ft_search_red
 		token_red = ft_search_red(tokens);
 		if (token_red)
 		{
@@ -112,7 +111,6 @@ int	ft_yggdrasil(t_token **tokens, t_tree **tree, t_data **data)
 		}
 		else
 		{
-			// se queda ft_branch_w
 			if (ft_branch_w(tree, tokens, (*data)->path))
 				return (1);
 		}
