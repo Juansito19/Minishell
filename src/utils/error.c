@@ -16,8 +16,8 @@ int	ft_print_error(int error_code, char *s)
 int	ft_pd_error(char *format, char *s, int error_code)
 {
 	if (s)
-		ft_fprintf(error_code, format, s);
+		ft_fprintf(1, format, s);
 	else
-		ft_fprintf(error_code, format);
+		ft_fprintf(1, format);
 	return (error_code);
 }

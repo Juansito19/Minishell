@@ -18,6 +18,7 @@ int	ft_odin_signal(void)
 		return (ft_pd_error(ERR_SIGNAL, "SIGQUIT", 1));
 	return (0);
 }
+
 static void	ft_son_handler(int sig)
 {
 	if (sig == SIGINT)
