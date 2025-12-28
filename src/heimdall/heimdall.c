@@ -95,6 +95,11 @@ int	ft_heimdall_cmd(t_data **data, t_tree **ygg, char **env, int forked)
 	return (0);
 }
 
+
+// Hay que revisar la funcion para crear su propia estructura
+// y poder meter todas las variables que necesitemos
+// Proximamente hay que recuperar en caso de que el comando falle la salida
+// estandar para escribir el error y que no salga por el fd
 int ft_heimdall_redir(t_data **data, t_tree **ygg, char **env, int forked)
 {
     t_tree  *curr;
