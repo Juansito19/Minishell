@@ -48,9 +48,12 @@ SIGNAL = $(SIGNAL_DIR)/signals.c \
 		$(SIGNAL_DIR)/heimdall_signals.c \
 
 RATATOSKR = $(RATATOSKR_DIR)/ratatoskr.c \
-			$(RATATOSKR_DIR)/ratatoskr_utils.c \
+		$(RATATOSKR_DIR)/ratatoskr_utils.c \
 
 HEIMDALL = $(HEIMDALL_DIR)/heimdall.c \
+		$(HEIMDALL_DIR)/heimdall_pipe.c \
+		$(HEIMDALL_DIR)/heimdall_red.c \
+		$(HEIMDALL_DIR)/heimdall_cmd.c \
 
 MIMIR = $(MIMIR_DIR)/mimir.c \
 		$(MIMIR_DIR)/mimir_utils.c \

@@ -38,9 +38,9 @@ int	ft_token_word(t_token **tokens, char *s, int *ind)
 	int		size;
 
 	size = ft_token_size(s);
-	if (size < 0)
+	if (size <= 0)
 		return (0);
-	if (s[1] && s[0] == '$' && ft_is_quote(s[1]))
+	if ((s[1] && s[0] && s[0] == '$') && ft_is_quote(s[1]))
 		word = ft_substr(s, 1, size);
 	else
 		word = ft_substr(s, 0, size);

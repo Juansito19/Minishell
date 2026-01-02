@@ -19,10 +19,6 @@ void	ft_check_input(t_data **data, char *input)
 	ft_ratatoskr(&(*data)->tokens);
 	// printf("====SEGUNDO====\n");
 	// print_token(&(*data)->tokens);
-
-	// yggdrasil sufre cambios:
-	// solo divide por pipes
-	// las redirecciones se unen a los comandos
 	ft_yggdrasil(&(*data)->tokens, &(*data)->yggdrasil, data);
 	// fprint_tree(&(*data)->yggdrasil);
 }
@@ -64,10 +60,10 @@ int	ft_minishell(t_data **data)
 			printf("exit\n");
 			break ;
 		}
-		ft_check_input(data, input);
 		add_history(input);
-		ft_odin_signal();
+		ft_check_input(data, input);
 		free(input);
+		ft_odin_signal();
 		ft_heimdall(data, &(*data)->yggdrasil, (*data)->env, 0);
 		ft_files_destroyer(&(*data)->yggdrasil);
 		ft_free_all(&(*data)->yggdrasil, &(*data)->tokens, NULL, NULL);
