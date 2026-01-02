@@ -59,7 +59,7 @@ void	ft_clean_yggdrasil(t_tree **tree)
 
 void	ft_clean_data(t_data **data)
 {
-	if (!(*data))
+	if (!data || !(*data))
 		return ;
 	if ((*data)->path)
 		free((*data)->path);
@@ -70,6 +70,7 @@ void	ft_clean_data(t_data **data)
 	if ((*data)->tokens)
 		ft_free_tokens(&(*data)->tokens);
 	free((*data));
+	*data = NULL;
 }
 
 void	*ft_free_all(t_tree **tree, t_token **token, char **input, char ***s)

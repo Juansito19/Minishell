@@ -286,7 +286,6 @@ int ft_heimdall_redir(t_data **data, t_tree **ygg, char **env, int forked)
 		stdin_backup = dup(STDIN_FILENO);
 		stdout_backup = dup(STDOUT_FILENO);
 	}
-	printf("entra\n");
 	// --- 2. Bucle para abrir archivos (Igual que antes) ---
 	while (curr && ft_is_red(curr->type))
 	{

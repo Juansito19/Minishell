@@ -18,7 +18,7 @@ void	ft_check_input(t_data **data, char *input)
 	ft_search_eof(&(*data)->tokens);
 	ft_ratatoskr(&(*data)->tokens);
 	// printf("====SEGUNDO====\n");
-	// print_token(&(*data)->tokens);
+	print_token(&(*data)->tokens);
 	ft_yggdrasil(&(*data)->tokens, &(*data)->yggdrasil, data);
 	// fprint_tree(&(*data)->yggdrasil);
 }
@@ -55,9 +55,8 @@ int	ft_minishell(t_data **data)
 		input = readline("bostero$> ");
 		if (!input)
 		{
-			free(input);
 			ft_clean_data(data);
-			printf("exit\n");
+			ft_fprintf(1, "exit\n");
 			break ;
 		}
 		add_history(input);

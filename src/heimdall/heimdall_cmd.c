@@ -60,13 +60,19 @@ int	ft_heimdall_cmd(t_data **data, t_tree **ygg, char **env, int forked)
 	{
 		status = ft_builtins(data, av, env);
 		if (forked)
+		{
+			ft_clean_data(data);
 			exit(status);
+		}
 		return (status);
 	}
 	if (ft_bifrost(ygg))
 	{
 		if (forked)
+		{
+			ft_clean_data(data);
 			exit(127);
+		}
 		return (127);
 	}
 	if (forked)
