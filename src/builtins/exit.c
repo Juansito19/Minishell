@@ -43,5 +43,6 @@ int	ft_exit(t_data **data, char **status)
 			return (ft_pd_error(ERR_EXIT_TOO_MANY, NULL, 1));
 		break ;
 	}
+	ft_clean_data(data);
 	exit(0);
 }
