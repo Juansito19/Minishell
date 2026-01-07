@@ -364,7 +364,7 @@ int	ft_heimdall_redir(t_data **data, t_tree **ygg, char **env, int forked)
 		else
 			break ;
 	}
-	ft_heimdall_redir_aux(data, env, &red, forked);
+	ft_redir_aux(data, env, &red, forked);
 	return (red.status);
 }
 
