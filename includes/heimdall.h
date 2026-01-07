@@ -8,6 +8,21 @@ typedef struct s_data	t_data;
 /* ========== heimdall ========== */
 /* ============================== */
 
+typedef struct s_red
+{
+	t_tree	*curr;
+	t_tree	*file_node;
+	t_tree	*cmd_node;
+	int		fd_out;
+	int		fd_in;
+	int		tmp_fd;
+	int		flags;
+	int		stdin_backup;
+	int		stdout_backup;
+	int		status;
+}	t_red;
+
+
 int	ft_bifrost(t_tree **ygg);
 int	ft_search_path(t_tree **ygg, char **tmp_dir, char **path_dir);
 int	ft_assign_path(t_tree **ygg, char **tmp_dir, char ***path_dir, int *i);

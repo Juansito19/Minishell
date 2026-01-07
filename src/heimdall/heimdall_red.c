@@ -252,124 +252,144 @@
 // 	return (status);
 // }
 
+int	ft_init_red(t_red *red, t_tree **ygg, int forked)
+{
+	red->cmd_node = (*ygg)->left;
+	red->curr = *ygg;
+	red->file_node = NULL;
+	red->fd_out = -1;
+	red->fd_in = -1;
+	if (!forked)
+	{
+		red->stdin_backup = dup(STDIN_FILENO);
+		red->stdout_backup = dup(STDOUT_FILENO);
+	}
+	red->status = -1;
+	red->tmp_fd = -1;
+	red->flags = -1;
+	return (0);
+}
+
 // Hay que revisar la funcion para crear su propia estructura
 // y poder meter todas las variables que necesitemos
 // Proximamente hay que recuperar en caso de que el comando falle la salida
 // estandar para escribir el error y que no salga por el fd
 int ft_heimdall_redir(t_data **data, t_tree **ygg, char **env, int forked)
 {
-	t_tree	*curr;
-	t_tree	*file_node;
-	t_tree	*cmd_node;
-	int		fd_out;
-	int		fd_in;
-	int		tmp_fd;
-	int		flags;
-	// Variables para guardar el estado original
-	int		stdin_backup;
-	int		stdout_backup;
-	int		status;
+	t_red	red;
+	// t_tree	*curr;
+	// t_tree	*file_node;
+	// t_tree	*cmd_node;
+	// int		fd_out;
+	// int		fd_in;
+	// int		tmp_fd;
+	// int		flags;
+	// // Variables para guardar el estado original
+	// int		stdin_backup;
+	// int		stdout_backup;
+	// int		status;
 
-	cmd_node = (*ygg)->left;
-	curr = *ygg;
-	fd_out = -1;
-	fd_in = -1;
-	stdin_backup = -1;
-	stdout_backup = -1;
-	status = 0;
+	// cmd_node = (*ygg)->left;
+	// curr = *ygg;
+	// fd_out = -1;
+	// fd_in = -1;
+	// stdin_backup = -1;
+	// stdout_backup = -1;
+	// status = 0;
 
+	ft_init_red(&red, ygg, forked);
 	// --- 1. SAVE: Guardamos STDIN y STDOUT originales si no es un fork ---
 	// Si estamos en un hijo (forked=1), no hace falta porque el hijo muere.
 	// Pero si es un builtin o shell principal, ES VITAL.
-	if (!forked)
-	{
-		stdin_backup = dup(STDIN_FILENO);
-		stdout_backup = dup(STDOUT_FILENO);
-	}
+	// if (!forked)
+	// {
+	// 	stdin_backup = dup(STDIN_FILENO);
+	// 	stdout_backup = dup(STDOUT_FILENO);
+	// }
 	// --- 2. Bucle para abrir archivos (Igual que antes) ---
-	while (curr && ft_is_red(curr->type))
+	while (red.curr && ft_is_red(red.curr->type))
 	{
-		if (curr->right && ft_is_red(curr->right->type))
-			file_node = curr->right->left;
+		if (red.curr->right && ft_is_red(red.curr->right->type))
+			red.file_node = red.curr->right->left;
 		else
-			file_node = curr->right;
+			red.file_node = red.curr->right;
 
-		if (curr->type == T_REDIR_IN)
+		if (red.curr->type == T_REDIR_IN)
 		{
-			tmp_fd = open(file_node->content[0], O_RDONLY);
-			if (tmp_fd < 0)
+			red.tmp_fd = open(red.file_node->content[0], O_RDONLY);
+			if (red.tmp_fd < 0)
 			{
 				// Si falla, hay que restaurar antes de salir si hicimos backups
 				if (!forked)
 				{
-					close(stdin_backup);
-					close(stdout_backup);
+					close(red.stdin_backup);
+					close(red.stdout_backup);
 				}
-				return (ft_pd_error(ERR_PERMISSION_DENIED, file_node->content[0], 1));
+				return (ft_pd_error(ERR_PERMISSION_DENIED, red.file_node->content[0], 1));
 			}
-			if (fd_in != -1)
-				close(fd_in);
-			fd_in = tmp_fd;
+			if (red.fd_in != -1)
+				close(red.fd_in);
+			red.fd_in = red.tmp_fd;
 		}
 		else
 		{
-			flags = O_CREAT | O_WRONLY;
-			if (curr->type == T_REDIR_OUT)
-				flags |= O_TRUNC;
+			red.flags = O_CREAT | O_WRONLY;
+			if (red.curr->type == T_REDIR_OUT)
+				red.flags |= O_TRUNC;
 			else
-				flags |= O_APPEND;
-			tmp_fd = open(file_node->content[0], flags, 0644);
-			if (tmp_fd < 0)
+				red.flags |= O_APPEND;
+			red.tmp_fd = open(red.file_node->content[0], red.flags, 0644);
+			if (red.tmp_fd < 0)
 			{
 				if (!forked)
 				{
-					close(stdin_backup);
-					close(stdout_backup);
+					close(red.stdin_backup);
+					close(red.stdout_backup);
 				}
-				return (ft_pd_error(ERR_PERMISSION_DENIED, file_node->content[0], 1));
+				return (ft_pd_error(ERR_PERMISSION_DENIED, red.file_node->content[0], 1));
 			}
-			if (fd_out != -1)
-				close(fd_out);
-			fd_out = tmp_fd;
+			if (red.fd_out != -1)
+				close(red.fd_out);
+			red.fd_out = red.tmp_fd;
 		}
-		if (curr->right && ft_is_red(curr->right->type))
-			curr = curr->right;
+		if (red.curr->right && ft_is_red(red.curr->right->type))
+			red.curr = red.curr->right;
 		else
 			break ;
 	}
 
 	// --- 3. Aplicar dup2 (Redirección activa) ---
-	if (fd_in != -1)
+	if (red.fd_in != -1)
 	{
-		dup2(fd_in, STDIN_FILENO);
-		close(fd_in);
+		dup2(red.fd_in, STDIN_FILENO);
+		close(red.fd_in);
 	}
-	if (fd_out != -1)
+	if (red.fd_out != -1)
 	{
-		dup2(fd_out, STDOUT_FILENO);
-		close(fd_out);
+		dup2(red.fd_out, STDOUT_FILENO);
+		close(red.fd_out);
 	}
 
 	// --- 4. Ejecutar el comando ---
-	if (cmd_node)
-		status = ft_heimdall(data, &cmd_node, env, forked);
+	if (red.cmd_node)
+		red.status = ft_heimdall(data, &red.cmd_node, env, forked);
 
 	// --- 5. RESTORE: Volver a conectar teclado y pantalla ---
 	if (!forked)
 	{
 		// Recuperamos la entrada estándar (teclado)
-		if (stdin_backup != -1)
+		if (red.stdin_backup != -1)
 		{
-			dup2(stdin_backup, STDIN_FILENO);
-			close(stdin_backup);
+			dup2(red.stdin_backup, STDIN_FILENO);
+			close(red.stdin_backup);
 		}
 		// Recuperamos la salida estándar (pantalla)
-		if (stdout_backup != -1)
+		if (red.stdout_backup != -1)
 		{
-			dup2(stdout_backup, STDOUT_FILENO);
-			close(stdout_backup);
+			dup2(red.stdout_backup, STDOUT_FILENO);
+			close(red.stdout_backup);
 		}
 	}
 
-	return (status);
+	return (red.status);
 }
