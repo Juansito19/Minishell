@@ -18,7 +18,7 @@ void	ft_check_input(t_data **data, char *input)
 	ft_search_eof(&(*data)->tokens);
 	ft_ratatoskr(&(*data)->tokens);
 	// printf("====SEGUNDO====\n");
-	print_token(&(*data)->tokens);
+	// print_token(&(*data)->tokens);
 	ft_yggdrasil(&(*data)->tokens, &(*data)->yggdrasil, data);
 	// fprint_tree(&(*data)->yggdrasil);
 }
@@ -44,7 +44,7 @@ t_data	*ft_init_data(char **env)
 	return (data);
 }
 
-int	ft_minishell(t_data **data)
+int	ft_minishell(t_data **data, int status)
 {
 	char	*input;
 
@@ -63,7 +63,8 @@ int	ft_minishell(t_data **data)
 		ft_check_input(data, input);
 		free(input);
 		ft_odin_signal();
-		ft_heimdall(data, &(*data)->yggdrasil, (*data)->env, 0);
+		status = ft_heimdall(data, &(*data)->yggdrasil, (*data)->env, 0);
+		(*data)->exit_status = status;
 		ft_files_destroyer(&(*data)->yggdrasil);
 		ft_free_all(&(*data)->yggdrasil, &(*data)->tokens, NULL, NULL);
 	}
@@ -82,6 +83,6 @@ int	main(int ac, char **av, char **env)
 		return (ft_pd_error(ERR_MALLOC, NULL, 12));
 	// ft_random_banner();
 	ft_banner_3();
-	ft_minishell(&data);
+	ft_minishell(&data, 0);
 	return (0);
 }
