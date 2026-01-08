@@ -4,19 +4,6 @@
 // ====== UNSET ====== //
 // =================== //
 
-/* 
-función ft_unset(argumentos, env):
-    para cada argumento:
-        si no es un identificador válido:
-            imprimir error "not a valid identifier"
-            continuar
-        
-        buscar variable en env
-        si existe:
-            eliminarla del array de env
-            reorganizar el array
-*/
-
 int	ft_validate_av_unset(char *av)
 {
 	int	i;

@@ -16,7 +16,7 @@ int	ft_branch_m(t_token *meta, t_tree **tree, t_token **tokens, t_data **data)
 		ft_free_all(tree, tokens, NULL, &word);
 		return (ft_pd_error(ERR_MALLOC, NULL, 12));
 	}
-	(*tree) = ft_tree_init(word, ft_take_meta(meta->content), (*data)->path);
+	(*tree) = ft_tree_init(word, ft_take_meta(meta->content), (*data)->env);
 	if (!(*tree))
 	{
 		ft_free_all(tree, tokens, NULL, &word);
@@ -33,7 +33,7 @@ int	ft_branch_m(t_token *meta, t_tree **tree, t_token **tokens, t_data **data)
 	return (0);
 }
 
-int	ft_branch_w(t_tree **tree, t_token **tokens, char *path)
+int	ft_branch_w(t_tree **tree, t_token **tokens, char **env)
 {
 	char	**word;
 	t_type	type;
@@ -47,7 +47,7 @@ int	ft_branch_w(t_tree **tree, t_token **tokens, char *path)
 		return (ft_pd_error(ERR_MALLOC, NULL, 12));
 	}
 	type = ft_is_builtin(tokens);
-	(*tree) = ft_tree_init(word, type, path);
+	(*tree) = ft_tree_init(word, type, env);
 	if (!(*tree))
 	{
 		ft_free_all(tree, tokens, NULL, &word);

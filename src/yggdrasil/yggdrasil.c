@@ -111,7 +111,7 @@ int	ft_yggdrasil(t_token **tokens, t_tree **tree, t_data **data)
 		}
 		else
 		{
-			if (ft_branch_w(tree, tokens, (*data)->path))
+			if (ft_branch_w(tree, tokens, (*data)->env))
 				return (1);
 		}
 		return (0);

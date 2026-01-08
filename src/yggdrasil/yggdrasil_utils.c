@@ -4,7 +4,8 @@
 /* ======= yggdrasil utils ========= */
 /* ================================= */
 
-t_tree	*ft_tree_init(char **content, t_type type, char *path)
+// t_tree	*ft_tree_init(char **content, t_type type, char *path)
+t_tree	*ft_tree_init(char **content, t_type type, char **env)
 {
 	t_tree	*new_tree;
 
@@ -18,12 +19,8 @@ t_tree	*ft_tree_init(char **content, t_type type, char *path)
 	new_tree->pid = 0;
 	new_tree->pipe[0] = -1;
 	new_tree->pipe[1] = -1;
-	new_tree->path = ft_strdup(path);
-	if (!new_tree->path)
-	{
-		ft_pd_error(ERR_MALLOC, NULL, 12);
-		return (NULL);
-	}
+	new_tree->path = NULL;
+	ft_find_path(&new_tree, env);
 	new_tree->type = type;
 	new_tree->content = content;
 	return (new_tree);

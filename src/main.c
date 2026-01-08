@@ -7,7 +7,8 @@ void	ft_check_input(t_data **data, char *input)
 	g_status = 0;
 	if (ft_big_prick_parse(input))
 	{
-		ft_print_error(0, "Error: Syntax error");
+		(*data)->exit_status = 2;
+		ft_print_error(0, "Minishell: error: Syntax error");
 		return ;
 	}
 	(*data)->tokens = ft_token(input, 0);
@@ -18,7 +19,7 @@ void	ft_check_input(t_data **data, char *input)
 	ft_search_eof(&(*data)->tokens);
 	ft_ratatoskr(&(*data)->tokens);
 	// printf("====SEGUNDO====\n");
-	print_token(&(*data)->tokens);
+	// print_token(&(*data)->tokens);
 	ft_yggdrasil(&(*data)->tokens, &(*data)->yggdrasil, data);
 	// fprint_tree(&(*data)->yggdrasil);
 }
@@ -37,14 +38,33 @@ t_data	*ft_init_data(char **env)
 	data->infile = -1;
 	data->outfile = -1;
 	data->path = NULL;
-	ft_find_path(&data, env);
-	data->env = ft_array_dup(env);
+	data->env = NULL;
+	if (!env || !*env)
+		data->env = ft_no_env();
+	else
+		data->env = ft_array_dup(env);
 	data->tokens = NULL;
 	data->yggdrasil = NULL;
 	return (data);
 }
 
-int	ft_minishell(t_data **data)
+/* 
+
+cosas a revisar:
+con comandos_
+echo "" | ""
+echo "" | echo ""
+ls "" | ""
+ls "" | ls ""
+
+aca sale este mensaje de error sin salto de linea
+bostero$> ls "" | ls ""
+ademas habria que verificar el temita de "/usr/bin/ls" deberia ser "ls"
+/usr/bin/ls: /usr/bin/ls: cannot access ''cannot access '': No such file or directory: No such file or directory
+
+*/
+
+int	ft_minishell(t_data **data, int status)
 {
 	char	*input;
 
@@ -52,21 +72,22 @@ int	ft_minishell(t_data **data)
 	while (1)
 	{
 		ft_hugin_signal();
-		input = readline("bostero$> ");
+		if (isatty(STDIN_FILENO))
+			input = readline("bostero$> ");
+		else
+			input = readline("");
 		if (!input)
-		{
-			ft_clean_data(data);
-			ft_fprintf(1, "exit\n");
 			break ;
-		}
 		add_history(input);
 		ft_check_input(data, input);
 		free(input);
 		ft_odin_signal();
-		ft_heimdall(data, &(*data)->yggdrasil, (*data)->env, 0);
+		status = ft_heimdall(data, &(*data)->yggdrasil, (*data)->env, 0);
+		(*data)->exit_status = status;
 		ft_files_destroyer(&(*data)->yggdrasil);
 		ft_free_all(&(*data)->yggdrasil, &(*data)->tokens, NULL, NULL);
 	}
+	ft_clean_data(data);
 	rl_clear_history();
 	return (0);
 }
@@ -80,8 +101,10 @@ int	main(int ac, char **av, char **env)
 	data = ft_init_data(env);
 	if (!data)
 		return (ft_pd_error(ERR_MALLOC, NULL, 12));
-	// ft_random_banner();
-	ft_banner_3();
-	ft_minishell(&data);
+	if (isatty(STDIN_FILENO))
+		ft_banner_3();
+	ft_minishell(&data, 0);
+	if (isatty(STDIN_FILENO))
+		ft_fprintf(1, "exit\n");
 	return (0);
 }

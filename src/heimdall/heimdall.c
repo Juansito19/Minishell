@@ -44,21 +44,21 @@ int	ft_assign_path(t_tree **ygg, char **tmp_dir, char ***path_dir, int *i)
 	return (0);
 }
 
-int	ft_bifrost(t_tree **ygg)
+int	ft_bifrost(t_tree **ygg, char *tmp_dir)
 {
-	char	*tmp_dir;
 	char	**path_dir;
 	int		i;
 
-	i = 0;
-	tmp_dir = NULL;
-	if ((*ygg)->content[0][0] == '.' || (*ygg)->content[0][0] == '\0')
+	if ((ft_strlen((*ygg)->content[0]) == 1 && (*ygg)->content[0][0] == '.'))
+		return (ft_pd_error(ERR_CMD_NOT_FOUND, (*ygg)->content[0], 12));
+	if ((*ygg)->content[0][0] == '\0')
 		return (ft_pd_error(ERR_CMD_NOT_FOUND, (*ygg)->content[0], 12));
 	if (access((*ygg)->content[0], X_OK) == 0)
 		return (0);
 	path_dir = ft_split((*ygg)->path, ':');
 	if (!path_dir)
-		return (ft_pd_error(ERR_MALLOC, NULL, 12));
+		return (ft_pd_error(ERR_NO_SUCH_FILE, (*ygg)->content[0], 1));
+	i = 0;
 	while (path_dir[i])
 	{
 		if (ft_search_path(ygg, &tmp_dir, &path_dir[i]) == -1)

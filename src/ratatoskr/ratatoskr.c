@@ -43,7 +43,7 @@ int	ft_new_content(char **tmp_name, t_token **eof, t_token **token)
 	(*eof)->content = *tmp_name;
 	(*eof)->type = T_FD;
 	(*token)->type = T_REDIR_IN;
-	(*token)->content = ft_strdup(">");
+	(*token)->content = ft_strdup("<");
 	return (0);
 }
 
