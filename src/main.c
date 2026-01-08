@@ -7,6 +7,7 @@ void	ft_check_input(t_data **data, char *input)
 	g_status = 0;
 	if (ft_big_prick_parse(input))
 	{
+		(*data)->exit_status = 2;
 		ft_print_error(0, "Minishell: error: Syntax error");
 		return ;
 	}
@@ -37,11 +38,31 @@ t_data	*ft_init_data(char **env)
 	data->infile = -1;
 	data->outfile = -1;
 	data->path = NULL;
-	data->env = ft_array_dup(env);
+	data->env = NULL;
+	if (!env || !*env)
+		data->env = ft_no_env();
+	else
+		data->env = ft_array_dup(env);
 	data->tokens = NULL;
 	data->yggdrasil = NULL;
 	return (data);
 }
+
+/* 
+
+cosas a revisar:
+con comandos_
+echo "" | ""
+echo "" | echo ""
+ls "" | ""
+ls "" | ls ""
+
+aca sale este mensaje de error sin salto de linea
+bostero$> ls "" | ls ""
+ademas habria que verificar el temita de "/usr/bin/ls" deberia ser "ls"
+/usr/bin/ls: /usr/bin/ls: cannot access ''cannot access '': No such file or directory: No such file or directory
+
+*/
 
 int	ft_minishell(t_data **data, int status)
 {

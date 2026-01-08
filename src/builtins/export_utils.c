@@ -28,8 +28,6 @@ void	ft_sort_env(char **env)
 	}
 }
 
-// export PATH="hola puto"
-
 char	**ft_add_var(char **env, char *var)
 {
 	char	**res;

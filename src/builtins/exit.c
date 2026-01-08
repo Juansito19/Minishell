@@ -4,20 +4,12 @@
 // ====== EXIT ===== //
 // ================= //
 
-/* hay que ver como hacemos la salida de error y la salida normal
-no valen juntas */
 static void	ft_terminator(t_data **data, char *status, int err)
 {
-	(void) status;
 	ft_fprintf(1, "exit\n");
-	// if status deberia ser - uli tenia razon
-	if (err)
+	if (status)
 	{
-		// aca esta el problema
-		// if (status)
-		// 	ft_pd_error(ERR_EXIT_NUMERIC, status, err);
-		// else
-		// 	ft_pd_error("minishell: exit\n", NULL, err);
+		ft_pd_error(ERR_EXIT_NUMERIC, status, err);
 		ft_clean_data(data);
 		clear_history();
 		exit(2);
@@ -51,6 +43,7 @@ int	ft_exit(t_data **data, char **status)
 			return (ft_pd_error(ERR_EXIT_TOO_MANY, NULL, 1));
 		break ;
 	}
+	exit_status = ft_atoi(status[0]);
 	ft_clean_data(data);
-	exit(0);
+	exit(exit_status);
 }

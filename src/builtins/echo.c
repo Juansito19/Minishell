@@ -32,7 +32,7 @@ int	ft_flag_echo(int *ind, char **str)
 	n_flag = 0;
 	while (str[i])
 	{
-		if (!ft_strncmp(str[i], "-n", 2))
+		if (str[i][0] && !ft_strncmp(str[i], "-n", 2))
 		{
 			j = 2;
 			while (str[i][j] && str[i][j] == 'n')

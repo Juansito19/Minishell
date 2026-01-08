@@ -4,51 +4,23 @@
 // ====== EXPORT ====== //
 // ==================== //
 
-/* 
-Sin argumentos: muestra todas las variables de 
-				entorno ordenadas con formato declare -x VAR="value"
-Con argumentos: crea o modifica variables de entorno
-
-función ft_export_sin_args(env):
-    copiar array de env
-    ordenar alfabéticamente la copia
-    para cada variable en copia:
-        imprimir "declare -x " + variable
-    liberar copia
-
-función ft_export(argumentos, env):
-    si no hay argumentos:
-        ft_export_sin_args(env)
-        retornar
-    
-    para cada argumento:
-        si no es un identificador válido 
-		(debe empezar con letra o _, solo letras/números/_):
-            imprimir error "not a valid identifier"
-            continuar
-        
-        separar nombre y valor por '='
-        si la variable ya existe en env:
-            actualizar su valor
-        sino:
-            añadir nueva variable al env
-*/
-
-int	ft_no_env(char ***env_cpy)
+char	**ft_no_env(void)
 {
-	char	*tmp;
+	char	**env_cpy;
 	char	*pwd;
 
-	(*env_cpy) = ft_calloc(4, sizeof(char *));
-	if (!(*env_cpy))
-		return (ft_pd_error(ERR_MALLOC, NULL, 12));
-	tmp = "PWD=";
+	env_cpy = ft_calloc(4, sizeof(char *));
+	if (!env_cpy)
+	{
+		ft_pd_error(ERR_MALLOC, NULL, 12);
+		return (NULL);
+	}
 	pwd = getcwd(NULL, 0);
-	(*env_cpy)[0] = ft_strjoin(tmp, pwd);
-	(*env_cpy)[1] = "SHLVL=1";
-	(*env_cpy)[2] = "OLDPWD";
+	env_cpy[0] = ft_strjoin("PWD=", pwd);
+	env_cpy[1] = ft_strdup("SHLVL=1");
+	env_cpy[2] = ft_strdup("OLDPWD");
 	free(pwd);
-	return (0);
+	return (env_cpy);
 }
 
 int	ft_export_no_av(char **env)
@@ -112,9 +84,6 @@ int	ft_export(char ***env, char **av)
 
 	if (!av || !(*av))
 	{
-		if (!env || !*env)
-			return (1);
-			// ft_no_env(env);
 		if (ft_export_no_av(*env))
 			return (1);
 		return (0);

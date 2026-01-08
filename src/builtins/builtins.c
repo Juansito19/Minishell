@@ -25,7 +25,7 @@ int	ft_builtins(t_data **data, char **av, char **env)
 	else if (!ft_strcmp("env", av[0]))
 		return (ft_env(env));
 	else if (!ft_strcmp("exit", av[0]))
-		return (ft_exit(data, av + 1));
+		return (ft_exit(data, &av[1]));
 	else if (!ft_strcmp("export", av[0]))
 		return (ft_export(&(*data)->env, av + 1));
 	else if (!ft_strcmp("pwd", av[0]))
