@@ -55,7 +55,7 @@ int			ft_yggdrasil(t_token **tokens, t_tree **tree, t_data **data);
 
 int			ft_branch_m(t_token *meta, t_tree **tree,
 				t_token **tokens, t_data **data);
-int			ft_branch_w(t_tree **tree, t_token **tokens, char *path);
+int			ft_branch_w(t_tree **tree, t_token **tokens, char **env);
 
 // ================================= //
 
@@ -63,7 +63,7 @@ int			ft_branch_w(t_tree **tree, t_token **tokens, char *path);
 /* ======== yggdrasil utils ======== */
 /* ================================= */
 
-t_tree		*ft_tree_init(char **content, t_type type, char *path);
+t_tree		*ft_tree_init(char **content, t_type type, char **env);
 t_token		*ft_search_pipe(t_token **tokens);
 t_token		*ft_search_red(t_token **tokens);
 void		ft_treeadd_right(t_tree **tree, t_tree *new);

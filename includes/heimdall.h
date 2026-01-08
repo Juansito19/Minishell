@@ -22,7 +22,7 @@ typedef struct s_red
 	int		status;
 }	t_red;
 
-int		ft_bifrost(t_tree **ygg);
+int		ft_bifrost(t_tree **ygg, char *tmp_dir);
 int		ft_search_path(t_tree **ygg, char **tmp_dir, char **path_dir);
 int		ft_assign_path(t_tree **ygg, char **tmp_dir, char ***path_dir, int *i);
 int		ft_heimdall_cmd(t_data **data, t_tree **ygg, char **env, int forked);

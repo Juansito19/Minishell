@@ -34,21 +34,36 @@ función ft_export(argumentos, env):
             añadir nueva variable al env
 */
 
+int	ft_no_env(char ***env_cpy)
+{
+	char	*tmp;
+	char	*pwd;
+
+	(*env_cpy) = ft_calloc(4, sizeof(char *));
+	if (!(*env_cpy))
+		return (ft_pd_error(ERR_MALLOC, NULL, 12));
+	tmp = "PWD=";
+	pwd = getcwd(NULL, 0);
+	(*env_cpy)[0] = ft_strjoin(tmp, pwd);
+	(*env_cpy)[1] = "SHLVL=1";
+	(*env_cpy)[2] = "OLDPWD";
+	free(pwd);
+	return (0);
+}
+
 int	ft_export_no_av(char **env)
 {
 	char	**env_cpy;
 	int		i;
 
 	i = 0;
-	if (!env)
-		return (ft_pd_error(ERR_MALLOC, NULL, 12));
 	env_cpy = ft_array_dup(env);
 	if (!env_cpy)
 		return (ft_pd_error(ERR_MALLOC, NULL, 12));
 	ft_sort_env(env_cpy);
 	while (env_cpy[i])
 	{
-		ft_fprintf(1, "declare -x %s\n", env_cpy[i]);
+		ft_fprintf(1, "declare -x \"%s\"\n", env_cpy[i]);
 		i++;
 	}
 	ft_free_all_array(env_cpy);
@@ -77,6 +92,8 @@ int	ft_get_var(char **env, char *av)
 	int		len;
 
 	len = 0;
+	if (!env || !*env)
+		return (-1);
 	while (av[len] && av[len] != '=')
 		len++;
 	i = 0;
@@ -95,6 +112,9 @@ int	ft_export(char ***env, char **av)
 
 	if (!av || !(*av))
 	{
+		if (!env || !*env)
+			return (1);
+			// ft_no_env(env);
 		if (ft_export_no_av(*env))
 			return (1);
 		return (0);

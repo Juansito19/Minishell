@@ -7,7 +7,7 @@ void	ft_check_input(t_data **data, char *input)
 	g_status = 0;
 	if (ft_big_prick_parse(input))
 	{
-		ft_print_error(0, "Error: Syntax error");
+		ft_print_error(0, "Minishell: error: Syntax error");
 		return ;
 	}
 	(*data)->tokens = ft_token(input, 0);
@@ -37,7 +37,6 @@ t_data	*ft_init_data(char **env)
 	data->infile = -1;
 	data->outfile = -1;
 	data->path = NULL;
-	ft_find_path(&data, env);
 	data->env = ft_array_dup(env);
 	data->tokens = NULL;
 	data->yggdrasil = NULL;
@@ -52,13 +51,12 @@ int	ft_minishell(t_data **data, int status)
 	while (1)
 	{
 		ft_hugin_signal();
-		input = readline("bostero$> ");
+		if (isatty(STDIN_FILENO))
+			input = readline("bostero$> ");
+		else
+			input = readline("");
 		if (!input)
-		{
-			ft_clean_data(data);
-			ft_fprintf(1, "exit\n");
 			break ;
-		}
 		add_history(input);
 		ft_check_input(data, input);
 		free(input);
@@ -68,6 +66,7 @@ int	ft_minishell(t_data **data, int status)
 		ft_files_destroyer(&(*data)->yggdrasil);
 		ft_free_all(&(*data)->yggdrasil, &(*data)->tokens, NULL, NULL);
 	}
+	ft_clean_data(data);
 	rl_clear_history();
 	return (0);
 }
@@ -81,8 +80,10 @@ int	main(int ac, char **av, char **env)
 	data = ft_init_data(env);
 	if (!data)
 		return (ft_pd_error(ERR_MALLOC, NULL, 12));
-	// ft_random_banner();
-	ft_banner_3();
+	if (isatty(STDIN_FILENO))
+		ft_banner_3();
 	ft_minishell(&data, 0);
+	if (isatty(STDIN_FILENO))
+		ft_fprintf(1, "exit\n");
 	return (0);
 }

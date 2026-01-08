@@ -82,7 +82,7 @@ int	ft_heimdall_pipe(t_data **data, t_tree **ygg, char **env, int forked)
 
 	status = 0;
 	(void)env;
-	if (pipe((*ygg)->pipe)) // Hay que ver como le damos valor a exit_status a la hora de terminar
+	if (pipe((*ygg)->pipe))
 		return (ft_pd_error(ERR_PIPE_FAILED, NULL, 32));
 	left_pid = fork();
 	if (!left_pid)

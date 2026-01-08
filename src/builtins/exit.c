@@ -10,6 +10,7 @@ static void	ft_terminator(t_data **data, char *status, int err)
 {
 	(void) status;
 	ft_fprintf(1, "exit\n");
+	// if status deberia ser - uli tenia razon
 	if (err)
 	{
 		// aca esta el problema
