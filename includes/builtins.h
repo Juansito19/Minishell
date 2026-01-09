@@ -9,7 +9,7 @@ int			ft_builtins(t_data **data, char **av, char **env);
 
 // =========== PWD ============ //
 
-int			ft_pwd(void);
+int			ft_pwd(char **env);
 
 // =========== CD ============= //
 
@@ -23,7 +23,7 @@ int			ft_cd(char ***env, char *av);
 
 char		**ft_no_env(void);
 void		ft_sort_env(char **env);
-int			ft_export_no_av(char **env);
+int			ft_export_no_av(char **env, int i, int j);
 int			ft_validate_av_export(char *av);
 int			ft_get_var(char **env, char *av);
 char		**ft_add_var(char **env, char *var);

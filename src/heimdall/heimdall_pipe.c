@@ -70,8 +70,8 @@ int	ft_heimdall_pipe(t_data **data, t_tree **ygg, char **env, int forked)
 		ft_clean_data(data);
 		exit(status);
 	}
-	close((*ygg)->pipe[1]);
-	waitpid(left_pid, NULL, 0);
+	// close((*ygg)->pipe[1]);
+	// waitpid(left_pid, NULL, 0);
 	right_pid = fork();
 	if (!right_pid)
 	{
@@ -86,7 +86,9 @@ int	ft_heimdall_pipe(t_data **data, t_tree **ygg, char **env, int forked)
 		ft_clean_data(data);
 		exit(status);
 	}
+	close((*ygg)->pipe[1]);
 	close((*ygg)->pipe[0]);
+	waitpid(left_pid, NULL, 0);
 	waitpid(right_pid, &status, 0);
 	if (forked)
 	{
