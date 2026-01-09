@@ -38,13 +38,13 @@ int	ft_search_oldpwd(char ***env)
 	int	i;
 
 	i = 0;
-	while (ft_strncmp("OLDPWD", (*env)[i], ft_strlen((*env)[i])))
+	while ((*env)[i] && ft_strncmp("OLDPWD", (*env)[i], ft_strlen((*env)[i])))
 		i++;
 	if (!ft_strncmp("OLDPWD", (*env)[i], ft_strlen((*env)[i])))
 	{
 		if ((*env)[i])
 			free((*env)[i]);
-		while ((*env)[i + 1])
+		while ((*env)[i] && (*env)[i + 1])
 		{
 			(*env)[i] = (*env)[i + 1];
 			i++;

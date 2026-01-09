@@ -23,20 +23,29 @@ char	**ft_no_env(void)
 	return (env_cpy);
 }
 
-int	ft_export_no_av(char **env)
+int	ft_export_no_av(char **env, int i, int j)
 {
 	char	**env_cpy;
-	int		i;
 
-	i = 0;
 	env_cpy = ft_array_dup(env);
 	if (!env_cpy)
 		return (ft_pd_error(ERR_MALLOC, NULL, 12));
 	ft_sort_env(env_cpy);
-	while (env_cpy[i])
+	while (env_cpy[++i])
 	{
-		ft_fprintf(1, "declare -x \"%s\"\n", env_cpy[i]);
-		i++;
+		ft_fprintf(1, "declare -x ");
+		j = -1;
+		while (env_cpy[i][++j] && env_cpy[i][j] != '=')
+			ft_fprintf(1, "%c", env_cpy[i][j]);
+		if (env_cpy[i][j] != '\0')
+		{
+			ft_fprintf(1, "%c", env_cpy[i][j]);
+			if (env_cpy[i][++j])
+				ft_fprintf(1, "\"%s\"", env_cpy[i] + j);
+			else
+				ft_fprintf(1, "\"\"");
+		}
+		ft_fprintf(1, "\n");
 	}
 	ft_free_all_array(env_cpy);
 	return (0);
@@ -71,7 +80,7 @@ int	ft_get_var(char **env, char *av)
 	i = 0;
 	while (env[i])
 	{
-		if (!ft_strncmp(env[i], av, len) && env[i][len] == '=')
+		if (!ft_strncmp(env[i], av, len))
 			return (i);
 		i++;
 	}
@@ -84,7 +93,7 @@ int	ft_export(char ***env, char **av)
 
 	if (!av || !(*av))
 	{
-		if (ft_export_no_av(*env))
+		if (ft_export_no_av(*env, -1, -1))
 			return (1);
 		return (0);
 	}

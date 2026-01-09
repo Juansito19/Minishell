@@ -60,6 +60,8 @@ int	ft_token_word_size(char *s, int i, int count, int state)
 	return (count);
 }
 
+// 	  esto puede ser al pedo porque ya no lo usamos
+// v	v	v	v	v	v	v	v	v	v	v	v	v
 void	ft_change_flag(t_type type, int *flag)
 {
 	if (type == T_DQUOTE && *flag == 0)
@@ -72,32 +74,57 @@ void	ft_change_flag(t_type type, int *flag)
 		*flag = 0;
 }
 
+//            esto hay que revisarlo tambien
+// v	v	v	v	v	v	v	v	v	v	v	v	v
 int	ft_token_clean_word(t_token **token)
 {
-	char		*word;
-	t_type		type;
-	static int	flag;
-	int			i;
-	int			x;
+	char	*word;
+	int		i;
+	int		state;
 
-	x = 0;
-	while ((*token)->content[x])
-	{
-		type = ft_is_quote((*token)->content[x]);
-		ft_change_flag(type, &flag);
-		x++;
-	}
-	i = ft_token_word_size((*token)->content, 0, 0, flag);
+	state = 0;
+	i = ft_token_word_size((*token)->content, 0, 0, state);
 	word = malloc(i + 1 * sizeof(char));
 	if (!word)
 		return (ft_pd_error(ERR_MALLOC, NULL, 12));
 	word[i] = '\0';
-	ft_put_word((*token)->content, &word, 0, &flag);
+	state = 0;
+	ft_put_word((*token)->content, &word, 0, &state);
 	(*token)->type = T_CMD;
 	free((*token)->content);
 	(*token)->content = word;
 	return (0);
 }
+
+//            esto hay que darle una vuelta
+// v	v	v	v	v	v	v	v	v	v	v	v	v
+// int	ft_token_clean_word(t_token **token)
+// {
+// 	char		*word;
+// 	t_type		type;
+// 	int			flag;
+// 	int			i;
+// 	int			x;
+
+// 	x = 0;
+// 	flag = 0;
+// 	while ((*token)->content[x])
+// 	{
+// 		type = ft_is_quote((*token)->content[x]);
+// 		ft_change_flag(type, &flag);
+// 		x++;
+// 	}
+// 	i = ft_token_word_size((*token)->content, 0, 0, flag);
+// 	word = malloc(i + 1 * sizeof(char));
+// 	if (!word)
+// 		return (ft_pd_error(ERR_MALLOC, NULL, 12));
+// 	word[i] = '\0';
+// 	ft_put_word((*token)->content, &word, 0, &flag);
+// 	(*token)->type = T_CMD;
+// 	free((*token)->content);
+// 	(*token)->content = word;
+// 	return (0);
+// }
 
 void	ft_search_quotes(t_token **token)
 {

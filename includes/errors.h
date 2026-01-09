@@ -36,6 +36,8 @@ by end-of-file (wanted `%s')\n"
 
 # define ERR_SIGNAL "minishell: signal: signal %s fail\n"
 
+# define ERR_PWD "pwd: getcwd: cannot access parent directories\n"
+
 /* ============================ */
 /* ========== error =========== */
 /* ============================ */
