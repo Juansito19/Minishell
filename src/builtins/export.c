@@ -81,7 +81,11 @@ int	ft_get_var(char **env, char *av)
 	while (env[i])
 	{
 		if (!ft_strncmp(env[i], av, len))
+		{
+			if (av[len] == '\0')
+				return (-2);
 			return (i);
+		}
 		i++;
 	}
 	return (-1);

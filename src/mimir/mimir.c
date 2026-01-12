@@ -66,6 +66,7 @@ int	ft_domain_expansion(t_expand **exp, int i, char **env, int exit)
 		return (ft_pd_error(ERR_MALLOC, NULL, 12));
 	// Si la flag LIMIT esta activa guardamos ese sobrante en aux.
 	// Ej: $HOME.aa = [ .aa ] | sino solo ponemos a NULL
+	// echo $?hcudshfuewrf ew  wr 4ew""""
 	if ((*exp)->limit)
 		(*exp)->aux = ft_substr((*exp)->split[i], x, str_size);
 	else

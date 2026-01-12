@@ -62,6 +62,8 @@ int	ft_change_or_add_var(char ***env, char *av)
 	int		i;
 
 	i = ft_get_var(*env, av);
+	if (i == -2)
+		return (0);
 	if (i != -1)
 	{
 		if ((*env) && (*env)[i])
