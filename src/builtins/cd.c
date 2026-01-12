@@ -92,7 +92,6 @@ char	*ft_take_path(char ***env, char *av)
 		path = ft_get_var_value(*env, "HOME");
 		if (!path)
 		{
-			// cambio de este error, decia "no such file to directory"
 			ft_pd_error(ERR_CD_NO_HOME, NULL, 1);
 			return (NULL);
 		}
@@ -102,7 +101,6 @@ char	*ft_take_path(char ***env, char *av)
 		path = ft_get_var_value(*env, "OLDPWD");
 		if (!path)
 		{
-			// cambio de este error, decia "no such file to directory"
 			ft_pd_error(ERR_CD_NO_OLDPWD, NULL, 1);
 			return (NULL);
 		}
@@ -118,8 +116,7 @@ int	ft_cd(char ***env, char **av)
 	char	*path;
 	char	*oldpwd;
 
-	// agregue este if que no estaba
-	if (ft_count_words(av) > 2)
+	if (ft_count_words(av) > 1)
 		return (ft_pd_error(ERR_CD_TOO_MANY_ARGS, NULL, 1));
 	path = ft_take_path(env, av[0]);
 	if (!path)
@@ -128,8 +125,9 @@ int	ft_cd(char ***env, char **av)
 	if (chdir(path))
 	{
 		free(oldpwd);
+		ft_pd_error(ERR_CD_NO_SUCH_FILE, path, 1);
 		free(path);
-		return (ft_pd_error(ERR_CD_NO_SUCH_FILE, path, 1));
+		return (1);
 	}
 	if (ft_update_pwd_vars(env, oldpwd))
 	{
