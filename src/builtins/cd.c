@@ -116,8 +116,8 @@ int	ft_cd(char ***env, char **av)
 	char	*path;
 	char	*oldpwd;
 
-	// if (ft_count_words(av) > 1)
-	// 	return (ft_pd_error(ERR_CD_TOO_MANY_ARGS, NULL, 1));
+	if (ft_count_words(av) > 1)
+		return (ft_pd_error(ERR_CD_TOO_MANY_ARGS, NULL, 1));
 	path = ft_take_path(env, av[0]);
 	if (!path)
 		return (1);
