@@ -4,6 +4,26 @@
 // ====== UNSET ====== //
 // =================== //
 
+int	ft_get_var_unset(char **env, char *av)
+{
+	int		i;
+	int		len;
+
+	len = 0;
+	if (!env || !*env)
+		return (-1);
+	while (av[len] && av[len] != '=')
+		len++;
+	i = 0;
+	while (env[i])
+	{
+		if (!ft_strncmp(env[i], av, len))
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
 int	ft_validate_av_unset(char *av)
 {
 	int	i;
@@ -24,7 +44,7 @@ int	ft_unset_var(char ***env, char *av)
 {
 	int	i;
 
-	i = ft_get_var(*env, av);
+	i = ft_get_var_unset(*env, av);
 	if (i != -1)
 	{
 		if ((*env)[i])

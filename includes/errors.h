@@ -15,7 +15,7 @@ while looking for matching `%c'\n"
 # define ERR_EXECVE "minishell: execve: execve failed\n"
 
 # define ERR_CMD_NOT_FOUND "minishell: %s: command not found\n" // 127
-# define ERR_NO_SUCH_FILE "minishell: %s: No such file or directory\n" // 127
+# define NO_FILE_DIR "minishell: %s: No such file or directory\n" // 127
 # define PER_DENIED "minishell: %s: Permission denied\n" // 126
 # define ERR_IS_DIRECTORY "minishell: %s: Is a directory\n" // 126
 # define ERR_NOT_DIRECTORY "minishell: %s: Not a directory\n"

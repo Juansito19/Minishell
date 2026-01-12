@@ -1,0 +1,16 @@
+a
+b
+c
+d
+e
+includes
+libft
+Makefile
+minishell
+minishell.a
+obj
+prueba1
+README.md
+src
+txt
+valgrind.supp

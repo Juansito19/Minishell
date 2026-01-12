@@ -9,7 +9,7 @@ int	ft_print_cd_error(char *path)
 	struct stat	st;
 
 	if (access(path, F_OK) == -1)
-		ft_pd_error(ERR_NO_SUCH_FILE, "cd", 1);
+		ft_pd_error(NO_FILE_DIR, "cd", 1);
 	else if (stat(path, &st) == -1)
 		ft_pd_error(ERR_CD_STAT, NULL, 1);
 	else if (!S_ISDIR(st.st_mode))

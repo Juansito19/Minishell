@@ -23,7 +23,8 @@ int	ft_builtins(t_data **data, char **av, char **env)
 	else if (!ft_strcmp("echo", av[0]))
 		return (ft_echo(ft_count_words(av), av));
 	else if (!ft_strcmp("env", av[0]))
-		return (ft_env(env));
+		return (ft_env(env, av));
+	// return (ft_env(env));
 	else if (!ft_strcmp("exit", av[0]))
 		return (ft_exit(data, &av[1]));
 	else if (!ft_strcmp("export", av[0]))
