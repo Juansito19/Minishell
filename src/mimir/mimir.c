@@ -4,6 +4,8 @@
 /* ======== mimir ======= */
 /* ====================== */
 
+// echo "hola ""$USER '$USER'"   '"USER"'
+
 // (23 lineas)
 // Esta funcion vuelve a poner en el imput todos los cambios
 // Va haciendo un join de cada string guardado en el split,
