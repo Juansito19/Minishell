@@ -34,6 +34,7 @@ int		ft_export(char ***env, char **av);
 
 // ========== UNSET =========== //
 
+int		ft_get_var_unset(char **env, char *av);
 int		ft_validate_av_unset(char *av);
 int		ft_unset_var(char ***env, char *av);
 int		ft_unset(char ***env, char **av);
@@ -46,7 +47,7 @@ int		ft_flag_echo(int *ind, char **str);
 
 // ========== ENV =========== //
 
-int		ft_env(char **env);
+int		ft_env(char **env, char **av);
 
 // ========== EXIT =========== //
 

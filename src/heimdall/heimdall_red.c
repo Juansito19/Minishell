@@ -354,11 +354,11 @@ int	ft_heimdall_redir(t_data **data, t_tree **ygg, char **env, int forked)
 		if (red.curr->type == T_REDIR_IN)
 		{
 			if (ft_case_in(&red, forked))
-				return (ft_pd_error(PER_DENIED, red.file_node->content[0], 1));
+				return (ft_pd_error(NO_FILE_DIR, red.file_node->content[0], 1));
 		}
 		else
 			if (ft_case_out(&red, forked))
-				return (ft_pd_error(PER_DENIED, red.file_node->content[0], 1));
+				return (ft_pd_error(NO_FILE_DIR, red.file_node->content[0], 1));
 		if (red.curr->right && ft_is_red(red.curr->right->type))
 			red.curr = red.curr->right;
 		else

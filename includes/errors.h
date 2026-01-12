@@ -15,7 +15,7 @@ while looking for matching `%c'\n"
 # define ERR_EXECVE "minishell: execve: execve failed\n"
 
 # define ERR_CMD_NOT_FOUND "minishell: %s: command not found\n" // 127
-# define ERR_NO_SUCH_FILE "minishell: %s: No such file or directory\n" // 127
+# define NO_FILE_DIR "minishell: %s: No such file or directory\n" // 127
 # define PER_DENIED "minishell: %s: Permission denied\n" // 126
 # define ERR_IS_DIRECTORY "minishell: %s: Is a directory\n" // 126
 # define ERR_NOT_DIRECTORY "minishell: %s: Not a directory\n"
@@ -25,9 +25,11 @@ while looking for matching `%c'\n"
 # define ERR_RATA "minishell: ratatosker: open fail\n"
 
 # define ERR_CD_TOO_MANY_ARGS "minishell: cd: too many arguments\n"
+# define ERR_CD_NO_DIR "minishell: cd: not a directory\n"
 # define ERR_CD_NO_HOME "minishell: cd: HOME not set\n"
 # define ERR_CD_NO_OLDPWD "minishell: cd: OLDPWD not set\n"
 # define ERR_CD_NO_SUCH_FILE "minishell: cd: %s: No such file or directory\n"
+# define ERR_CD_STAT "minishell: cd: : Error accessing file info\n"
 # define ERR_EXPORT_INVALID "minishell: export: `%s': not a valid identifier\n"
 # define ERR_UNSET_INVALID "minishell: unset: `%s': not a valid identifier\n"
 # define ERR_EXIT_NUMERIC "minishell: exit: %s: numeric argument required\n" //2
@@ -44,8 +46,9 @@ by end-of-file (wanted `%s')\n"
 /* ========== error =========== */
 /* ============================ */
 
-int			ft_print_error(int error_code, char *s);
-int			ft_pd_error(char *format, char *s, int error_code);
+int	ft_print_cd_error(char *path);
+int	ft_print_error(int error_code, char *s);
+int	ft_pd_error(char *format, char *s, int error_code);
 
 /* ============================ */
 

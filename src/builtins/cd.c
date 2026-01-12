@@ -125,9 +125,7 @@ int	ft_cd(char ***env, char **av)
 	if (chdir(path))
 	{
 		free(oldpwd);
-		ft_pd_error(ERR_CD_NO_SUCH_FILE, path, 1);
-		free(path);
-		return (1);
+		return (ft_print_cd_error(path));
 	}
 	if (ft_update_pwd_vars(env, oldpwd))
 	{

@@ -57,7 +57,7 @@ int	ft_bifrost(t_tree **ygg, char *tmp_dir)
 		return (0);
 	path_dir = ft_split((*ygg)->path, ':');
 	if (!path_dir)
-		return (ft_pd_error(ERR_NO_SUCH_FILE, (*ygg)->content[0], 1));
+		return (ft_pd_error(NO_FILE_DIR, (*ygg)->content[0], 1));
 	i = 0;
 	while (path_dir[i])
 	{

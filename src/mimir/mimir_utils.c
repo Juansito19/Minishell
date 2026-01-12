@@ -101,3 +101,36 @@ int	ft_no_found_var(t_expand **exp, t_token **token)
 		return (ft_pd_error(ERR_MALLOC, NULL, 12));
 	return (0);
 }
+
+
+/*========================================================================*/
+
+/* Añade un caracter al string dinámico 's' */
+void	ft_add_char(char **s, char c)
+{
+	char	*tmp;
+	char	str[2];
+
+	str[0] = c;
+	str[1] = '\0';
+	if (!*s)
+		*s = ft_strdup("");
+	tmp = ft_strjoin(*s, str);
+	free(*s);
+	*s = tmp;
+}
+
+/* Añade un string completo al string dinámico 's' */
+void	ft_add_str(char **s, char *add)
+{
+	char	*tmp;
+
+	if (!add)
+		return ;
+	if (!*s)
+		*s = ft_strdup("");
+	tmp = ft_strjoin(*s, add);
+	free(*s);
+	free(add);
+	*s = tmp;
+}

@@ -7,31 +7,56 @@
 int	ft_find_limit(t_expand **exp, char *s, int i)
 {
 	(*exp)->limit = 0;
-	if (s[i] == '$')
+	if (s[i] != '$')
 	{
-		while (s[++i])
-		{
-			if (!ft_isalnum(s[i]) && s[i] != '_' && s[i] != '?')
-			{
-				(*exp)->limit = 1;
-				return (i);
-			}
-		}
-	}
-	else
-	{
-		while (s[i])
-		{
-			if (s[i] == '$')
-			{
-				(*exp)->limit = 1;
-				return (i);
-			}
+		while (s[i] && s[i] != '$')
 			i++;
-		}
+		if (s[i])
+			(*exp)->limit = 1;
+		return (i);
 	}
+	if (s[++i] == '?')
+	{
+		(*exp)->limit = 1;
+		return (i + 1);
+	}
+	while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
+		i++;
+	if (s[i])
+		(*exp)->limit = 1;
 	return (i);
 }
+
+// int	ft_find_limit(t_expand **exp, char *s, int i)
+// {
+// 	(*exp)->limit = 0;
+// 	if (s[i] == '$')
+// 	{
+// 		while (s[++i])
+// 		{
+// 			if ((!ft_isalnum(s[i]) && s[i] != '_') || s[i] == '?')
+// 			{
+// 				(*exp)->limit = 1;
+// 				if (s[i] == '?')
+// 					return (i + 1);
+// 				return (i);
+// 			}
+// 		}
+// 	}
+// 	else
+// 	{
+// 		while (s[i])
+// 		{
+// 			if (s[i] == '$')
+// 			{
+// 				(*exp)->limit = 1;
+// 				return (i);
+// 			}
+// 			i++;
+// 		}
+// 	}
+// 	return (i);
+// }
 
 // (8 lineas)
 // Esta funcion retorna uno cada vez que haya que ignorar la posicion 

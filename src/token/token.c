@@ -31,6 +31,35 @@ int	ft_token_size(char *s)
 	return (i);
 }
 
+// int	ft_token_size(char *s, int i)
+// {
+// 	int	quote;
+// 	int	prev_quote;
+
+// 	quote = 0;
+// 	prev_quote = 0;
+// 	while (s[++i])
+// 	{
+// 		prev_quote = quote;
+// 		if (ft_is_quote(s[i]) == T_DQUOTE && !quote)
+// 			quote = 2;
+// 		else if (ft_is_quote(s[i]) == T_DQUOTE && quote == 2)
+// 			quote = 0;
+// 		else if (ft_is_quote(s[i]) == T_SQUOTE && !quote)
+// 			quote = 1;
+// 		else if (ft_is_quote(s[i]) == T_SQUOTE && quote == 1)
+// 			quote = 0;
+// 		// Si salimos de comillas y encontramos otra comilla, cortamos
+// 		if (i > 0 && !prev_quote && quote && ft_is_quote(s[i]))
+// 			return (i);
+// 		if (ft_is_metachar(s[i]) && !quote)
+// 			break ;
+// 		if (s[i] == ' ' && !quote)
+// 			return (i);
+// 	}
+// 	return (i);
+// }
+
 int	ft_token_word(t_token **tokens, char *s, int *ind)
 {
 	t_token	*new;

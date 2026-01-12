@@ -60,6 +60,11 @@ void		ft_variable_search(t_expand **exp, char **env, int i, int exit);
 void		ft_need_to_expand(t_token **token);
 void		ft_aux_need_to_expand(t_token **tkn, int state);
 
+
+void		ft_add_char(char **s, char c);
+void		ft_add_str(char **s, char *add);
+
+
 /* ================================= */
 
 /* ================================= */
