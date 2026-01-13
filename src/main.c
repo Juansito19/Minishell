@@ -14,16 +14,18 @@ static int	ft_check_input(t_data **data, char *input)
 		return (1);
 	}
 	(*data)->tokens = ft_token(input, 0);
-	// printf("====PRIMERO====\n");
-	// print_token(&(*data)->tokens);
-	ft_mimir(&(*data)->tokens, (*data)->env, (*data)->exit_status);
+	ft_mimir(&(*data)->tokens, data);
 	ft_search_quotes(&(*data)->tokens);
 	ft_search_eof(&(*data)->tokens);
 	ft_ratatoskr(&(*data)->tokens);
-	// printf("====SEGUNDO====\n");
-	// print_token(&(*data)->tokens);
 	ft_yggdrasil(&(*data)->tokens, &(*data)->yggdrasil, data);
-	// fprint_tree(&(*data)->yggdrasil);
+	if (g_status == 130)
+	{
+		(*data)->exit_status = g_status;
+		ft_files_destroyer(&(*data)->yggdrasil);
+		ft_free_all(&(*data)->yggdrasil, &(*data)->tokens, &input, NULL);
+		return (1);
+	}
 	free(input);
 	input = NULL;
 	return (0);
@@ -52,19 +54,6 @@ t_data	*ft_init_data(char **env)
 	data->yggdrasil = NULL;
 	return (data);
 }
-
-/*
-	*** Unico error encontrado en el heredoc ***
-	Rarisimo...
-	Al pulsar ctrl-c sin terminar el heredoc
-	se crea un archivo con el nombre del delimitador
-	del heredoc. 
-	Ademas el exit status se actualiza o se queda en -1.
-	hay que ver los archivos:
-	ratatoskr.c
-	ratatoskr_utils.c (el que puede llegar a tener el error)
-	Tiene que ser algo que tenga que ver con señales.
-*/
 
 int	ft_minishell(t_data **data, int status)
 {

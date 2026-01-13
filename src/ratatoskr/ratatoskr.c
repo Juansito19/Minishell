@@ -15,7 +15,7 @@ void	ft_search_eof(t_token **token)
 	{
 		if (aux->type == T_HEREDOC)
 			eof = 1;
-		else if (aux->type == T_WORD && eof)
+		else if (aux && eof)
 		{
 			eof = 0;
 			aux->type = T_EOF;
@@ -53,28 +53,68 @@ int	ft_chg_b(t_token **token, char **tmp_name, int fd, t_token **eof)
 	int		stdin_backup;
 
 	stdin_backup = dup(STDIN_FILENO);
+	line = NULL;
 	while (1)
 	{
-		line = readline("> ");
+		if (g_status != 130)
+			line = readline("> ");
 		if (!line || g_status == 130)
 		{
-			if (line)
-				free(line);
-			return (ft_signal_break(tmp_name, fd, stdin_backup, eof));
+			line = ft_strdup((*eof)->content);
+			ft_new_content(tmp_name, eof, token);
+			return (ft_signal_break(&line, fd, stdin_backup, eof));
 		}
 		if (!ft_strcmp(line, (*eof)->content))
 			break ;
 		ft_fprintf(fd, "%s\n", line);
 		free(line);
-		line = NULL;
 	}
-	if (line)
-		free(line);
+	free(line);
 	close(fd);
 	close(stdin_backup);
 	ft_new_content(tmp_name, eof, token);
 	return (0);
 }
+
+// int	ft_new_content(char **tmp_name, t_token **eof, t_token **token)
+// {
+// 	free((*eof)->content);
+// 	free((*token)->content);
+// 	(*eof)->content = *tmp_name;
+// 	(*eof)->type = T_FD;
+// 	(*token)->type = T_REDIR_IN;
+// 	(*token)->content = ft_strdup("<");
+// 	return (0);
+// }
+
+// int	ft_chg_b(t_token **token, char **tmp_name, int fd, t_token **eof)
+// {
+// 	char	*line;
+// 	int		stdin_backup;
+
+// 	stdin_backup = dup(STDIN_FILENO);
+// 	while (1)
+// 	{
+// 		line = readline("> ");
+// 		if (!line || g_status == 130)
+// 		{
+// 			if (line)
+// 				free(line);
+// 			return (ft_signal_break(tmp_name, fd, stdin_backup, eof));
+// 		}
+// 		if (!ft_strcmp(line, (*eof)->content))
+// 			break ;
+// 		ft_fprintf(fd, "%s\n", line);
+// 		free(line);
+// 		line = NULL;
+// 	}
+// 	if (line)
+// 		free(line);
+// 	close(fd);
+// 	close(stdin_backup);
+// 	ft_new_content(tmp_name, eof, token);
+// 	return (0);
+// }
 
 int	ft_ratatoskr(t_token **token)
 {
@@ -97,10 +137,10 @@ int	ft_ratatoskr(t_token **token)
 		}
 		ft_munin_signal();
 		ft_find_branch_eof(&(*token)->next, &eof_token);
-		if (ft_chg_b(token, &tmp_name, fd, &eof_token) == 130)
-			return (130);
+		ft_chg_b(token, &tmp_name, fd, &eof_token);
 		ft_hugin_signal();
 	}
 	ft_ratatoskr(&(*token)->next);
+	ft_reset_heredoc_times();
 	return (0);
 }

@@ -264,7 +264,7 @@ int	ft_init_red(t_red *red, t_tree **ygg, int forked)
 		red->stdin_backup = dup(STDIN_FILENO);
 		red->stdout_backup = dup(STDOUT_FILENO);
 	}
-	red->status = -1;
+	red->status = 0;
 	red->tmp_fd = -1;
 	red->flags = -1;
 	return (0);

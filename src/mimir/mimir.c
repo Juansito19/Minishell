@@ -163,7 +163,7 @@
 
 /* Maneja la lógica de encontrar el valor y avanzar el índice */
 /* Usa tu ft_find_limit y ft_get_var_value existentes */
-static int	ft_append_val(char **res, char *str, int i, char **env, int exit_s)
+static int	ft_append_val(char **res, char *str, int i, t_data **data)
 {
 	int		len;
 	char	*var_name;
@@ -171,7 +171,7 @@ static int	ft_append_val(char **res, char *str, int i, char **env, int exit_s)
 
 	if (str[i + 1] == '?')
 	{
-		ft_add_str(res, ft_itoa(exit_s));
+		ft_add_str(res, ft_itoa((*data)->exit_status));
 		return (i + 2);
 	}
 	len = 0;
@@ -184,17 +184,30 @@ static int	ft_append_val(char **res, char *str, int i, char **env, int exit_s)
 		return (i + 1);
 	}
 	var_name = ft_substr(str, i + 1, len);
-	val = ft_get_var_value(env, var_name);
+	val = ft_get_var_value((*data)->env, var_name);
 	ft_add_str(res, val);
 	free(var_name);
 	return (i + 1 + len);
+}
+
+// cosita pendiente >:(  8==D = echo "$USER" '$USER'"'$USER'"'"$USER"'
+static void	ft_flags_state(char s, int *state)
+{
+	if (s == '\'' && *state == 0)
+		*state = 1;
+	else if (s == '\'' && *state == 1)
+		*state = 0;
+	else if (s == '\"' && *state == 0)
+		*state = 2;
+	else if (s == '\"' && *state == 2)
+		*state = 0;
 }
 
 /* State 0: Nada
    State 1: Comilla Simple ' (No expande nada)
    State 2: Comilla Doble " (Expande $)
 */
-char	*ft_process_new_expansion(char *str, char **env, int exit_status)
+char	*ft_process_new_expansion(char *str, t_data **data)
 {
 	char	*res;
 	int		i;
@@ -205,17 +218,10 @@ char	*ft_process_new_expansion(char *str, char **env, int exit_status)
 	state = 0;
 	while (str[i])
 	{
-		if (str[i] == '\'' && state == 0)
-			state = 1;
-		else if (str[i] == '\'' && state == 1)
-			state = 0;
-		else if (str[i] == '\"' && state == 0)
-			state = 2;
-		else if (str[i] == '\"' && state == 2)
-			state = 0;
+		ft_flags_state(str[i], &state);
 		if (str[i] == '$' && state != 1 && (ft_isalnum(str[i + 1])
 				|| str[i + 1] == '_' || str[i + 1] == '?'))
-			i = ft_append_val(&res, str, i, env, exit_status);
+			i = ft_append_val(&res, str, i, data);
 		else
 		{
 			ft_add_char(&res, str[i]);
@@ -225,13 +231,13 @@ char	*ft_process_new_expansion(char *str, char **env, int exit_status)
 	return (res);
 }
 
-int	ft_expand_var(t_token **token, char **env, int exit_status)
+int	ft_expand_var(t_token **token, t_data **data)
 {
 	char	*new_content;
 
 	if (!token || !*token || !(*token)->content)
 		return (0);
-	new_content = ft_process_new_expansion((*token)->content, env, exit_status);
+	new_content = ft_process_new_expansion((*token)->content, data);
 	if (!new_content)
 		return (ft_pd_error(ERR_MALLOC, NULL, 12));
 	free((*token)->content);
@@ -240,12 +246,11 @@ int	ft_expand_var(t_token **token, char **env, int exit_status)
 }
 
 
-
-int	ft_mimir(t_token **token, char **env, int exit_status)
+int	ft_mimir(t_token **token, t_data **data)
 {
 	t_token	*aux;
 
-	if (!env || !*env)
+	if (!(*data)->env || !(*data)->env[0])
 		return (0);
 	ft_need_to_expand(token);
 	aux = (*token);
@@ -253,7 +258,7 @@ int	ft_mimir(t_token **token, char **env, int exit_status)
 	{
 		if ((*token)->expand)
 		{
-			if (ft_expand_var(token, env, exit_status))
+			if (ft_expand_var(token, data))
 				return (1);
 		}
 		(*token) = (*token)->next;
@@ -261,3 +266,113 @@ int	ft_mimir(t_token **token, char **env, int exit_status)
 	(*token) = aux;
 	return (0);
 }
+
+// /*===========================================================================*/
+// /*===========================================================================*/
+
+// /* Maneja la lógica de encontrar el valor y avanzar el índice */
+// /* Usa tu ft_find_limit y ft_get_var_value existentes */
+// static int	ft_append_val(char **res, char *str, int i, char **env, int exit_s)
+// {
+// 	int		len;
+// 	char	*var_name;
+// 	char	*val;
+
+// 	if (str[i + 1] == '?')
+// 	{
+// 		ft_add_str(res, ft_itoa(exit_s));
+// 		return (i + 2);
+// 	}
+// 	len = 0;
+// 	while (str[i + 1 + len] && (ft_isalnum(str[i + 1 + len])
+// 			|| str[i + 1 + len] == '_'))
+// 		len++;
+// 	if (len == 0)
+// 	{
+// 		ft_add_char(res, '$');
+// 		return (i + 1);
+// 	}
+// 	var_name = ft_substr(str, i + 1, len);
+// 	val = ft_get_var_value(env, var_name);
+// 	ft_add_str(res, val);
+// 	free(var_name);
+// 	return (i + 1 + len);
+// }
+
+// // cosita pendiente >:(  8==D = echo "$USER" '$USER'"'$USER'"'"$USER"'
+// static void	ft_flags_state(char s, int *state)
+// {
+// 	if (s == '\'' && *state == 0)
+// 		*state = 1;
+// 	else if (s == '\'' && *state == 1)
+// 		*state = 0;
+// 	else if (s == '\"' && *state == 0)
+// 		*state = 2;
+// 	else if (s == '\"' && *state == 2)
+// 		*state = 0;
+// }
+
+// /* State 0: Nada
+//    State 1: Comilla Simple ' (No expande nada)
+//    State 2: Comilla Doble " (Expande $)
+// */
+// char	*ft_process_new_expansion(char *str, char **env, int exit_status)
+// {
+// 	char	*res;
+// 	int		i;
+// 	int		state;
+
+// 	res = ft_strdup("");
+// 	i = 0;
+// 	state = 0;
+// 	while (str[i])
+// 	{
+// 		ft_flags_state(str[i], &state);
+// 		if (str[i] == '$' && state != 1 && (ft_isalnum(str[i + 1])
+// 				|| str[i + 1] == '_' || str[i + 1] == '?'))
+// 			i = ft_append_val(&res, str, i, env, exit_status);
+// 		else
+// 		{
+// 			ft_add_char(&res, str[i]);
+// 			i++;
+// 		}
+// 	}
+// 	return (res);
+// }
+
+// int	ft_expand_var(t_token **token, char **env, int exit_status)
+// {
+// 	char	*new_content;
+
+// 	if (!token || !*token || !(*token)->content)
+// 		return (0);
+// 	new_content = ft_process_new_expansion((*token)->content, env, exit_status);
+// 	if (!new_content)
+// 		return (ft_pd_error(ERR_MALLOC, NULL, 12));
+// 	free((*token)->content);
+// 	(*token)->content = new_content;
+// 	return (0);
+// }
+
+
+
+// int	ft_mimir(t_token **token, char **env, int exit_status)
+// {
+// 	t_token	*aux;
+
+// 	if (!env || !*env)
+// 		return (0);
+// 	ft_need_to_expand(token);
+// 	aux = (*token);
+// 	while ((*token))
+// 	{
+// 		if ((*token)->expand)
+// 		{
+// 			if (ft_expand_var(token, env, exit_status))
+// 				return (1);
+// 		}
+// 		(*token) = (*token)->next;
+// 	}
+// 	(*token) = aux;
+// 	return (0);
+// }
