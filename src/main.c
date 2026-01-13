@@ -53,6 +53,19 @@ t_data	*ft_init_data(char **env)
 	return (data);
 }
 
+/*
+	*** Unico error encontrado en el heredoc ***
+	Rarisimo...
+	Al pulsar ctrl-c sin terminar el heredoc
+	se crea un archivo con el nombre del delimitador
+	del heredoc. 
+	Ademas el exit status se actualiza o se queda en -1.
+	hay que ver los archivos:
+	ratatoskr.c
+	ratatoskr_utils.c (el que puede llegar a tener el error)
+	Tiene que ser algo que tenga que ver con señales.
+*/
+
 int	ft_minishell(t_data **data, int status)
 {
 	char	*input;
