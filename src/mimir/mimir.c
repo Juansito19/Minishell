@@ -187,7 +187,6 @@ static int	ft_append_val(char **res, char *str, int i, char **env, int exit_s)
 	val = ft_get_var_value(env, var_name);
 	ft_add_str(res, val);
 	free(var_name);
-	free(val);
 	return (i + 1 + len);
 }
 
