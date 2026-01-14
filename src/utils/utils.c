@@ -21,27 +21,6 @@ void	ft_random_banner(void)
 		ft_banner_4a();
 }
 
-// int	ft_find_path(t_data **data, char **envp)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (envp[i])
-// 	{
-// 		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-// 		{
-// 			(*data)->path = ft_strdup(envp[i] + 5);
-// 			if (!(*data)->path)
-// 				return (ft_pd_error(ERR_MALLOC, NULL, 12));
-// 			break ;
-// 		}
-// 		i++;
-// 	}
-// 	if (!(*data)->path)
-// 		return (1);
-// 	return (0);
-// }
-
 int	ft_find_path(t_tree **tree, char **envp)
 {
 	int	i;
@@ -63,4 +42,18 @@ int	ft_find_path(t_tree **tree, char **envp)
 	if (!(*tree)->path)
 		return (1);
 	return (0);
+}
+
+int	*ft_get_times_ptr(int reset)
+{
+	static int	times;
+
+	if (reset)
+		times = 0;
+	return (&times);
+}
+
+void	ft_reset_heredoc_times(void)
+{
+	ft_get_times_ptr(1);
 }

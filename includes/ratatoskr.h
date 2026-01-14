@@ -22,11 +22,6 @@ char	*ft_make_unic_name(void);
 int		ft_files_destroyer(t_tree **yggdrasil);
 int		ft_signal_break(char **tmp_name, int fd, int fd_back, t_token **eof);
 
-
-int		*ft_get_times_ptr(int reset);
-void	ft_reset_heredoc_times(void);
-
-
 /* =============================== */
 
 #endif

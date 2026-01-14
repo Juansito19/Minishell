@@ -4,108 +4,39 @@
 /* ======== mimir utils ======= */
 /* ============================ */
 
-t_expand	*ft_init_expanders(void)
+void	ft_aux_need_to_expand(t_token **tkn, int state)
 {
-	t_expand	*expander;
-
-	expander = malloc(1 * sizeof(t_expand));
-	if (!expander)
-		return (NULL);
-	expander->init_quote = NULL;
-	expander->end_quote = NULL;
-	expander->split = NULL;
-	expander->var = NULL;
-	expander->tmp_var = NULL;
-	expander->aux = NULL;
-	expander->s_end = 0;
-	expander->s_init = 0;
-	expander->limit = 0;
-	expander->dollar = 0;
-	expander->expand = 0;
-	return (expander);
-}
-
-int	ft_handle_end_quote(t_expand **exp, char *content)
-{
-	int	i;
-	int	size;
-
-	i = (*exp)->s_init;
-	size = (*exp)->s_init;
-	while (content[i] && !ft_is_quote(content[i]))
-		i++;
-	if (ft_is_quote(content[i]))
-	{
-		(*exp)->end_quote = ft_substr(content, i, size);
-		if (!(*exp)->end_quote)
-			return (ft_pd_error(ERR_MALLOC, NULL, 12));
-		(*exp)->s_end = i;
-		return (0);
-	}
-	return (0);
-}
-
-int	ft_handle_init_quote(t_expand **exp, char *content)
-{
-	int	i;
+	int		i;
 
 	i = 0;
-	while (content[i] && content[i] != '$')
+	while ((*tkn)->content[i] && (*tkn)->expand == 0)
+	{
+		if (ft_is_quote((*tkn)->content[i]) == T_DQUOTE && !state)
+			state = 2;
+		else if (ft_is_quote((*tkn)->content[i]) == T_DQUOTE && state == 2)
+			state = 0;
+		else if (ft_is_quote((*tkn)->content[i]) == T_SQUOTE && !state)
+			state = 1;
+		else if (ft_is_quote((*tkn)->content[i]) == T_SQUOTE && state == 1)
+			state = 0;
+		if ((*tkn)->content[i] == '$' && state != 1 && (*tkn)->content[i + 1])
+			(*tkn)->expand = 1;
 		i++;
-	if (i)
-	{
-		(*exp)->init_quote = ft_substr(content, 0, i);
-		if (!(*exp)->init_quote)
-			return (ft_pd_error(ERR_MALLOC, NULL, 12));
-		(*exp)->s_init = i;
-		return (0);
 	}
-	return (0);
 }
 
-int	ft_found_var(t_expand **exp, t_token **token)
+void	ft_need_to_expand(t_token **token)
 {
-	if ((*exp)->init_quote && (*exp)->end_quote)
+	t_token	*aux;
+
+	aux = (*token);
+	while (aux)
 	{
-		(*exp)->aux = ft_strjoin((*exp)->init_quote, (*exp)->tmp_var);
-		(*exp)->var = ft_strjoin((*exp)->aux, (*exp)->end_quote);
-		if (!(*exp)->var)
-			return (ft_pd_error(ERR_MALLOC, NULL, 12));
+		ft_aux_need_to_expand(&aux, 0);
+		aux = aux->next;
 	}
-	else
-	{
-		(*exp)->var = ft_strdup((*exp)->tmp_var);
-		if (!(*exp)->var)
-			return (ft_pd_error(ERR_MALLOC, NULL, 12));
-	}
-	free((*token)->content);
-	(*token)->content = ft_strdup((*exp)->var);
-	if (!(*token)->content)
-		return (ft_pd_error(ERR_MALLOC, NULL, 12));
-	return (0);
 }
 
-int	ft_no_found_var(t_expand **exp, t_token **token)
-{
-	if ((*exp)->init_quote && (*exp)->end_quote)
-	{
-		(*exp)->var = ft_strjoin((*exp)->init_quote, (*exp)->end_quote);
-		if (!(*exp)->var)
-			return (ft_pd_error(ERR_MALLOC, NULL, 12));
-	}
-	else
-		(*exp)->var = ft_strdup("");
-	free((*token)->content);
-	(*token)->content = ft_strdup((*exp)->var);
-	if (!(*token)->content)
-		return (ft_pd_error(ERR_MALLOC, NULL, 12));
-	return (0);
-}
-
-
-/*========================================================================*/
-
-/* Añade un caracter al string dinámico 's' */
 void	ft_add_char(char **s, char c)
 {
 	char	*tmp;
@@ -120,7 +51,6 @@ void	ft_add_char(char **s, char c)
 	*s = tmp;
 }
 
-/* Añade un string completo al string dinámico 's' */
 void	ft_add_str(char **s, char *add)
 {
 	char	*tmp;

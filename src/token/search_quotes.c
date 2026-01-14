@@ -23,10 +23,6 @@ void	ft_put_word(char *s, char **word, int i, int *state)
 			(*word)[++j] = s[i];
 		else if (ft_is_quote(s[i]) == T_SQUOTE && *state == 2)
 			(*word)[++j] = s[i];
-		// else if (s[i] == '$' && *state == 2)	// -
-		// 	(*word)[++j] = s[i];				// |-->	esto creo que es al pedo
-		// else if (s[i] == '$' && *state == 1)	// |		(tener en cuenta)
-		// 	(*word)[++j] = s[i];				// -
 		else if (!ft_is_quote(s[i]))
 			(*word)[++j] = s[i];
 		i++;
@@ -49,10 +45,6 @@ int	ft_token_word_size(char *s, int i, int count, int state)
 			count++;
 		else if (ft_is_quote(s[i]) == T_SQUOTE && state == 2)
 			count++;
-		// else if (s[i] == '$' && state == 2)	// -
-		// 	count++;						// |---> esto creo que es al pedo
-		// else if (s[i] == '$' && state == 1)	// |		(tener en cuenta)
-		// 	count++;						// -
 		else if (!ft_is_quote(s[i]))
 			count++;
 		i++;
