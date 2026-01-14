@@ -4,8 +4,6 @@
 /* ========= parse ========== */
 /* ========================== */
 
-/* ========== funcion principial =========== */
-
 int	ft_big_prick_parse(char *input)
 {
 	if (ft_open_quote(input))
@@ -16,8 +14,6 @@ int	ft_big_prick_parse(char *input)
 		return (1);
 	return (0);
 }
-
-/* ========== parseo comillas =========== */
 
 int	ft_open_quote(char *input)
 {
@@ -43,25 +39,6 @@ int	ft_open_quote(char *input)
 	return (0);
 }
 
-/* ========== parseo redirecciones =========== */
-
-/*
-
-añado este if / else al ft_redir_check
-
-ANTES:
-if (s[i] == '<')
-	return (1);
-
-if (s[i] == '<')
-	{
-		if (s[i + 1] && s[i + 1] == '<')
-			return (0);
-		else
-			return (1);
-	}
-*/
-
 int	ft_redir_check(char *s)
 {
 	int		i;
@@ -82,8 +59,6 @@ int	ft_redir_check(char *s)
 		return (1);
 	return (0);
 }
-
-/* ========== parseo pipes =========== */
 
 int	ft_pipe_check(char *s)
 {

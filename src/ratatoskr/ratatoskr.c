@@ -76,46 +76,6 @@ int	ft_chg_b(t_token **token, char **tmp_name, int fd, t_token **eof)
 	return (0);
 }
 
-// int	ft_new_content(char **tmp_name, t_token **eof, t_token **token)
-// {
-// 	free((*eof)->content);
-// 	free((*token)->content);
-// 	(*eof)->content = *tmp_name;
-// 	(*eof)->type = T_FD;
-// 	(*token)->type = T_REDIR_IN;
-// 	(*token)->content = ft_strdup("<");
-// 	return (0);
-// }
-
-// int	ft_chg_b(t_token **token, char **tmp_name, int fd, t_token **eof)
-// {
-// 	char	*line;
-// 	int		stdin_backup;
-
-// 	stdin_backup = dup(STDIN_FILENO);
-// 	while (1)
-// 	{
-// 		line = readline("> ");
-// 		if (!line || g_status == 130)
-// 		{
-// 			if (line)
-// 				free(line);
-// 			return (ft_signal_break(tmp_name, fd, stdin_backup, eof));
-// 		}
-// 		if (!ft_strcmp(line, (*eof)->content))
-// 			break ;
-// 		ft_fprintf(fd, "%s\n", line);
-// 		free(line);
-// 		line = NULL;
-// 	}
-// 	if (line)
-// 		free(line);
-// 	close(fd);
-// 	close(stdin_backup);
-// 	ft_new_content(tmp_name, eof, token);
-// 	return (0);
-// }
-
 int	ft_ratatoskr(t_token **token)
 {
 	char	*tmp_name;

@@ -12,7 +12,6 @@ void	ft_hugin_handler(int sig)
 	}
 }
 
-// Estas señales son para recibir el prompt desde el main
 int	ft_hugin_signal(void)
 {
 	struct sigaction	sa;
@@ -42,7 +41,6 @@ static void	ft_munin_handler(int sig)
 	}
 }
 
-// Estas señales son solo para el HEREDOC
 int	ft_munin_signal(void)
 {
 	struct sigaction	sa;

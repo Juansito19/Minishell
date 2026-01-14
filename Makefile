@@ -57,8 +57,6 @@ HEIMDALL = $(HEIMDALL_DIR)/heimdall.c \
 
 MIMIR = $(MIMIR_DIR)/mimir.c \
 		$(MIMIR_DIR)/mimir_utils.c \
-		$(MIMIR_DIR)/mimir_expander.c \
-		$(MIMIR_DIR)/split_mimir.c \
 
 TOKEN = $(TOK_DIR)/token.c \
         $(TOK_DIR)/token_utils.c \
@@ -66,7 +64,6 @@ TOKEN = $(TOK_DIR)/token.c \
 
 UTILS = $(UTILS_DIR)/utils.c \
     	$(UTILS_DIR)/banner.c \
-    	$(UTILS_DIR)/print.c \
     	$(UTILS_DIR)/clean.c \
     	$(UTILS_DIR)/error.c \
     	$(UTILS_DIR)/type_validator.c \

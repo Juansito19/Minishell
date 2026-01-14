@@ -19,7 +19,6 @@ static int	ft_check_input(t_data **data, char *input)
 	ft_search_eof(&(*data)->tokens);
 	ft_ratatoskr(&(*data)->tokens);
 	ft_yggdrasil(&(*data)->tokens, &(*data)->yggdrasil, data);
-	// fprint_tree(&(*data)->yggdrasil);
 	if (g_status == 130)
 	{
 		(*data)->exit_status = g_status;
@@ -102,7 +101,7 @@ int	main(int ac, char **av, char **env)
 	if (!data)
 		return (ft_pd_error(ERR_MALLOC, NULL, 12));
 	if (isatty(STDIN_FILENO))
-		ft_banner_3();
+		ft_random_banner();
 	ft_minishell(&data, 0);
 	if (isatty(STDIN_FILENO))
 		ft_fprintf(1, "exit\n");

@@ -30,13 +30,11 @@ typedef struct s_token	t_token;
 /* ============= mimir ============= */
 /* ================================= */
 
-int			ft_expand_var(t_token **token, t_data **data);
-// int			ft_expand_var(t_token **token, char **env, int exit_status);
-int			ft_mimir(t_token **token, t_data **data);
-// int			ft_mimir(t_token **token, char **env, int exit_status);
-int			ft_process_var(t_expand **exp, char **env, int exit, char *cont);
-int			ft_rebuild_var(t_expand **exp);
-int			ft_domain_expansion(t_expand **exp, int i, char **env, int exit);
+int		ft_append_val(char **res, char *str, int i, t_data **data);
+void	ft_flags_state(char s, int *state);
+int		ft_expand_var(t_token **token, t_data **data);
+char	*ft_process_new_expansion(char *str, t_data **data);
+int		ft_mimir(t_token **token, t_data **data);
 
 /* ================================= */
 
@@ -44,36 +42,10 @@ int			ft_domain_expansion(t_expand **exp, int i, char **env, int exit);
 /* ========== mimir utils ========== */
 /* ================================= */
 
-t_expand	*ft_init_expanders(void);
-int			ft_found_var(t_expand **exp, t_token **token);
-int			ft_no_found_var(t_expand **exp, t_token **token);
-int			ft_handle_end_quote(t_expand **exp, char *content);
-int			ft_handle_init_quote(t_expand **exp, char *content);
-
-/* ================================= */
-
-/* ================================= */
-/* ========= mimir expander ======== */
-/* ================================= */
-
-int			ft_find_limit(t_expand **exp, char *s, int i);
-int			ft_expander_validator(t_expand **exp, int i, int size);
-void		ft_variable_search(t_expand **exp, char **env, int i, int exit);
-void		ft_need_to_expand(t_token **token);
-void		ft_aux_need_to_expand(t_token **tkn, int state);
-
-
-void		ft_add_char(char **s, char c);
-void		ft_add_str(char **s, char *add);
-
-
-/* ================================= */
-
-/* ================================= */
-/* ========== split utils ========== */
-/* ================================= */
-
-char		**ft_split_dollar(char const *s, char c);
+void	ft_need_to_expand(t_token **token);
+void	ft_aux_need_to_expand(t_token **tkn, int state);
+void	ft_add_char(char **s, char c);
+void	ft_add_str(char **s, char *add);
 
 /* ================================= */
 
