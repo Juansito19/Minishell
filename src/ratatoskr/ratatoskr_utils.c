@@ -53,11 +53,10 @@ int	ft_files_destroyer(t_tree **yggdrasil)
 	return (0);
 }
 
-int	ft_signal_break(char **tmp_name, int fd, int fd_back, t_token **eof)
+int	ft_signal_break(char **tmp_name, int fd, int fd_back)
 {
 	int	*times;
 
-	(void) eof;
 	times = ft_get_times_ptr(0);
 	if (g_status == 130)
 	{
