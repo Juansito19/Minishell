@@ -19,6 +19,7 @@ static int	ft_check_input(t_data **data, char *input)
 	ft_search_eof(&(*data)->tokens);
 	ft_ratatoskr(&(*data)->tokens);
 	ft_yggdrasil(&(*data)->tokens, &(*data)->yggdrasil, data);
+	// fprint_tree(&(*data)->yggdrasil);
 	if (g_status == 130)
 	{
 		(*data)->exit_status = g_status;

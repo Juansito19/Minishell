@@ -19,18 +19,19 @@ int	ft_odin_signal(void)
 	return (0);
 }
 
-static void	ft_son_handler(int sig)
-{
-	if (sig == SIGINT)
-		ft_fprintf(1, "\n");
-}
+// static void	ft_son_handler(int sig)
+// {
+// 	if (sig == SIGINT)
+// 		ft_fprintf(1, "\n");
+// }
 
 // Estas señales son solo para los procesos hijos en el ejecutor
 int	ft_odinson_signal(void)
 {
 	struct sigaction	sa;
 
-	sa.sa_handler = &ft_son_handler;
+	// sa.sa_handler = &ft_son_handler;
+	sa.sa_handler = SIG_DFL;
 	sa.sa_flags = 0;
 	sigemptyset(&sa.sa_mask);
 	if (sigaction(SIGINT, &sa, NULL) == -1)

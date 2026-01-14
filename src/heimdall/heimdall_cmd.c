@@ -48,6 +48,14 @@ int	ft_exec_parent(t_data **data, t_tree **ygg, char **av, char **env)
 	if ((*ygg)->pid == 0)
 		ft_exec_child(data, av, env);
 	waitpid((*ygg)->pid, &status, 0);
+	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGINT)
+			ft_fprintf(1, "\n");
+		else if (WTERMSIG(status) == SIGQUIT)
+			ft_fprintf(2, "Quit (core dumped)\n");
+		return (128 + WTERMSIG(status));
+	}
 	return (WEXITSTATUS(status));
 }
 
