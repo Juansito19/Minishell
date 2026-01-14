@@ -203,10 +203,10 @@ static void	ft_flags_state(char s, int *state)
 		*state = 0;
 }
 
-/* State 0: Nada
-   State 1: Comilla Simple ' (No expande nada)
-   State 2: Comilla Doble " (Expande $)
-*/
+// /* State 0: Nada
+//    State 1: Comilla Simple ' (No expande nada)
+//    State 2: Comilla Doble " (Expande $)
+// */
 char	*ft_process_new_expansion(char *str, t_data **data)
 {
 	char	*res;
@@ -214,6 +214,8 @@ char	*ft_process_new_expansion(char *str, t_data **data)
 	int		state;
 
 	res = ft_strdup("");
+	if (!res)
+		return (NULL);
 	i = 0;
 	state = 0;
 	while (str[i])
@@ -230,6 +232,52 @@ char	*ft_process_new_expansion(char *str, t_data **data)
 	}
 	return (res);
 }
+
+// En mimir.c
+
+// Versión robusta que gestiona explícitamente los cambios de estado
+// static void	ft_flags_state(char s, int *state)
+// {
+// 	if (s == '\'' && *state == 0)
+// 		*state = 1;
+// 	else if (s == '\'' && *state == 1)
+// 		*state = 0;
+// 	else if (s == '\"' && *state == 0)
+// 		*state = 2;
+// 	else if (s == '\"' && *state == 2)
+// 		*state = 0;
+// }
+
+// char	*ft_process_new_expansion(char *str, t_data **data)
+// {
+// 	char	*res;
+// 	int		i;
+// 	int		state;
+
+// 	res = ft_strdup("");
+// 	if (!res)
+// 		return (NULL); // Protección de malloc añadida
+// 	i = 0;
+// 	state = 0;
+// 	while (str[i])
+// 	{
+// 		ft_flags_state(str[i], &state);
+// 		// La condición clave corregida:
+// 		// Si es $, Y (estado es 0 O estado es 2), Y el siguiente caracter es válido
+// 		if (str[i] == '$' && state != 1 && (ft_isalnum(str[i + 1])
+// 				|| str[i + 1] == '_' || str[i + 1] == '?'))
+// 		{
+// 			// Ojo: ft_append_val avanza 'i' y devuelve el nuevo índice
+// 			i = ft_append_val(&res, str, i, data);
+// 		}
+// 		else
+// 		{
+// 			ft_add_char(&res, str[i]);
+// 			i++;
+// 		}
+// 	}
+// 	return (res);
+// }
 
 int	ft_expand_var(t_token **token, t_data **data)
 {

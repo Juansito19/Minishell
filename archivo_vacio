@@ -1,0 +1,24 @@
+total 636
+drwxr-xr-x  8 unovo-ru 2025_malaga   4096 Jan 14 17:26 .
+drwxr-xr-x  4 unovo-ru 2025_malaga     69 Jan 11 21:34 ..
+-rw-r--r--  1 unovo-ru 2025_malaga      0 Jan 14 17:03 a
+-rw-r--r--  1 unovo-ru 2025_malaga      0 Jan 14 17:27 archivo_vacio
+-rw-r--r--  1 unovo-ru 2025_malaga      0 Jan 14 17:03 b
+-rw-r--r--  1 unovo-ru 2025_malaga      0 Jan 14 17:03 c
+-rw-r--r--  1 unovo-ru 2025_malaga      0 Jan 14 17:03 d
+-rw-r--r--  1 unovo-ru 2025_malaga      0 Jan 14 17:05 e
+-rw-r--r--  1 unovo-ru 2025_malaga      0 Jan 14 17:23 file A
+-rw-r--r--  1 unovo-ru 2025_malaga     28 Jan 14 17:23 file B
+drwxr-xr-x  8 unovo-ru 2025_malaga   4096 Jan 14 12:29 .git
+-rw-r--r--  1 unovo-ru 2025_malaga     70 Jan  9 21:40 .gitignore
+drwxr-xr-x  2 unovo-ru 2025_malaga   4096 Jan 14 12:29 includes
+drwxr-xr-x  4 unovo-ru 2025_malaga     74 Jan 12 22:52 libft
+-rw-r--r--  1 unovo-ru 2025_malaga 215370 Jan 11 20:37 Makefile
+-rwxr-xr-x  1 unovo-ru 2025_malaga 133704 Jan 14 17:22 minishell
+-rw-r--r--  1 unovo-ru 2025_malaga 262414 Jan 14 17:22 minishell.a
+drwxr-xr-x  3 unovo-ru 2025_malaga     17 Jan 12 22:52 obj
+drwxr-xr-x  2 unovo-ru 2025_malaga      6 Jan 12 19:27 prueba1
+-rw-r--r--  1 unovo-ru 2025_malaga    141 Jan  9 21:40 README.md
+-rw-r--r--  1 unovo-ru 2025_malaga     33 Jan 14 17:25 resultado_loco
+drwxr-xr-x 11 unovo-ru 2025_malaga    153 Jan 14 12:29 src
+-rw-r--r--  1 unovo-ru 2025_malaga    791 Jan  9 21:40 valgrind.supp
