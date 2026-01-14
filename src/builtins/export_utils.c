@@ -36,12 +36,12 @@ char	**ft_add_var(char **env, char *var)
 
 	i = 0;
 	size = 0;
-	while (env[size])
+	while (env && env[size])
 		size++;
 	res = ft_calloc(size + 2, sizeof(char *));
 	if (!res)
 		return (NULL);
-	while (env[i])
+	while (env && env[i])
 	{
 		res[i] = ft_strdup(env[i]);
 		if (!res[i])
@@ -51,7 +51,8 @@ char	**ft_add_var(char **env, char *var)
 	res[i] = ft_strdup(var);
 	if (!res[i])
 		return (ft_free_all_array(res));
-	ft_free_all_array(env);
+	if (env)
+		ft_free_all_array(env);
 	return (res);
 }
 
@@ -61,9 +62,11 @@ int	ft_change_or_add_var(char ***env, char *av)
 	int		i;
 
 	i = ft_get_var(*env, av);
+	if (i == -2)
+		return (0);
 	if (i != -1)
 	{
-		if ((*env)[i])
+		if ((*env) && (*env)[i])
 			free((*env)[i]);
 		(*env)[i] = ft_strdup(av);
 		if (!(*env)[i])

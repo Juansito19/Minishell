@@ -4,63 +4,6 @@
 // ====== CD ====== //
 // ================ //
 
-/*
-función ft_cd(argumentos, env):
-    si no hay argumentos:
-        path = obtener variable HOME del env
-        si HOME no existe:
-            error "HOME not set"
-            retornar 1
-    sino:
-        path = argumentos[1]
-    
-    guardar_pwd_actual = getcwd()
-    
-    si chdir(path) falla:
-        imprimir error "No such file or directory"
-        retornar 1
-    
-    actualizar variable OLDPWD = guardar_pwd_actual
-    actualizar variable PWD = getcwd() nuevo
-    retornar 0
-
-chdir() - cambia de directorio
-getenv() o buscar en tu array de env
-
-cd sin argumentos → va a HOME
-cd - → va al directorio anterior (OLDPWD)
-cd .. → sube un nivel
-*/
-
-// int	ft_change_env_value(char ***env, char *key, char *new_value, int i)
-// {
-// 	char	*search_value;
-// 	char	*value;
-
-// 	search_value = ft_strjoin(key, "=");
-// 	if (!search_value)
-// 		return (ft_print_error(12, NULL));
-// 	while ((*env)[i])
-// 	{
-// 		if (!ft_strncmp((*env)[i], search_value, ft_strlen(search_value)))
-// 		{
-// 			free((*env)[i]);
-// 			value = ft_strjoin(search_value, new_value);
-// 			if (!value)
-// 			{
-// 				free(search_value);
-// 				ft_print_error(0, ERR_MALLOC);
-// 			}
-// 			(*env)[i] = value;
-// 			free(search_value);
-// 			return (0);
-// 		}
-// 		i++;
-// 	}
-// 	free(search_value);
-// 	return (1);
-// }
-
 char	*ft_get_var_value(char **env, char *key)
 {
 	char	*search_value;
@@ -90,6 +33,29 @@ char	*ft_get_var_value(char **env, char *key)
 	return (NULL);
 }
 
+int	ft_search_oldpwd(char ***env)
+{
+	int	i;
+
+	i = 0;
+	while ((*env)[i] && ft_strncmp("OLDPWD", (*env)[i], ft_strlen((*env)[i])))
+		i++;
+	if (!ft_strncmp("OLDPWD", (*env)[i], ft_strlen((*env)[i])))
+	{
+		if ((*env)[i])
+			free((*env)[i]);
+		while ((*env)[i] && (*env)[i + 1])
+		{
+			(*env)[i] = (*env)[i + 1];
+			i++;
+		}
+		(*env)[i] = NULL;
+		return (0);
+	}
+	else
+		return (1);
+}
+
 int	ft_update_pwd_vars(char ***env, char *oldpwd)
 {
 	char	*pwd_now;
@@ -101,6 +67,7 @@ int	ft_update_pwd_vars(char ***env, char *oldpwd)
 		if (!tmp)
 			return (ft_pd_error(ERR_MALLOC, NULL, 12));
 		ft_change_or_add_var(env, tmp);
+		ft_search_oldpwd(env);
 		free(tmp);
 	}
 	pwd_now = getcwd(NULL, 0);
@@ -125,7 +92,7 @@ char	*ft_take_path(char ***env, char *av)
 		path = ft_get_var_value(*env, "HOME");
 		if (!path)
 		{
-			ft_pd_error(ERR_CD_NO_SUCH_FILE, "HOME", 1);
+			ft_pd_error(ERR_CD_NO_HOME, NULL, 1);
 			return (NULL);
 		}
 	}
@@ -134,7 +101,7 @@ char	*ft_take_path(char ***env, char *av)
 		path = ft_get_var_value(*env, "OLDPWD");
 		if (!path)
 		{
-			ft_pd_error(ERR_CD_NO_SUCH_FILE, "OLDPWD", 1);
+			ft_pd_error(ERR_CD_NO_OLDPWD, NULL, 1);
 			return (NULL);
 		}
 		ft_printf("%s\n", path);
@@ -144,20 +111,21 @@ char	*ft_take_path(char ***env, char *av)
 	return (path);
 }
 
-int	ft_cd(char ***env, char *av)
+int	ft_cd(char ***env, char **av)
 {
 	char	*path;
 	char	*oldpwd;
 
-	path = ft_take_path(env, av);
+	if (ft_count_words(av) > 1)
+		return (ft_pd_error(ERR_CD_TOO_MANY_ARGS, NULL, 1));
+	path = ft_take_path(env, av[0]);
 	if (!path)
 		return (1);
 	oldpwd = getcwd(NULL, 0);
 	if (chdir(path))
 	{
 		free(oldpwd);
-		free(path);
-		return (ft_pd_error(ERR_CD_NO_SUCH_FILE, path, 1));
+		return (ft_print_cd_error(path));
 	}
 	if (ft_update_pwd_vars(env, oldpwd))
 	{

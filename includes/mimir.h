@@ -30,8 +30,10 @@ typedef struct s_token	t_token;
 /* ============= mimir ============= */
 /* ================================= */
 
-int			ft_expand_var(t_token **token, char **env, int exit_status);
-int			ft_mimir(t_token **token, char **env, int exit_status);
+int			ft_expand_var(t_token **token, t_data **data);
+// int			ft_expand_var(t_token **token, char **env, int exit_status);
+int			ft_mimir(t_token **token, t_data **data);
+// int			ft_mimir(t_token **token, char **env, int exit_status);
 int			ft_process_var(t_expand **exp, char **env, int exit, char *cont);
 int			ft_rebuild_var(t_expand **exp);
 int			ft_domain_expansion(t_expand **exp, int i, char **env, int exit);
@@ -59,6 +61,11 @@ int			ft_expander_validator(t_expand **exp, int i, int size);
 void		ft_variable_search(t_expand **exp, char **env, int i, int exit);
 void		ft_need_to_expand(t_token **token);
 void		ft_aux_need_to_expand(t_token **tkn, int state);
+
+
+void		ft_add_char(char **s, char c);
+void		ft_add_str(char **s, char *add);
+
 
 /* ================================= */
 

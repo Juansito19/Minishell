@@ -12,7 +12,8 @@ typedef struct s_expand	t_expand;
 /* ========== utils =========== */
 /* ============================ */
 
-int		ft_find_path(t_data **data, char **envp);
+int		ft_find_path(t_tree **tree, char **envp);
+// int		ft_find_path(t_data **data, char **envp);
 
 /* ============================ */
 

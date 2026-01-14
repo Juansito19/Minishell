@@ -7,7 +7,7 @@
 static void	ft_terminator(t_data **data, char *status, int err)
 {
 	ft_fprintf(1, "exit\n");
-	if (err)
+	if (status)
 	{
 		ft_pd_error(ERR_EXIT_NUMERIC, status, err);
 		ft_clean_data(data);
@@ -43,5 +43,7 @@ int	ft_exit(t_data **data, char **status)
 			return (ft_pd_error(ERR_EXIT_TOO_MANY, NULL, 1));
 		break ;
 	}
-	exit(0);
+	exit_status = ft_atoi(status[0]);
+	ft_clean_data(data);
+	exit(exit_status);
 }

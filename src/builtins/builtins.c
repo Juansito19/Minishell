@@ -4,7 +4,7 @@
 /* ======== builtin ========= */
 /* ========================== */
 
-static int	ft_count_words(char **av)
+int	ft_count_words(char **av)
 {
 	int	i;
 
@@ -19,17 +19,17 @@ static int	ft_count_words(char **av)
 int	ft_builtins(t_data **data, char **av, char **env)
 {
 	if (!ft_strcmp("cd", av[0]))
-		return (ft_cd(&(*data)->env, av[1]));
+		return (ft_cd(&(*data)->env, av + 1));
 	else if (!ft_strcmp("echo", av[0]))
 		return (ft_echo(ft_count_words(av), av));
 	else if (!ft_strcmp("env", av[0]))
-		return (ft_env(env));
+		return (ft_env(env, av));
 	else if (!ft_strcmp("exit", av[0]))
-		return (ft_exit(data, av + 1));
+		return (ft_exit(data, &av[1]));
 	else if (!ft_strcmp("export", av[0]))
 		return (ft_export(&(*data)->env, av + 1));
 	else if (!ft_strcmp("pwd", av[0]))
-		return (ft_pwd());
+		return (ft_pwd(env));
 	else if (!ft_strcmp("unset", av[0]))
 		return (ft_unset(&(*data)->env, av + 1));
 	return (0);

@@ -2,34 +2,34 @@
 
 int	g_status = 0;
 
-void	ft_check_input(t_data **data, char *input)
+static int	ft_check_input(t_data **data, char *input)
 {
+	g_status = 0;
 	if (ft_big_prick_parse(input))
 	{
-		ft_print_error(0, "Error: Syntax error");
-		return ;
+		(*data)->exit_status = 2;
+		ft_print_error(0, "Minishell: error: Syntax error");
+		free(input);
+		input = NULL;
+		return (1);
 	}
 	(*data)->tokens = ft_token(input, 0);
-	// printf("====PRIMERO====\n");
-	// print_token(&(*data)->tokens);
-	ft_mimir(&(*data)->tokens, (*data)->env, (*data)->exit_status);
+	ft_mimir(&(*data)->tokens, data);
 	ft_search_quotes(&(*data)->tokens);
-	// printf("====SEGUNDO====\n");
-	// print_token(&(*data)->tokens);
-
-	// search_eof se mantiene porque ya busca a travez de tokens los EOF
 	ft_search_eof(&(*data)->tokens);
-
-	// yggdrasil sufre cambios:
-	// solo divide por pipes
-	// las redirecciones se unen a los comandos
+	ft_ratatoskr(&(*data)->tokens);
 	ft_yggdrasil(&(*data)->tokens, &(*data)->yggdrasil, data);
-
-	// ratatosker tiene que ir antes que yggdrasil
-	// el cambio es porque si vamos a modificar a yggdrasil
-	// el modo de buscar se parece al de tokens
-	ft_ratatoskr(&(*data)->yggdrasil);
 	// fprint_tree(&(*data)->yggdrasil);
+	if (g_status == 130)
+	{
+		(*data)->exit_status = g_status;
+		ft_files_destroyer(&(*data)->yggdrasil);
+		ft_free_all(&(*data)->yggdrasil, &(*data)->tokens, &input, NULL);
+		return (1);
+	}
+	free(input);
+	input = NULL;
+	return (0);
 }
 
 t_data	*ft_init_data(char **env)
@@ -46,14 +46,17 @@ t_data	*ft_init_data(char **env)
 	data->infile = -1;
 	data->outfile = -1;
 	data->path = NULL;
-	ft_find_path(&data, env);
-	data->env = ft_array_dup(env);
+	data->env = NULL;
+	if (!env || !*env)
+		data->env = ft_no_env();
+	else
+		data->env = ft_array_dup(env);
 	data->tokens = NULL;
 	data->yggdrasil = NULL;
 	return (data);
 }
 
-int	ft_minishell(t_data **data)
+int	ft_minishell(t_data **data, int status)
 {
 	char	*input;
 
@@ -61,22 +64,22 @@ int	ft_minishell(t_data **data)
 	while (1)
 	{
 		ft_hugin_signal();
-		input = readline("bostero$> ");
+		if (isatty(STDIN_FILENO))
+			input = readline("bostero$> ");
+		else
+			input = readline("");
 		if (!input)
-		{
-			free(input);
-			ft_clean_data(data);
-			printf("exit\n");
 			break ;
-		}
-		ft_check_input(data, input);
 		add_history(input);
+		if (ft_check_input(data, input))
+			continue ;
 		ft_odin_signal();
-		free(input);
-		ft_heimdall(data, &(*data)->yggdrasil, (*data)->env, 0);
+		status = ft_heimdall(data, &(*data)->yggdrasil, (*data)->env, 0);
+		(*data)->exit_status = status;
 		ft_files_destroyer(&(*data)->yggdrasil);
 		ft_free_all(&(*data)->yggdrasil, &(*data)->tokens, NULL, NULL);
 	}
+	ft_clean_data(data);
 	rl_clear_history();
 	return (0);
 }
@@ -90,8 +93,10 @@ int	main(int ac, char **av, char **env)
 	data = ft_init_data(env);
 	if (!data)
 		return (ft_pd_error(ERR_MALLOC, NULL, 12));
-	// ft_random_banner();
-	ft_banner_3();
-	ft_minishell(&data);
+	if (isatty(STDIN_FILENO))
+		ft_banner_3();
+	ft_minishell(&data, 0);
+	if (isatty(STDIN_FILENO))
+		ft_fprintf(1, "exit\n");
 	return (0);
 }
