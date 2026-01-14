@@ -66,8 +66,6 @@ int			ft_branch_w(t_tree **tree, t_token **tokens, char **env);
 t_tree		*ft_tree_init(char **content, t_type type, char **env);
 t_token		*ft_search_pipe(t_token **tokens);
 t_token		*ft_search_red(t_token **tokens);
-void		ft_treeadd_right(t_tree **tree, t_tree *new);
-void		ft_treeadd_left(t_tree **tree, t_tree *new);
 
 // ================================= //
 

@@ -13,7 +13,8 @@ typedef struct s_expand	t_expand;
 /* ============================ */
 
 int		ft_find_path(t_tree **tree, char **envp);
-// int		ft_find_path(t_data **data, char **envp);
+int		*ft_get_times_ptr(int reset);
+void	ft_reset_heredoc_times(void);
 
 /* ============================ */
 
@@ -37,19 +38,6 @@ void	ft_clean_yggdrasil(t_tree **tree);
 void	ft_free_tokens(t_token **head);
 void	ft_clean_data(t_data **data);
 void	*ft_free_all(t_tree **tree, t_token **token, char **input, char ***s);
-int		ft_clean_expanders(t_expand **expander);
-
-/* ============================ */
-
-/* ============================ */
-/* ========== print =========== */
-/* ============================ */
-
-void	print_token(t_token **token);
-void	ft_write_type_branch(t_type type);
-void	print_tree(t_tree **tree);
-void	print_tree_recursive(t_tree *tree, int depth, char *prefix);
-void	fprint_tree(t_tree **tree);
 
 /* ============================ */
 
