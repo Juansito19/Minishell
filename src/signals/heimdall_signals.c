@@ -1,5 +1,9 @@
 #include "minishell.h"
 
+/* =============================== */
+/* ====== heimdall_signals ======= */
+/* =============================== */
+
 int	ft_odin_signal(void)
 {
 	struct sigaction	sa;
