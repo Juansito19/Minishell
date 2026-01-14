@@ -62,7 +62,7 @@ int	ft_chg_b(t_token **token, char **tmp_name, int fd, t_token **eof)
 		{
 			line = ft_strdup((*eof)->content);
 			ft_new_content(tmp_name, eof, token);
-			return (ft_signal_break(&line, fd, stdin_backup, eof));
+			return (ft_signal_break(&line, fd, stdin_backup));
 		}
 		if (!ft_strcmp(line, (*eof)->content))
 			break ;

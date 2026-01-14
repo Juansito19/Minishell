@@ -83,6 +83,14 @@ int	ft_minishell(t_data **data, int status)
 	return (0);
 }
 
+/*
+	Que nos intenten romper la minishell
+	Ponerla bonita ;)
+	Poner los comentarios en los .h de las funciones tipo brief
+	Hacer la historia en el Readme
+	Agregar los cabeceros
+*/
+
 int	main(int ac, char **av, char **env)
 {
 	t_data	*data;
