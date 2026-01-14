@@ -46,8 +46,28 @@ by end-of-file (wanted `%s')\n"
 /* ========== error =========== */
 /* ============================ */
 
+/**
+ * @brief Prints appropriate error message for cd command.
+ * @param path Path that caused the error.
+ * @return Always returns 1 (error code).
+ */
 int	ft_print_cd_error(char *path);
+
+/**
+ * @brief Prints error message with optional system error.
+ * @param error_code System error code (0 for none).
+ * @param s Custom error message string.
+ * @return Always returns 1 (error code).
+ */
 int	ft_print_error(int error_code, char *s);
+
+/**
+ * @brief Prints formatted error message to stderr.
+ * @param format Format string for error message.
+ * @param s String to include in formatted message.
+ * @param error_code Error code to return.
+ * @return The provided error_code value.
+ */
 int	ft_pd_error(char *format, char *s, int error_code);
 
 /* ============================ */
