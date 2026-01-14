@@ -100,6 +100,35 @@ void	ft_variable_search(t_expand **exp, char **env, int i, int exit)
 	(*exp)->tmp_var = NULL;
 }
 
+// void	ft_aux_need_to_expand(t_token **tkn, int state)
+// {
+// 	int		i;
+
+// 	i = 0;
+// 	while ((*tkn)->content[i] && (*tkn)->expand == 0)
+// 	{
+// 		if (ft_is_quote((*tkn)->content[i]) == T_DQUOTE && !state)
+// 			state = 2;
+// 		else if (ft_is_quote((*tkn)->content[i]) == T_DQUOTE && state == 2)
+// 			state = 0;
+// 		else if (ft_is_quote((*tkn)->content[i]) == T_SQUOTE && !state)
+// 			state = 1;
+// 		else if (ft_is_quote((*tkn)->content[i]) == T_SQUOTE && state == 1)
+// 			state = 0;
+// 		else if ((*tkn)->content[i] == '$' && (*tkn)->content[i + 1] == '\0')		// 
+// 			return ;																// 
+// 		else if ((*tkn)->content[i] == '$' && state == 1)							// 
+// 			return ;																//  esto es al pedo
+// 		else if ((*tkn)->content[i] == '$' && state == 2)							// 
+// 			(*tkn)->expand = 1;														// 
+// 		else if ((*tkn)->content[i] == '$' && !state)		--------->				aqui esta el cambio
+// 			(*tkn)->expand = 1;
+// 		i++;
+// 	}
+// }
+
+// En mimir_expander.c
+
 void	ft_aux_need_to_expand(t_token **tkn, int state)
 {
 	int		i;
@@ -115,13 +144,7 @@ void	ft_aux_need_to_expand(t_token **tkn, int state)
 			state = 1;
 		else if (ft_is_quote((*tkn)->content[i]) == T_SQUOTE && state == 1)
 			state = 0;
-		else if ((*tkn)->content[i] == '$' && (*tkn)->content[i + 1] == '\0')
-			return ;
-		else if ((*tkn)->content[i] == '$' && state == 1)
-			return ;
-		else if ((*tkn)->content[i] == '$' && state == 2)
-			(*tkn)->expand = 1;
-		else if ((*tkn)->content[i] == '$' && !state)
+		if ((*tkn)->content[i] == '$' && state != 1 && (*tkn)->content[i + 1])
 			(*tkn)->expand = 1;
 		i++;
 	}
