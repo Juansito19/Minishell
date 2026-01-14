@@ -1,5 +1,9 @@
 #include "minishell.h"
 
+/* ========================== */
+/* ========= signals ======== */
+/* ========================== */
+
 void	ft_hugin_handler(int sig)
 {
 	if (sig == SIGINT)
