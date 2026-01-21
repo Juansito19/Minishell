@@ -1,8 +1,0 @@
-obj/
-.vscode/
-minishell
-*.a
-*.o
-.heredoc_*
-.gitignore
-src/main_parse.c
